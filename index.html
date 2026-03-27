@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>NextGen Tech Labs — Where Industry Meets Education</title>
+<meta name="description" content="NextGen Tech Labs places world-class industry professionals inside colleges. Real practitioners. Real skills. Real outcomes."/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;600;700;900&family=Outfit:wght@300;400;500;600&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#000308;--bg2:#010610;--card:#0d1830;
+  --border:rgba(0,212,255,0.1);--border2:rgba(0,212,255,0.22);
+  --a1:#00d4ff;--a2:#7b2fff;--a4:#00ff88;
+  --text:#eef2ff;--muted:#6b7ea8;--muted2:#4a5880;
+  --grad1:linear-gradient(135deg,#00d4ff,#7b2fff);
+  --grad2:linear-gradient(135deg,#7b2fff,#ff6b35);
+  --grad3:linear-gradient(135deg,#00ff88,#00d4ff);
+}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:'Outfit',sans-serif;font-size:16px;line-height:1.65;overflow-x:hidden;cursor:none}
+#cursor{position:fixed;width:12px;height:12px;background:var(--a1);border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);mix-blend-mode:difference;transition:width .3s,height .3s}
+#cursor-ring{position:fixed;width:36px;height:36px;border:1.5px solid rgba(0,212,255,0.45);border-radius:50%;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:width .3s,height .3s}
+.grid-bg{position:fixed;inset:0;z-index:0;background-image:linear-gradient(rgba(0,212,255,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(0,212,255,0.03) 1px,transparent 1px);background-size:60px 60px;pointer-events:none}
+@keyframes blink{0%,100%{opacity:1;box-shadow:0 0 0 transparent}50%{opacity:.5;box-shadow:0 0 14px rgba(0,212,255,.9)}}
+@keyframes floatOrb{0%,100%{transform:translate(0,0)}50%{transform:translate(25px,-25px)}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(28px)}to{opacity:1;transform:translateY(0)}}
+@keyframes tickerScroll{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+@keyframes bounceIn{0%{transform:scale(0)}70%{transform:scale(1.15)}100%{transform:scale(1)}}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:500;display:flex;align-items:center;justify-content:space-between;padding:1rem 5%;background:rgba(0,3,8,0.78);backdrop-filter:blur(24px);border-bottom:1px solid var(--border)}
+.logo{font-family:'Unbounded',sans-serif;font-size:1rem;font-weight:700;color:#fff;text-decoration:none;display:flex;align-items:center;gap:.5rem}
+.logo-dot{width:8px;height:8px;border-radius:50%;background:var(--a1);flex-shrink:0;animation:blink 2s infinite}
+.logo span{background:var(--grad1);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.nav-links{display:flex;gap:2.5rem;list-style:none;align-items:center}
+.nav-links a{color:var(--muted);text-decoration:none;font-size:.875rem;font-weight:500;transition:color .2s}
+.nav-links a:hover{color:#fff}
+.nav-cta{background:var(--grad1)!important;color:#fff!important;padding:.55rem 1.3rem!important;border-radius:8px;font-weight:600!important;font-size:.82rem!important}
+.hamburger{display:none;cursor:pointer;color:var(--text);font-size:1.25rem;background:none;border:none}
+.mobile-menu{display:none;position:fixed;inset:0;z-index:490;background:rgba(0,3,8,.98);flex-direction:column;align-items:center;justify-content:center;gap:2.5rem}
+.mobile-menu.open{display:flex}
+.mobile-menu a{font-family:'Unbounded',sans-serif;font-size:1.6rem;font-weight:700;color:var(--text);text-decoration:none;transition:color .2s}
+.mobile-menu a:hover{color:var(--a1)}
+.mobile-close{position:absolute;top:1.5rem;right:5%;background:none;border:none;color:var(--text);font-size:1.5rem;cursor:pointer}
+
+/* HERO */
+#hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:9rem 5% 4rem;position:relative;overflow:hidden;z-index:2}
+.orb{position:absolute;border-radius:50%;pointer-events:none}
+.orb1{width:700px;height:700px;top:-150px;left:-150px;background:radial-gradient(circle,rgba(0,212,255,.1) 0%,transparent 65%);animation:floatOrb 9s ease-in-out infinite}
+.orb2{width:600px;height:600px;bottom:-150px;right:-150px;background:radial-gradient(circle,rgba(123,47,255,.1) 0%,transparent 65%);animation:floatOrb 11s ease-in-out infinite reverse}
+.hero-chip{display:inline-flex;align-items:center;gap:.6rem;background:rgba(0,212,255,.08);border:1px solid rgba(0,212,255,.25);border-radius:100px;padding:.45rem 1.1rem;font-size:.72rem;color:var(--a1);font-family:'Fira Code',monospace;margin-bottom:2rem;animation:fadeUp .7s ease both}
+.chip-dot{width:6px;height:6px;border-radius:50%;background:var(--a4);animation:blink 1.5s infinite}
+.hero-h1{font-family:'Unbounded',sans-serif;font-size:clamp(2rem,5.5vw,5.5rem);font-weight:900;line-height:1.0;letter-spacing:-3px;margin-bottom:1.5rem;animation:fadeUp .7s .1s ease both}
+.h1-g1{background:var(--grad1);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;display:block}
+.h1-g2{background:var(--grad2);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;display:block}
+.hero-sub{font-size:clamp(.95rem,1.8vw,1.15rem);color:var(--muted);max-width:600px;margin:0 auto 2.5rem;font-weight:300;animation:fadeUp .7s .2s ease both;line-height:1.8}
+.hero-btns{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;animation:fadeUp .7s .3s ease both}
+.btn-p{display:inline-flex;align-items:center;gap:.5rem;background:var(--grad1);color:#fff;text-decoration:none;padding:.9rem 2.2rem;border-radius:10px;font-weight:600;font-size:.95rem;transition:transform .25s,box-shadow .25s;box-shadow:0 4px 30px rgba(0,212,255,.3);border:none;cursor:pointer}
+.btn-p:hover{transform:translateY(-3px);box-shadow:0 12px 40px rgba(0,212,255,.45)}
+.btn-o{display:inline-flex;align-items:center;gap:.5rem;border:1px solid var(--border2);color:var(--text);text-decoration:none;padding:.9rem 2.2rem;border-radius:10px;font-weight:500;font-size:.95rem;transition:border-color .25s,background .25s,transform .25s}
+.btn-o:hover{border-color:var(--a1);background:rgba(0,212,255,.07);transform:translateY(-2px)}
+.ticker-wrap{width:100%;overflow:hidden;border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:.8rem 0;background:rgba(0,212,255,.02);margin-top:4rem;animation:fadeUp .7s .4s ease both}
+.ticker{display:flex;animation:tickerScroll 28s linear infinite;white-space:nowrap}
+.ticker-item{display:inline-flex;align-items:center;gap:.8rem;padding:0 1.5rem;font-family:'Fira Code',monospace;font-size:.72rem;color:var(--muted2);letter-spacing:1px;text-transform:uppercase}
+.ticker-item .d{color:var(--a1)}
+
+/* STATS */
+.stats-band{display:flex;justify-content:center;flex-wrap:wrap;border-top:1px solid var(--border);border-bottom:1px solid var(--border);background:var(--bg2);position:relative;z-index:2}
+.stat-block{flex:1;min-width:180px;padding:2.5rem 2rem;text-align:center;border-right:1px solid var(--border);transition:background .3s}
+.stat-block:last-child{border-right:none}
+.stat-block:hover{background:rgba(0,212,255,.04)}
+.sn{font-family:'Unbounded',sans-serif;font-size:2.5rem;font-weight:900;background:var(--grad1);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;display:block;margin-bottom:.3rem}
+.sl{font-size:.78rem;color:var(--muted);letter-spacing:.5px}
+
+/* SECTIONS */
+section{padding:7rem 5%;position:relative;z-index:2}
+.container{max-width:1160px;margin:0 auto}
+.sec-tag{font-family:'Fira Code',monospace;font-size:.72rem;color:var(--a1);letter-spacing:3px;text-transform:uppercase;margin-bottom:.75rem;display:flex;align-items:center;gap:.5rem}
+.sec-tag::before{content:'//'}
+h2{font-family:'Unbounded',sans-serif;font-size:clamp(1.6rem,3.5vw,3rem);font-weight:800;letter-spacing:-1.5px;margin-bottom:1rem;line-height:1.1}
+.g1{background:var(--grad1);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.g2{background:var(--grad2);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.g3{background:var(--grad3);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.sec-sub{color:var(--muted);max-width:560px;margin-bottom:3.5rem;font-weight:300;font-size:1rem}
+
+/* HOW */
+#how{background:var(--bg2)}
+.steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1px;background:var(--border)}
+.step{background:var(--card);padding:2.5rem 2rem;position:relative;overflow:hidden;transition:background .3s}
+.step::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--grad1);transform:scaleX(0);transform-origin:left;transition:transform .5s}
+.step:hover::before{transform:scaleX(1)}
+.step:hover{background:#0f1e3a}
+.step-n{font-family:'Unbounded',sans-serif;font-size:3rem;font-weight:900;background:var(--grad1);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;opacity:.15;margin-bottom:1.5rem;line-height:1}
+.step-ic{font-size:1.8rem;margin-bottom:1rem}
+.step h3{font-family:'Unbounded',sans-serif;font-size:.9rem;font-weight:700;margin-bottom:.6rem;letter-spacing:-.3px}
+.step p{color:var(--muted);font-size:.87rem;line-height:1.7}
+
+/* SERVICES */
+#services{background:var(--bg)}
+.svc-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:1.5rem}
+.svc-card{background:var(--card);border:1px solid var(--border);border-radius:20px;padding:2.2rem;transition:transform .35s,border-color .35s,box-shadow .35s;position:relative;overflow:hidden;cursor:default}
+.svc-card:hover{transform:translateY(-8px);border-color:rgba(0,212,255,.35);box-shadow:0 20px 60px rgba(0,212,255,.1)}
+.svc-icon{width:58px;height:58px;border-radius:16px;display:flex;align-items:center;justify-content:center;font-size:1.55rem;margin-bottom:1.5rem}
+.si1{background:linear-gradient(135deg,rgba(255,59,59,.18),rgba(123,47,255,.18));border:1px solid rgba(255,59,59,.25)}
+.si2{background:linear-gradient(135deg,rgba(0,212,255,.18),rgba(0,255,136,.12));border:1px solid rgba(0,212,255,.25)}
+.si3{background:linear-gradient(135deg,rgba(0,255,136,.18),rgba(0,212,255,.12));border:1px solid rgba(0,255,136,.25)}
+.si4{background:linear-gradient(135deg,rgba(255,107,53,.18),rgba(255,59,59,.12));border:1px solid rgba(255,107,53,.25)}
+.si5{background:linear-gradient(135deg,rgba(236,72,153,.18),rgba(123,47,255,.12));border:1px solid rgba(236,72,153,.25)}
+.si6{background:linear-gradient(135deg,rgba(0,212,255,.15),rgba(123,47,255,.15));border:1px solid rgba(0,212,255,.2)}
+.svc-card h3{font-family:'Unbounded',sans-serif;font-size:.95rem;font-weight:700;margin-bottom:.6rem;letter-spacing:-.3px}
+.svc-card p{color:var(--muted);font-size:.87rem;margin-bottom:1.2rem;line-height:1.7}
+.tags{display:flex;flex-wrap:wrap;gap:.35rem}
+.tag{font-size:.67rem;font-family:'Fira Code',monospace;padding:.2rem .6rem;border-radius:5px;background:rgba(0,212,255,.08);border:1px solid rgba(0,212,255,.18);color:var(--a1)}
+
+/* FOUNDERS */
+#founders{background:var(--bg2)}
+.mission-box{background:var(--card);border:1px solid var(--border);border-radius:24px;padding:3rem;margin-bottom:3rem;position:relative;overflow:hidden}
+.mission-box::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--grad1)}
+.m-quote{font-family:'Unbounded',sans-serif;font-size:clamp(1rem,2.5vw,1.55rem);font-weight:700;line-height:1.4;letter-spacing:-.5px;margin-bottom:1.2rem}
+.m-quote .hl{background:var(--grad1);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.mission-box p{color:var(--muted);font-size:.93rem;line-height:1.85;max-width:720px}
+.founders-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem}
+.founder-card{background:var(--card);border:1px solid var(--border);border-radius:20px;padding:2.5rem;transition:border-color .3s,transform .3s;position:relative;overflow:hidden}
+.founder-card::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:var(--grad1);opacity:0;transition:opacity .3s}
+.founder-card:hover{border-color:rgba(0,212,255,.35);transform:translateY(-4px)}
+.founder-card:hover::after{opacity:1}
+.f-top{display:flex;align-items:center;gap:1.5rem;margin-bottom:1.5rem}
+.f-av{width:78px;height:78px;border-radius:18px;display:flex;align-items:center;justify-content:center;font-family:'Unbounded',sans-serif;font-size:1.6rem;font-weight:900;color:#fff;flex-shrink:0}
+.fa1{background:var(--grad1)}.fa2{background:var(--grad2)}
+.f-name{font-family:'Unbounded',sans-serif;font-size:1.05rem;font-weight:800;margin-bottom:.2rem;letter-spacing:-.3px}
+.f-role{font-family:'Fira Code',monospace;font-size:.7rem;color:var(--a1);letter-spacing:.8px}
+.founder-card p{color:var(--muted);font-size:.87rem;line-height:1.8;margin-bottom:1.5rem}
+.f-skills{display:flex;flex-wrap:wrap;gap:.35rem;margin-bottom:1.5rem}
+.f-skill{font-size:.67rem;font-family:'Fira Code',monospace;padding:.2rem .6rem;border-radius:5px;background:rgba(123,47,255,.12);border:1px solid rgba(123,47,255,.25);color:#b08dff}
+.f-links{display:flex;gap:.5rem;flex-wrap:wrap}
+.f-link{display:inline-flex;align-items:center;gap:.4rem;padding:.38rem .8rem;border-radius:7px;border:1px solid var(--border);color:var(--muted);text-decoration:none;font-size:.78rem;font-weight:500;transition:border-color .2s,color .2s,background .2s}
+.f-link:hover{border-color:var(--a1);color:var(--a1);background:rgba(0,212,255,.06)}
+
+/* WHY */
+#why{background:var(--bg)}
+.why-layout{display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:start}
+.why-panel{background:var(--card);border:1px solid var(--border);border-radius:20px;padding:2rem}
+.why-panel-title{font-family:'Unbounded',sans-serif;font-size:.75rem;font-weight:700;color:var(--muted2);letter-spacing:2px;text-transform:uppercase;margin-bottom:1.5rem;padding-bottom:1rem;border-bottom:1px solid var(--border)}
+.metric2{display:flex;align-items:center;justify-content:space-between;padding:.9rem 0;border-bottom:1px solid var(--border)}
+.metric2:last-child{border-bottom:none}
+.metric2-left{display:flex;align-items:center;gap:.8rem}
+.metric2-icon{width:34px;height:34px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:.9rem;background:rgba(0,212,255,.08);border:1px solid var(--border)}
+.metric2-label{font-size:.83rem;color:var(--muted)}
+.metric2-val{font-family:'Unbounded',sans-serif;font-size:1.15rem;font-weight:800;background:var(--grad1);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.why-list{list-style:none}
+.why-item{display:flex;gap:1.1rem;padding:1.3rem 0;border-bottom:1px solid var(--border);transition:padding-left .3s}
+.why-item:last-child{border-bottom:none}
+.why-item:hover{padding-left:.5rem}
+.why-check{width:26px;height:26px;flex-shrink:0;background:rgba(0,255,136,.1);border:1px solid rgba(0,255,136,.3);border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:.68rem;color:var(--a4);margin-top:3px}
+.why-item h4{font-family:'Unbounded',sans-serif;font-size:.8rem;font-weight:700;margin-bottom:.3rem;letter-spacing:-.2px}
+.why-item p{color:var(--muted);font-size:.85rem;line-height:1.6}
+
+/* CONTACT */
+#contact{background:var(--bg2)}
+.contact-layout{display:grid;grid-template-columns:1fr 1.3fr;gap:3rem}
+.contact-left h3{font-family:'Unbounded',sans-serif;font-size:1.1rem;font-weight:800;margin-bottom:.5rem;letter-spacing:-.3px}
+.contact-left p{color:var(--muted);font-size:.9rem;margin-bottom:1.8rem;line-height:1.8}
+.c-item{display:flex;align-items:center;gap:1rem;padding:1rem 1.2rem;background:var(--card);border:1px solid var(--border);border-radius:12px;margin-bottom:.7rem;text-decoration:none;color:var(--text);transition:border-color .2s,transform .2s}
+.c-item:hover{border-color:var(--a1);transform:translateX(4px)}
+.c-icon{width:40px;height:40px;flex-shrink:0;background:rgba(0,212,255,.1);border:1px solid rgba(0,212,255,.2);border-radius:10px;display:flex;align-items:center;justify-content:center;color:var(--a1);font-size:.95rem}
+.c-text strong{display:block;font-size:.87rem;font-weight:600}
+.c-text small{color:var(--muted);font-size:.74rem}
+.cf{background:var(--card);border:1px solid var(--border);border-radius:24px;padding:2.5rem}
+.cf-title{font-family:'Unbounded',sans-serif;font-size:.95rem;font-weight:800;margin-bottom:.3rem;letter-spacing:-.3px}
+.cf-sub{color:var(--muted);font-size:.8rem;margin-bottom:2rem;line-height:1.6}
+.fg{margin-bottom:1rem}
+.fg label{display:block;font-size:.7rem;font-family:'Fira Code',monospace;color:var(--muted2);letter-spacing:1px;text-transform:uppercase;margin-bottom:.4rem}
+.fg input,.fg select,.fg textarea{width:100%;background:rgba(0,3,8,.8);border:1px solid var(--border);border-radius:10px;padding:.78rem 1rem;color:var(--text);font-family:'Outfit',sans-serif;font-size:.9rem;outline:none;transition:border-color .2s,box-shadow .2s}
+.fg input:focus,.fg select:focus,.fg textarea:focus{border-color:var(--a1);box-shadow:0 0 0 3px rgba(0,212,255,.1)}
+.fg textarea{resize:vertical;min-height:90px}
+.fg select option{background:#000308}
+.fg-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.wa-btn{width:100%;display:flex;align-items:center;justify-content:center;gap:.8rem;background:linear-gradient(135deg,#25D366,#128C7E);color:#fff;border:none;padding:1rem;border-radius:12px;font-family:'Unbounded',sans-serif;font-weight:700;font-size:.85rem;cursor:pointer;transition:transform .2s,box-shadow .2s;margin-top:.5rem;letter-spacing:-.3px}
+.wa-btn:hover{transform:translateY(-2px);box-shadow:0 8px 30px rgba(37,211,102,.3)}
+.wa-btn i{font-size:1.2rem}
+.form-ok{display:none;text-align:center;padding:3rem 1rem}
+.form-ok .ok-icon{font-size:3rem;color:var(--a4);margin-bottom:1rem;display:block;animation:bounceIn .6s ease}
+.form-ok h3{font-family:'Unbounded',sans-serif;font-size:1rem;margin-bottom:.5rem}
+.form-ok p{color:var(--muted);font-size:.88rem;line-height:1.7}
+
+/* FOOTER */
+footer{background:var(--bg);border-top:1px solid var(--border);padding:3.5rem 5% 2rem;position:relative;z-index:2}
+.footer-top{max-width:1160px;margin:0 auto;display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:3rem;margin-bottom:3rem}
+.footer-brand p{color:var(--muted);font-size:.83rem;margin-top:.8rem;max-width:260px;line-height:1.7}
+.footer-col h4{font-family:'Unbounded',sans-serif;font-size:.72rem;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted2);margin-bottom:1.2rem}
+.footer-col ul{list-style:none}
+.footer-col li{margin-bottom:.7rem}
+.footer-col a{color:var(--muted);text-decoration:none;font-size:.83rem;transition:color .2s}
+.footer-col a:hover{color:var(--a1)}
+.footer-bottom{max-width:1160px;margin:0 auto;border-top:1px solid var(--border);padding-top:2rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem}
+.footer-bottom p{color:var(--muted2);font-size:.77rem}
+.socials{display:flex;gap:.6rem}
+.socials a{width:34px;height:34px;border:1px solid var(--border);border-radius:8px;display:flex;align-items:center;justify-content:center;color:var(--muted2);text-decoration:none;font-size:.83rem;transition:border-color .2s,color .2s,background .2s}
+.socials a:hover{border-color:var(--a1);color:var(--a1);background:rgba(0,212,255,.08)}
+
+/* SCROLL REVEAL */
+.reveal{opacity:0;transform:translateY(32px);transition:opacity .7s ease,transform .7s ease}
+.reveal.visible{opacity:1;transform:translateY(0)}
+
+/* SCROLLBAR */
+::-webkit-scrollbar{width:5px}
+::-webkit-scrollbar-track{background:var(--bg)}
+::-webkit-scrollbar-thumb{background:rgba(0,212,255,.3);border-radius:10px}
+
+/* RESPONSIVE */
+@media(max-width:900px){
+  .founders-grid,.why-layout,.contact-layout{grid-template-columns:1fr}
+  .footer-top{grid-template-columns:1fr 1fr}
+}
+@media(max-width:640px){
+  .nav-links{display:none}.hamburger{display:block}
+  .hero-h1{letter-spacing:-1.5px}
+  .stats-band{flex-direction:column}
+  .stat-block{border-right:none;border-bottom:1px solid var(--border)}
+  .stat-block:last-child{border-bottom:none}
+  .fg-row{grid-template-columns:1fr}
+  .footer-top{grid-template-columns:1fr}
+  body{cursor:auto}
+  #cursor,#cursor-ring{display:none}
+}
+</style>
+</head>
+<body>
+
+<div id="cursor"></div>
+<div id="cursor-ring"></div>
+<div class="grid-bg"></div>
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobileMenu">
+  <button class="mobile-close" onclick="closeMobile()"><i class="fa fa-times"></i></button>
+  <a href="#how" onclick="closeMobile()">How It Works</a>
+  <a href="#services" onclick="closeMobile()">Services</a>
+  <a href="#founders" onclick="closeMobile()">About</a>
+  <a href="#why" onclick="closeMobile()">Why Us</a>
+  <a href="#contact" onclick="closeMobile()">Contact</a>
+</div>
+
+<!-- NAV -->
+<nav>
+  <a class="logo" href="#hero"><div class="logo-dot"></div>NextGen<span>Tech Labs</span></a>
+  <ul class="nav-links">
+    <li><a href="#how">How It Works</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#founders">About</a></li>
+    <li><a href="#why">Why Us</a></li>
+    <li><a href="#contact" class="nav-cta">Book Free Session →</a></li>
+  </ul>
+  <button class="hamburger" onclick="openMobile()"><i class="fa fa-bars"></i></button>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="orb orb1"></div>
+  <div class="orb orb2"></div>
+  <div class="hero-chip"><div class="chip-dot"></div>Now accepting institutional partnerships worldwide</div>
+  <h1 class="hero-h1">
+    <span>Where Industry</span>
+    <span class="h1-g1">Meets Education.</span>
+    <span class="h1-g2">Skills That Matter.</span>
+  </h1>
+  <p class="hero-sub">NextGen Tech Labs deploys world-class industry professionals directly into your institution. Not theory. Not textbooks. Real practitioners who do this work every day — teaching the next generation to do the same.</p>
+  <div class="hero-btns">
+    <a href="#contact" class="btn-p"><i class="fa fa-calendar-check"></i> Book a Free Demo Session</a>
+    <a href="#services" class="btn-o"><i class="fa fa-layer-group"></i> Explore Programs</a>
+  </div>
+  <div class="ticker-wrap">
+    <div class="ticker">
+      <span class="ticker-item"><span class="d">◆</span>Cybersecurity &amp; Ethical Hacking</span>
+      <span class="ticker-item"><span class="d">◆</span>Artificial Intelligence &amp; ML</span>
+      <span class="ticker-item"><span class="d">◆</span>Data Analytics &amp; Visualization</span>
+      <span class="ticker-item"><span class="d">◆</span>Full-Stack Development</span>
+      <span class="ticker-item"><span class="d">◆</span>Digital Marketing &amp; Growth</span>
+      <span class="ticker-item"><span class="d">◆</span>Cloud Computing &amp; DevOps</span>
+      <span class="ticker-item"><span class="d">◆</span>Placement &amp; Career Readiness</span>
+      <span class="ticker-item"><span class="d">◆</span>Blockchain &amp; Web3</span>
+      <span class="ticker-item"><span class="d">◆</span>Cybersecurity &amp; Ethical Hacking</span>
+      <span class="ticker-item"><span class="d">◆</span>Artificial Intelligence &amp; ML</span>
+      <span class="ticker-item"><span class="d">◆</span>Data Analytics &amp; Visualization</span>
+      <span class="ticker-item"><span class="d">◆</span>Full-Stack Development</span>
+      <span class="ticker-item"><span class="d">◆</span>Digital Marketing &amp; Growth</span>
+      <span class="ticker-item"><span class="d">◆</span>Cloud Computing &amp; DevOps</span>
+      <span class="ticker-item"><span class="d">◆</span>Placement &amp; Career Readiness</span>
+      <span class="ticker-item"><span class="d">◆</span>Blockchain &amp; Web3</span>
+    </div>
+  </div>
+</section>
+
+<!-- STATS -->
+<div class="stats-band">
+  <div class="stat-block reveal"><span class="sn" data-target="1000" data-suffix="+">0</span><div class="sl">Students Achieved Their Dreams</div></div>
+  <div class="stat-block reveal"><span class="sn" data-target="80" data-suffix="+">0</span><div class="sl">Partner Institutions</div></div>
+  <div class="stat-block reveal"><span class="sn" data-target="25" data-suffix="+">0</span><div class="sl">Industry Trainers</div></div>
+  <div class="stat-block reveal"><span class="sn" data-target="92" data-suffix="%">0</span><div class="sl">Placement Improvement Rate</div></div>
+</div>
+
+<!-- HOW IT WORKS -->
+<section id="how">
+  <div class="container">
+    <div class="sec-tag reveal">Process</div>
+    <h2 class="reveal">Built for <span class="g1">Zero Effort</span><br/>on Your Side</h2>
+    <p class="sec-sub reveal">From the moment you reach out, we take over everything. Your only job is to give us a room and a batch.</p>
+    <div class="steps">
+      <div class="step reveal">
+        <div class="step-n">01</div>
+        <div class="step-ic">📋</div>
+        <h3>Share Your Requirement</h3>
+        <p>Tell us the topic, batch size, and preferred date. We respond within 24 hours with a curated trainer profile matched to your institution's level.</p>
+      </div>
+      <div class="step reveal">
+        <div class="step-n">02</div>
+        <div class="step-ic">🎯</div>
+        <h3>We Match the Expert</h3>
+        <p>Our team selects the best-fit industry professional — verified, experienced, and briefed on your students' background before they step in.</p>
+      </div>
+      <div class="step reveal">
+        <div class="step-n">03</div>
+        <div class="step-ic">⚡</div>
+        <h3>Workshop Delivered</h3>
+        <p>A high-impact, hands-on session at your campus. Real tools. Real scenarios. Students leave with practical knowledge and measurable confidence.</p>
+      </div>
+      <div class="step reveal">
+        <div class="step-n">04</div>
+        <div class="step-ic">📊</div>
+        <h3>Report &amp; Partnership</h3>
+        <p>You receive a detailed session report, student feedback summary, and a proposal for continued engagement. We become your long-term training partner.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section id="services">
+  <div class="container">
+    <div class="sec-tag reveal">Programs</div>
+    <h2 class="reveal">Every Skill <span class="g1">Industry Demands</span></h2>
+    <p class="sec-sub reveal">Every session is delivered by a practitioner who does this work daily — not someone who only teaches it.</p>
+    <div class="svc-grid">
+      <div class="svc-card reveal">
+        <div class="svc-icon si1">🛡️</div>
+        <h3>Cybersecurity &amp; Ethical Hacking</h3>
+        <p>Penetration testing, vulnerability assessment, SOC fundamentals, and real-world attack simulation built for the next generation of security professionals.</p>
+        <div class="tags"><span class="tag">Burp Suite</span><span class="tag">Nmap</span><span class="tag">Metasploit</span><span class="tag">Wireshark</span><span class="tag">OWASP Top 10</span><span class="tag">Kali Linux</span></div>
+      </div>
+      <div class="svc-card reveal">
+        <div class="svc-icon si2">🤖</div>
+        <h3>Artificial Intelligence &amp; ML</h3>
+        <p>From Python fundamentals to model deployment — students build real AI systems. Includes generative AI, computer vision, and prompt engineering modules.</p>
+        <div class="tags"><span class="tag">Python</span><span class="tag">TensorFlow</span><span class="tag">Scikit-learn</span><span class="tag">LLMs</span><span class="tag">Computer Vision</span></div>
+      </div>
+      <div class="svc-card reveal">
+        <div class="svc-icon si3">📊</div>
+        <h3>Data Analytics &amp; Visualization</h3>
+        <p>Teaching students to transform raw data into boardroom-ready insights using the exact tools that top companies use every day.</p>
+        <div class="tags"><span class="tag">Power BI</span><span class="tag">Tableau</span><span class="tag">SQL</span><span class="tag">Python</span><span class="tag">Excel Advanced</span></div>
+      </div>
+      <div class="svc-card reveal">
+        <div class="svc-icon si4">💻</div>
+        <h3>Full-Stack Development</h3>
+        <p>End-to-end web application development bootcamps where students ship a live project by the end of the session. GitHub-first methodology throughout.</p>
+        <div class="tags"><span class="tag">React</span><span class="tag">Node.js</span><span class="tag">Django</span><span class="tag">REST APIs</span><span class="tag">GitHub</span></div>
+      </div>
+      <div class="svc-card reveal">
+        <div class="svc-icon si5">📣</div>
+        <h3>Digital Marketing &amp; Growth</h3>
+        <p>Performance marketing, SEO, social media strategy, and analytics — the skills startups and enterprises are actively hiring for right now.</p>
+        <div class="tags"><span class="tag">Google Ads</span><span class="tag">Meta Ads</span><span class="tag">SEO</span><span class="tag">Analytics</span><span class="tag">Email Marketing</span></div>
+      </div>
+      <div class="svc-card reveal">
+        <div class="svc-icon si6">🎤</div>
+        <h3>Placement &amp; Career Readiness</h3>
+        <p>Resume building, mock interviews, group discussion practice — delivered by HR professionals and senior engineers who have actively hired freshers.</p>
+        <div class="tags"><span class="tag">Mock Interviews</span><span class="tag">GD Prep</span><span class="tag">Resume Clinic</span><span class="tag">Communication</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOUNDERS -->
+<section id="founders">
+  <div class="container">
+    <div class="sec-tag reveal">Leadership</div>
+    <h2 class="reveal">Built by <span class="g2">Practitioners,</span><br/>Not Professors</h2>
+    <p class="sec-sub reveal">Our founders have worked inside the industry, taught inside institutions, and understand the gap firsthand. That is what makes this different.</p>
+    <div class="mission-box reveal">
+      <div class="m-quote">"The world does not need more degrees.<br/>It needs people who can <span class="hl">actually do the work.</span><br/>We are here to make that happen — at scale."</div>
+      <p>NextGen Tech Labs was founded on a single belief: that the gap between what colleges teach and what companies need is not a small problem — it is a crisis. We exist to fix it by bringing the people who live and breathe this work directly into classrooms. Our vision is not bound by any region or geography. It is global — every institution, every student, every skill gap that stands between potential and opportunity.</p>
+    </div>
+    <div class="founders-grid">
+      <div class="founder-card reveal">
+        <div class="f-top">
+          <div class="f-av fa1">PM</div>
+          <div>
+            <div class="f-name">Prashant Mishra</div>
+            <div class="f-role">3FOUNDER &amp; CEO · CYBERSECURITY</div>
+          </div>
+        </div>
+        <p>Prashant is a cybersecurity practitioner who has worked with C-DAC under MeitY (Government of India), conducted offensive and defensive security operations, and has helped over a thousand students transform their career trajectories. He served as Visiting Faculty in Cryptography and Network Security at SSCBS, University of Delhi, and currently leads cybersecurity training at NIIT Foundation. His philosophy is simple — stop teaching security from slides and start teaching it from real attack scenarios. NextGen Tech Labs was born from a frustration with the gap between what industry demands and what institutions deliver, and a conviction that the fix is entirely achievable.</p>
+        <div class="f-skills"><span class="f-skill">VAPT</span><span class="f-skill">Penetration Testing</span><span class="f-skill">SOC Operations</span><span class="f-skill">Malware Analysis</span><span class="f-skill">AI &amp; ML</span><span class="f-skill">CEH v13</span></div>
+        <div class="f-links">
+          <a href="https://linkedin.com/in/imprashantt" target="_blank" rel="noopener" class="f-link"><i class="fab fa-linkedin"></i> LinkedIn</a>
+          <a href="mailto:prashant.builds@gmail.com" class="f-link"><i class="fa fa-envelope"></i> Email</a>
+          <a href="https://wa.me/918511565780" target="_blank" class="f-link"><i class="fab fa-whatsapp"></i> WhatsApp</a>
+        </div>
+      </div>
+      <div class="founder-card reveal">
+        <div class="f-top">
+          <div class="f-av fa2">PS</div>
+          <div>
+            <div class="f-name">Prashant Sharma</div>
+            <div class="f-role">CO-FOUNDER &amp; COO · OPERATIONS &amp; GROWTH</div>
+          </div>
+        </div>
+        <p>Prashant Sharma brings seven years of institutional partnership and operations leadership to NextGen Tech Labs. Before co-founding the company, he led strategic partnerships for EdTech platforms across South and Southeast Asia, working directly with 40+ universities to restructure their industry exposure frameworks. He holds an MBA in Strategy from a premier institution and has previously scaled training operations from a 3-person founding team to a 50-member organization with multi-country presence. Prashant's conviction is straightforward: most institutions have the intent but lack the infrastructure to bridge the industry gap — and that is precisely the problem NextGen Tech Labs was engineered to solve, at any scale.</p>
+        <div class="f-skills"><span class="f-skill">Strategic Partnerships</span><span class="f-skill">EdTech Operations</span><span class="f-skill">Institutional Sales</span><span class="f-skill">Team Scaling</span><span class="f-skill">MBA Strategy</span></div>
+        <div class="f-links">
+	  <a href="https://www.linkedin.com/in/prashantt-sharmaa/" target="_blank" rel="noopener" class="f-link"><i class="fab fa-linkedin"></i> LinkedIn</a>
+          <a href="mailto:prashant.builds@gmail.com" class="f-link"><i class="fa fa-envelope"></i> Email</a>
+          <a href="https://wa.me/917027181375" target="_blank" class="f-link"><i class="fab fa-whatsapp"></i> WhatsApp</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHY US -->
+<section id="why">
+  <div class="container">
+    <div class="sec-tag reveal">Differentiation</div>
+    <h2 class="reveal">Why Institutions <span class="g3">Choose Us</span></h2>
+    <p class="sec-sub reveal">Every competitor sends trainers. We send outcomes. Here is the operational difference.</p>
+    <div class="why-layout">
+      <div class="reveal">
+        <div class="why-panel">
+          <div class="why-panel-title">Performance at a Glance</div>
+          <div class="metric2"><div class="metric2-left"><div class="metric2-icon">🎓</div><div class="metric2-label">Students Transformed</div></div><div class="metric2-val">1,000+</div></div>
+          <div class="metric2"><div class="metric2-left"><div class="metric2-icon">🏛️</div><div class="metric2-label">Partner Institutions</div></div><div class="metric2-val">80+</div></div>
+          <div class="metric2"><div class="metric2-left"><div class="metric2-icon">⭐</div><div class="metric2-label">Avg. Session Rating</div></div><div class="metric2-val">4.8 / 5</div></div>
+          <div class="metric2"><div class="metric2-left"><div class="metric2-icon">📈</div><div class="metric2-label">Placement Improvement</div></div><div class="metric2-val">92%</div></div>
+          <div class="metric2"><div class="metric2-left"><div class="metric2-icon">⏱️</div><div class="metric2-label">Booking to Delivery</div></div><div class="metric2-val">48 hrs</div></div>
+          <div class="metric2"><div class="metric2-left"><div class="metric2-icon">🔁</div><div class="metric2-label">Institutions Renewed</div></div><div class="metric2-val">94%</div></div>
+        </div>
+      </div>
+      <ul class="why-list reveal">
+        <li class="why-item"><div class="why-check"><i class="fa fa-check"></i></div><div><h4>Real practitioners, not career trainers</h4><p>Every professional we deploy has active industry experience. They solve real problems during the week and teach from that experience when they step into your classrooms.</p></div></li>
+        <li class="why-item"><div class="why-check"><i class="fa fa-check"></i></div><div><h4>Zero administrative burden on your institution</h4><p>We handle trainer selection, logistics, content alignment, and post-session documentation. You provide a room and a batch — we handle everything else.</p></div></li>
+        <li class="why-item"><div class="why-check"><i class="fa fa-check"></i></div><div><h4>NAAC-aligned session reports included</h4><p>Every workshop generates a professional report that institutions can directly use for NAAC, NBA, or NIRF documentation and audit requirements.</p></div></li>
+        <li class="why-item"><div class="why-check"><i class="fa fa-check"></i></div><div><h4>First demo session at absolutely no cost</h4><p>No contracts. No payment. No commitment. Let your students experience a full session and then decide. We earn your trust before we earn your money.</p></div></li>
+        <li class="why-item"><div class="why-check"><i class="fa fa-check"></i></div><div><h4>Annual retainer plans with measurable outcomes</h4><p>Institutions on retainer receive regular sessions, dedicated trainer assignment, and a semester-end placement impact report to demonstrate ROI.</p></div></li>
+        <li class="why-item"><div class="why-check"><i class="fa fa-check"></i></div><div><h4>Fully customized to your curriculum and goals</h4><p>Every session is briefed against your department, semester, and student profile. We don't send a generic presentation — we build around your institution.</p></div></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="container">
+    <div class="sec-tag reveal">Contact</div>
+    <h2 class="reveal">Start with a <span class="g1">Free Session.</span><br/>No Commitment.</h2>
+    <p class="sec-sub reveal">Fill the form and we respond within 24 hours with a confirmed trainer profile and available dates for your institution.</p>
+    <div class="contact-layout">
+      <div>
+        <div class="contact-left reveal">
+          <h3>Reach Us Directly</h3>
+          <p>Prefer a conversation before filling a form? Call or message us on WhatsApp. We respond fast and personally.</p>
+        </div>
+        <a href="https://wa.me/918511565780" target="_blank" class="c-item reveal">
+          <div class="c-icon" style="background:rgba(37,211,102,0.1);border-color:rgba(37,211,102,0.25);color:#25D366"><i class="fab fa-whatsapp"></i></div>
+          <div class="c-text"><strong>+91 85115 65780</strong><small>WhatsApp — fastest response</small></div>
+        </a>
+        <a href="tel:+918511565780" class="c-item reveal">
+          <div class="c-icon"><i class="fa fa-phone"></i></div>
+          <div class="c-text"><strong>+91 85115 65780</strong><small>Call — Mon to Sat, 10am–7pm</small></div>
+        </a>
+        <a href="mailto:prashant.builds@gmail.com" class="c-item reveal">
+          <div class="c-icon"><i class="fa fa-envelope"></i></div>
+          <div class="c-text"><strong>prashant.builds@gmail.com</strong><small>Email — reply within 12 hours</small></div>
+        </a>
+        <a href="https://linkedin.com/in/imprashantt" target="_blank" class="c-item reveal">
+          <div class="c-icon" style="background:rgba(0,119,181,0.1);border-color:rgba(0,119,181,0.3);color:#0077b5"><i class="fab fa-linkedin-in"></i></div>
+          <div class="c-text"><strong>linkedin.com/in/imprashantt</strong><small>Connect with our CEO</small></div>
+        </a>
+      </div>
+      <div class="cf reveal">
+        <div class="cf-title">📋 Request a Free Workshop</div>
+        <div class="cf-sub">Takes 60 seconds. Clicking submit opens WhatsApp with your details pre-filled — just tap send and Prashant will confirm within 24 hours.</div>
+        <div id="cfWrap">
+          <div class="fg-row">
+            <div class="fg"><label>Your Name *</label><input type="text" id="f_name" placeholder="Dr. / Prof. / Mr. Name"/></div>
+            <div class="fg"><label>Designation *</label><input type="text" id="f_desig" placeholder="Principal / HOD / T&amp;P Officer"/></div>
+          </div>
+          <div class="fg"><label>Institution Name *</label><input type="text" id="f_inst" placeholder="Full institution name"/></div>
+          <div class="fg-row">
+            <div class="fg"><label>Phone / WhatsApp *</label><input type="tel" id="f_phone" placeholder="+91 XXXXX XXXXX"/></div>
+            <div class="fg"><label>Email</label><input type="email" id="f_email" placeholder="your@email.com"/></div>
+          </div>
+          <div class="fg">
+            <label>Program of Interest *</label>
+            <select id="f_topic">
+              <option value="">— Select a program —</option>
+              <option>Cybersecurity &amp; Ethical Hacking</option>
+              <option>Artificial Intelligence &amp; Machine Learning</option>
+              <option>Data Analytics &amp; Visualization</option>
+              <option>Full-Stack Web Development</option>
+              <option>Digital Marketing &amp; Growth</option>
+              <option>Placement &amp; Career Readiness</option>
+              <option>Cloud Computing &amp; DevOps</option>
+              <option>Multiple Programs / Annual Plan</option>
+              <option>Not sure — need guidance</option>
+            </select>
+          </div>
+          <div class="fg-row">
+            <div class="fg"><label>Expected Batch Size</label><input type="text" id="f_batch" placeholder="e.g. 60 students"/></div>
+            <div class="fg"><label>Preferred Date</label><input type="date" id="f_date"/></div>
+          </div>
+          <div class="fg"><label>Additional Requirements</label><textarea id="f_msg" placeholder="Any specific topics, student level, or scheduling needs..."></textarea></div>
+          <button class="wa-btn" onclick="sendToWA()"><i class="fab fa-whatsapp"></i>Send via WhatsApp — Instant Confirmation</button>
+        </div>
+        <div class="form-ok" id="cfOk">
+          <span class="ok-icon"><i class="fa fa-check-circle"></i></span>
+          <h3>WhatsApp Opened!</h3>
+          <p>Your details are pre-filled in WhatsApp. Just tap Send — Prashant will confirm your free session within 24 hours.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-top">
+    <div class="footer-brand">
+      <a class="logo" href="#hero"><div class="logo-dot"></div>NextGen<span>Tech Labs</span></a>
+      <p>Bridging the gap between industry and education. Real professionals. Real skills. Real outcomes — for every institution, everywhere.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Company</h4>
+      <ul>
+        <li><a href="#how">How It Works</a></li>
+        <li><a href="#services">Our Programs</a></li>
+        <li><a href="#founders">About Us</a></li>
+        <li><a href="#why">Why Choose Us</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Programs</h4>
+      <ul>
+        <li><a href="#services">Cybersecurity</a></li>
+        <li><a href="#services">AI &amp; ML</a></li>
+        <li><a href="#services">Data Analytics</a></li>
+        <li><a href="#services">Full-Stack Dev</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Contact</h4>
+      <ul>
+        <li><a href="https://wa.me/918511565780" target="_blank">WhatsApp Us</a></li>
+        <li><a href="tel:+918511565780">Call Us</a></li>
+        <li><a href="mailto:prashant.builds@gmail.com">Email Us</a></li>
+        <li><a href="https://linkedin.com/in/imprashantt" target="_blank">LinkedIn</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2025 NextGen Tech Labs. All rights reserved. Empowering institutions worldwide.</p>
+    <div class="socials">
+      <a href="https://linkedin.com/in/imprashantt" target="_blank"><i class="fab fa-linkedin-in"></i></a>
+      <a href="https://wa.me/918511565780" target="_blank"><i class="fab fa-whatsapp"></i></a>
+      <a href="mailto:prashant.builds@gmail.com"><i class="fa fa-envelope"></i></a>
+    </div>
+  </div>
+</footer>
+
+<script>
+// CURSOR
+const cur=document.getElementById('cursor'),ring=document.getElementById('cursor-ring');
+let mx=0,my=0,rx=0,ry=0;
+document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cur.style.left=mx+'px';cur.style.top=my+'px'});
+(function animR(){rx+=(mx-rx)*.12;ry+=(my-ry)*.12;ring.style.left=rx+'px';ring.style.top=ry+'px';requestAnimationFrame(animR)})();
+document.querySelectorAll('a,button,.svc-card,.founder-card,.step,.stat-block').forEach(el=>{
+  el.addEventListener('mouseenter',()=>{cur.style.width='20px';cur.style.height='20px';ring.style.width='54px';ring.style.height='54px'});
+  el.addEventListener('mouseleave',()=>{cur.style.width='12px';cur.style.height='12px';ring.style.width='36px';ring.style.height='36px'});
+});
+
+// NAV SCROLL
+window.addEventListener('scroll',()=>{document.querySelector('nav').style.padding=window.scrollY>60?'.7rem 5%':'1rem 5%'});
+
+// MOBILE MENU
+function openMobile(){document.getElementById('mobileMenu').classList.add('open')}
+function closeMobile(){document.getElementById('mobileMenu').classList.remove('open')}
+
+// SCROLL REVEAL
+const obs=new IntersectionObserver((entries)=>{
+  entries.forEach((e,i)=>{if(e.isIntersecting){setTimeout(()=>e.target.classList.add('visible'),i*90);obs.unobserve(e.target)}});
+},{threshold:0.08});
+document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+
+// COUNTER
+function animCount(el,target,suffix){
+  let v=0;const dur=2200,steps=70,inc=target/steps;
+  const t=setInterval(()=>{v+=inc;if(v>=target){v=target;clearInterval(t)}el.textContent=Math.floor(v).toLocaleString()+suffix},dur/steps);
+}
+const cObs=new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      const el=e.target.querySelector('.sn');
+      if(el&&!el.dataset.done){el.dataset.done=1;animCount(el,parseInt(el.dataset.target),el.dataset.suffix||'+')}
+      cObs.unobserve(e.target);
+    }
+  });
+},{threshold:.3});
+document.querySelectorAll('.stat-block').forEach(el=>cObs.observe(el));
+
+// WHATSAPP FORM
+function sendToWA(){
+  const n=document.getElementById('f_name').value.trim();
+  const d=document.getElementById('f_desig').value.trim();
+  const i=document.getElementById('f_inst').value.trim();
+  const p=document.getElementById('f_phone').value.trim();
+  const em=document.getElementById('f_email').value.trim();
+  const t=document.getElementById('f_topic').value;
+  const b=document.getElementById('f_batch').value.trim();
+  const dt=document.getElementById('f_date').value;
+  const m=document.getElementById('f_msg').value.trim();
+  if(!n||!i||!p||!t){alert('Please fill in: Name, Institution, Phone and Program to continue.');return}
+  const msg=`Hello! I am reaching out from the NextGen Tech Labs website.\n\n*Name:* ${n}${d?' ('+d+')':''}\n*Institution:* ${i}\n*Phone:* ${p}${em?'\n*Email:* '+em:''}\n*Program:* ${t}\n*Batch Size:* ${b||'Not specified'}\n*Preferred Date:* ${dt||'Flexible'}${m?'\n*Additional Info:* '+m:''}\n\nI would like to book a free demo session. Please confirm availability.`;
+  window.open('https://wa.me/918511565780?text='+encodeURIComponent(msg),'_blank');
+  document.getElementById('cfWrap').style.display='none';
+  document.getElementById('cfOk').style.display='block';
+}
+
+// SMOOTH SCROLL
+document.querySelectorAll('a[href^="#"]').forEach(a=>{
+  a.addEventListener('click',function(e){const t=document.querySelector(this.getAttribute('href'));if(t){e.preventDefault();t.scrollIntoView({behavior:'smooth',block:'start'})}});
+});
+</script>
+</body>
+</html>
