@@ -1,648 +1,1087 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>NextGen Tech Labs — Where Industry Meets Education</title>
-<meta name="description" content="NextGen Tech Labs places world-class industry professionals inside colleges. Real practitioners. Real skills. Real outcomes."/>
-<link rel="preconnect" href="https://fonts.googleapis.com"/>
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;600;700;900&family=Outfit:wght@300;400;500;600&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet"/>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Career Hub — Jobs, Skills & Platforms</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-:root{
-  --bg:#000308;--bg2:#010610;--card:#0d1830;
-  --border:rgba(0,212,255,0.1);--border2:rgba(0,212,255,0.22);
-  --a1:#00d4ff;--a2:#7b2fff;--a4:#00ff88;
-  --text:#eef2ff;--muted:#6b7ea8;--muted2:#4a5880;
-  --grad1:linear-gradient(135deg,#00d4ff,#7b2fff);
-  --grad2:linear-gradient(135deg,#7b2fff,#ff6b35);
-  --grad3:linear-gradient(135deg,#00ff88,#00d4ff);
+:root {
+  --bg:#07080c;--bg2:#0d0f16;--bg3:#13151f;--bg4:#1a1d2a;
+  --gold:#f0c040;--gold2:#e6a820;--gold-glow:rgba(240,192,64,0.12);
+  --blue:#4f8fff;--blue-glow:rgba(79,143,255,0.12);
+  --green:#34d399;--green-glow:rgba(52,211,153,0.1);
+  --red:#f87171;--orange:#fb923c;--purple:#a78bfa;
+  --text:#dde3f0;--text-dim:#5a6380;--text-mid:#8892aa;
+  --border:rgba(255,255,255,0.07);--border2:rgba(255,255,255,0.12);
+  --mono:'DM Mono',monospace;--display:'Bebas Neue',sans-serif;--body:'DM Sans',sans-serif;
+  --radius:10px;
 }
+*{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:smooth}
-body{background:var(--bg);color:var(--text);font-family:'Outfit',sans-serif;font-size:16px;line-height:1.65;overflow-x:hidden;cursor:none}
-#cursor{position:fixed;width:12px;height:12px;background:var(--a1);border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);mix-blend-mode:difference;transition:width .3s,height .3s}
-#cursor-ring{position:fixed;width:36px;height:36px;border:1.5px solid rgba(0,212,255,0.45);border-radius:50%;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:width .3s,height .3s}
-.grid-bg{position:fixed;inset:0;z-index:0;background-image:linear-gradient(rgba(0,212,255,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(0,212,255,0.03) 1px,transparent 1px);background-size:60px 60px;pointer-events:none}
-@keyframes blink{0%,100%{opacity:1;box-shadow:0 0 0 transparent}50%{opacity:.5;box-shadow:0 0 14px rgba(0,212,255,.9)}}
-@keyframes floatOrb{0%,100%{transform:translate(0,0)}50%{transform:translate(25px,-25px)}}
-@keyframes fadeUp{from{opacity:0;transform:translateY(28px)}to{opacity:1;transform:translateY(0)}}
-@keyframes tickerScroll{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
-@keyframes bounceIn{0%{transform:scale(0)}70%{transform:scale(1.15)}100%{transform:scale(1)}}
+body{background:var(--bg);color:var(--text);font-family:var(--body);font-size:16px;overflow-x:hidden}
+::-webkit-scrollbar{width:5px}::-webkit-scrollbar-track{background:var(--bg)}::-webkit-scrollbar-thumb{background:#1e2535;border-radius:3px}
+
+/* NOISE */
+body::after{content:'';position:fixed;inset:0;background:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.025'/%3E%3C/svg%3E");pointer-events:none;z-index:9998}
 
 /* NAV */
-nav{position:fixed;top:0;left:0;right:0;z-index:500;display:flex;align-items:center;justify-content:space-between;padding:1rem 5%;background:rgba(0,3,8,0.78);backdrop-filter:blur(24px);border-bottom:1px solid var(--border)}
-.logo{font-family:'Unbounded',sans-serif;font-size:1rem;font-weight:700;color:#fff;text-decoration:none;display:flex;align-items:center;gap:.5rem}
-.logo-dot{width:8px;height:8px;border-radius:50%;background:var(--a1);flex-shrink:0;animation:blink 2s infinite}
-.logo span{background:var(--grad1);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-.nav-links{display:flex;gap:2.5rem;list-style:none;align-items:center}
-.nav-links a{color:var(--muted);text-decoration:none;font-size:.875rem;font-weight:500;transition:color .2s}
-.nav-links a:hover{color:#fff}
-.nav-cta{background:var(--grad1)!important;color:#fff!important;padding:.55rem 1.3rem!important;border-radius:8px;font-weight:600!important;font-size:.82rem!important}
-.hamburger{display:none;cursor:pointer;color:var(--text);font-size:1.25rem;background:none;border:none}
-.mobile-menu{display:none;position:fixed;inset:0;z-index:490;background:rgba(0,3,8,.98);flex-direction:column;align-items:center;justify-content:center;gap:2.5rem}
-.mobile-menu.open{display:flex}
-.mobile-menu a{font-family:'Unbounded',sans-serif;font-size:1.6rem;font-weight:700;color:var(--text);text-decoration:none;transition:color .2s}
-.mobile-menu a:hover{color:var(--a1)}
-.mobile-close{position:absolute;top:1.5rem;right:5%;background:none;border:none;color:var(--text);font-size:1.5rem;cursor:pointer}
+nav{position:fixed;top:0;left:0;right:0;z-index:500;background:rgba(7,8,12,0.93);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);padding:0 5%;height:60px;display:flex;align-items:center;justify-content:space-between}
+.nav-logo{font-family:var(--display);font-size:1.4rem;letter-spacing:2px;color:var(--gold);text-decoration:none}
+.nav-logo span{color:var(--text-dim);font-family:var(--mono);font-size:0.6rem;display:block;letter-spacing:1px;margin-top:-4px}
+.nav-links{display:flex;gap:0;list-style:none}
+.nav-links a{padding:0 14px;height:60px;display:flex;align-items:center;font-family:var(--mono);font-size:0.68rem;letter-spacing:1px;color:var(--text-dim);text-decoration:none;border-bottom:2px solid transparent;transition:all .2s}
+.nav-links a:hover,.nav-links a.active{color:var(--gold);border-bottom-color:var(--gold)}
+.nav-btn{background:var(--gold);color:#07080c;border:none;padding:8px 18px;font-family:var(--mono);font-size:0.68rem;letter-spacing:1px;cursor:pointer;border-radius:6px;font-weight:600;text-decoration:none;transition:opacity .2s}
+.nav-btn:hover{opacity:.85}
+@media(max-width:900px){.nav-links{display:none}}
 
 /* HERO */
-#hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:9rem 5% 4rem;position:relative;overflow:hidden;z-index:2}
-.orb{position:absolute;border-radius:50%;pointer-events:none}
-.orb1{width:700px;height:700px;top:-150px;left:-150px;background:radial-gradient(circle,rgba(0,212,255,.1) 0%,transparent 65%);animation:floatOrb 9s ease-in-out infinite}
-.orb2{width:600px;height:600px;bottom:-150px;right:-150px;background:radial-gradient(circle,rgba(123,47,255,.1) 0%,transparent 65%);animation:floatOrb 11s ease-in-out infinite reverse}
-.hero-chip{display:inline-flex;align-items:center;gap:.6rem;background:rgba(0,212,255,.08);border:1px solid rgba(0,212,255,.25);border-radius:100px;padding:.45rem 1.1rem;font-size:.72rem;color:var(--a1);font-family:'Fira Code',monospace;margin-bottom:2rem;animation:fadeUp .7s ease both}
-.chip-dot{width:6px;height:6px;border-radius:50%;background:var(--a4);animation:blink 1.5s infinite}
-.hero-h1{font-family:'Unbounded',sans-serif;font-size:clamp(2rem,5.5vw,5.5rem);font-weight:900;line-height:1.0;letter-spacing:-3px;margin-bottom:1.5rem;animation:fadeUp .7s .1s ease both}
-.h1-g1{background:var(--grad1);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;display:block}
-.h1-g2{background:var(--grad2);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;display:block}
-.hero-sub{font-size:clamp(.95rem,1.8vw,1.15rem);color:var(--muted);max-width:600px;margin:0 auto 2.5rem;font-weight:300;animation:fadeUp .7s .2s ease both;line-height:1.8}
-.hero-btns{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;animation:fadeUp .7s .3s ease both}
-.btn-p{display:inline-flex;align-items:center;gap:.5rem;background:var(--grad1);color:#fff;text-decoration:none;padding:.9rem 2.2rem;border-radius:10px;font-weight:600;font-size:.95rem;transition:transform .25s,box-shadow .25s;box-shadow:0 4px 30px rgba(0,212,255,.3);border:none;cursor:pointer}
-.btn-p:hover{transform:translateY(-3px);box-shadow:0 12px 40px rgba(0,212,255,.45)}
-.btn-o{display:inline-flex;align-items:center;gap:.5rem;border:1px solid var(--border2);color:var(--text);text-decoration:none;padding:.9rem 2.2rem;border-radius:10px;font-weight:500;font-size:.95rem;transition:border-color .25s,background .25s,transform .25s}
-.btn-o:hover{border-color:var(--a1);background:rgba(0,212,255,.07);transform:translateY(-2px)}
-.ticker-wrap{width:100%;overflow:hidden;border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:.8rem 0;background:rgba(0,212,255,.02);margin-top:4rem;animation:fadeUp .7s .4s ease both}
-.ticker{display:flex;animation:tickerScroll 28s linear infinite;white-space:nowrap}
-.ticker-item{display:inline-flex;align-items:center;gap:.8rem;padding:0 1.5rem;font-family:'Fira Code',monospace;font-size:.72rem;color:var(--muted2);letter-spacing:1px;text-transform:uppercase}
-.ticker-item .d{color:var(--a1)}
+#hero{min-height:100vh;display:flex;align-items:center;padding:100px 5% 60px;position:relative;overflow:hidden}
+.hero-mesh{position:absolute;inset:0;background:radial-gradient(ellipse 70% 60% at 10% 50%,rgba(240,192,64,0.06) 0%,transparent 60%),radial-gradient(ellipse 50% 50% at 90% 20%,rgba(79,143,255,0.06) 0%,transparent 60%),radial-gradient(ellipse 40% 40% at 60% 90%,rgba(52,211,153,0.04) 0%,transparent 60%)}
+.hero-dots{position:absolute;inset:0;background-image:radial-gradient(rgba(255,255,255,0.04) 1px,transparent 1px);background-size:32px 32px}
+.hero-content{position:relative;z-index:2;max-width:850px}
+.hero-badge{display:inline-flex;align-items:center;gap:8px;background:var(--gold-glow);border:1px solid rgba(240,192,64,0.25);padding:6px 14px;border-radius:100px;font-family:var(--mono);font-size:0.68rem;color:var(--gold);letter-spacing:1px;margin-bottom:28px;animation:fadeUp .6s .1s both}
+.hero-badge .dot{width:6px;height:6px;border-radius:50%;background:var(--gold);animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+h1{font-family:var(--display);font-size:clamp(3rem,8vw,7rem);line-height:.95;letter-spacing:2px;margin-bottom:24px;animation:fadeUp .6s .25s both}
+h1 .g{background:linear-gradient(135deg,var(--gold),var(--orange));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+h1 .b{background:linear-gradient(135deg,var(--blue),var(--purple));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero-sub{font-size:1.1rem;color:var(--text-mid);line-height:1.8;max-width:620px;margin-bottom:40px;animation:fadeUp .6s .4s both}
+.hero-pills{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:36px;animation:fadeUp .6s .55s both}
+.pill{padding:6px 14px;border-radius:100px;font-family:var(--mono);font-size:0.65rem;letter-spacing:1px;border:1px solid var(--border);color:var(--text-dim);background:var(--bg3)}
+.pill.hot{border-color:rgba(240,192,64,0.3);color:var(--gold);background:var(--gold-glow)}
+.hero-btns{display:flex;gap:14px;flex-wrap:wrap;animation:fadeUp .6s .7s both}
+.btn-g{background:linear-gradient(135deg,var(--gold),var(--orange));color:#07080c;border:none;padding:13px 28px;font-family:var(--mono);font-size:0.78rem;letter-spacing:1px;cursor:pointer;border-radius:8px;font-weight:600;text-decoration:none;display:inline-flex;align-items:center;gap:8px;transition:opacity .2s}
+.btn-g:hover{opacity:.85}
+.btn-o{background:transparent;color:var(--text);border:1px solid var(--border2);padding:13px 28px;font-family:var(--mono);font-size:0.78rem;letter-spacing:1px;cursor:pointer;border-radius:8px;text-decoration:none;display:inline-flex;align-items:center;gap:8px;transition:all .2s}
+.btn-o:hover{border-color:var(--gold);color:var(--gold)}
+.hero-stats{position:absolute;right:5%;bottom:10%;display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--border);border:1px solid var(--border);border-radius:12px;overflow:hidden;animation:fadeUp .6s .9s both}
+@media(max-width:1100px){.hero-stats{display:none}}
+.hstat{background:var(--bg2);padding:24px 28px;text-align:center}
+.hstat-n{font-family:var(--display);font-size:2.2rem;color:var(--gold);display:block}
+.hstat-l{font-family:var(--mono);font-size:0.6rem;color:var(--text-dim);letter-spacing:2px;margin-top:4px}
+@keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
 
-/* STATS */
-.stats-band{display:flex;justify-content:center;flex-wrap:wrap;border-top:1px solid var(--border);border-bottom:1px solid var(--border);background:var(--bg2);position:relative;z-index:2}
-.stat-block{flex:1;min-width:180px;padding:2.5rem 2rem;text-align:center;border-right:1px solid var(--border);transition:background .3s}
-.stat-block:last-child{border-right:none}
-.stat-block:hover{background:rgba(0,212,255,.04)}
-.sn{font-family:'Unbounded',sans-serif;font-size:2.5rem;font-weight:900;background:var(--grad1);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;display:block;margin-bottom:.3rem}
-.sl{font-size:.78rem;color:var(--muted);letter-spacing:.5px}
+/* TICKER */
+.ticker{background:var(--bg3);border-top:1px solid var(--border);border-bottom:1px solid var(--border);overflow:hidden;padding:12px 0;white-space:nowrap}
+.ticker-inner{display:inline-flex;gap:48px;animation:tick 50s linear infinite;font-family:var(--mono);font-size:0.7rem;color:var(--text-dim);letter-spacing:1px}
+.ticker-inner span{color:var(--gold)}
+@keyframes tick{to{transform:translateX(-50%)}}
 
-/* SECTIONS */
-section{padding:7rem 5%;position:relative;z-index:2}
-.container{max-width:1160px;margin:0 auto}
-.sec-tag{font-family:'Fira Code',monospace;font-size:.72rem;color:var(--a1);letter-spacing:3px;text-transform:uppercase;margin-bottom:.75rem;display:flex;align-items:center;gap:.5rem}
-.sec-tag::before{content:'//'}
-h2{font-family:'Unbounded',sans-serif;font-size:clamp(1.6rem,3.5vw,3rem);font-weight:800;letter-spacing:-1.5px;margin-bottom:1rem;line-height:1.1}
-.g1{background:var(--grad1);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-.g2{background:var(--grad2);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-.g3{background:var(--grad3);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-.sec-sub{color:var(--muted);max-width:560px;margin-bottom:3.5rem;font-weight:300;font-size:1rem}
+/* SECTION COMMONS */
+section{padding:80px 5%}
+.sec-label{font-family:var(--mono);font-size:0.65rem;letter-spacing:3px;color:var(--gold);margin-bottom:8px;display:flex;align-items:center;gap:10px}
+.sec-label::before{content:'▸';color:var(--gold)}
+.sec-title{font-family:var(--display);font-size:clamp(1.8rem,4vw,3rem);letter-spacing:1px;margin-bottom:10px;color:#fff}
+.sec-title span{color:var(--gold)}
+.sec-desc{color:var(--text-dim);font-size:.95rem;line-height:1.8;max-width:640px;margin-bottom:50px}
 
-/* HOW */
-#how{background:var(--bg2)}
-.steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1px;background:var(--border)}
-.step{background:var(--card);padding:2.5rem 2rem;position:relative;overflow:hidden;transition:background .3s}
-.step::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--grad1);transform:scaleX(0);transform-origin:left;transition:transform .5s}
-.step:hover::before{transform:scaleX(1)}
-.step:hover{background:#0f1e3a}
-.step-n{font-family:'Unbounded',sans-serif;font-size:3rem;font-weight:900;background:var(--grad1);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;opacity:.15;margin-bottom:1.5rem;line-height:1}
-.step-ic{font-size:1.8rem;margin-bottom:1rem}
-.step h3{font-family:'Unbounded',sans-serif;font-size:.9rem;font-weight:700;margin-bottom:.6rem;letter-spacing:-.3px}
-.step p{color:var(--muted);font-size:.87rem;line-height:1.7}
+/* FADE IN */
+.fi{opacity:0;transform:translateY(28px);transition:opacity .6s,transform .6s}
+.fi.vis{opacity:1;transform:none}
 
-/* SERVICES */
-#services{background:var(--bg)}
-.svc-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:1.5rem}
-.svc-card{background:var(--card);border:1px solid var(--border);border-radius:20px;padding:2.2rem;transition:transform .35s,border-color .35s,box-shadow .35s;position:relative;overflow:hidden;cursor:default}
-.svc-card:hover{transform:translateY(-8px);border-color:rgba(0,212,255,.35);box-shadow:0 20px 60px rgba(0,212,255,.1)}
-.svc-icon{width:58px;height:58px;border-radius:16px;display:flex;align-items:center;justify-content:center;font-size:1.55rem;margin-bottom:1.5rem}
-.si1{background:linear-gradient(135deg,rgba(255,59,59,.18),rgba(123,47,255,.18));border:1px solid rgba(255,59,59,.25)}
-.si2{background:linear-gradient(135deg,rgba(0,212,255,.18),rgba(0,255,136,.12));border:1px solid rgba(0,212,255,.25)}
-.si3{background:linear-gradient(135deg,rgba(0,255,136,.18),rgba(0,212,255,.12));border:1px solid rgba(0,255,136,.25)}
-.si4{background:linear-gradient(135deg,rgba(255,107,53,.18),rgba(255,59,59,.12));border:1px solid rgba(255,107,53,.25)}
-.si5{background:linear-gradient(135deg,rgba(236,72,153,.18),rgba(123,47,255,.12));border:1px solid rgba(236,72,153,.25)}
-.si6{background:linear-gradient(135deg,rgba(0,212,255,.15),rgba(123,47,255,.15));border:1px solid rgba(0,212,255,.2)}
-.svc-card h3{font-family:'Unbounded',sans-serif;font-size:.95rem;font-weight:700;margin-bottom:.6rem;letter-spacing:-.3px}
-.svc-card p{color:var(--muted);font-size:.87rem;margin-bottom:1.2rem;line-height:1.7}
-.tags{display:flex;flex-wrap:wrap;gap:.35rem}
-.tag{font-size:.67rem;font-family:'Fira Code',monospace;padding:.2rem .6rem;border-radius:5px;background:rgba(0,212,255,.08);border:1px solid rgba(0,212,255,.18);color:var(--a1)}
+/* ── LANGUAGE SECTION ── */
+.lang-tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:32px}
+.lang-tab{padding:8px 18px;border-radius:8px;font-family:var(--mono);font-size:0.68rem;letter-spacing:1px;border:1px solid var(--border);color:var(--text-dim);background:var(--bg2);cursor:pointer;transition:all .2s}
+.lang-tab.act{border-color:var(--gold);color:var(--gold);background:var(--gold-glow)}
+.lang-panel{display:none}
+.lang-panel.show{display:block}
+.lang-hero{background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:28px;margin-bottom:20px;display:flex;gap:24px;align-items:flex-start;flex-wrap:wrap}
+.lang-icon{font-size:3rem;min-width:60px}
+.lang-title{font-family:var(--display);font-size:2rem;letter-spacing:1px}
+.lang-subtitle{font-family:var(--mono);font-size:.65rem;letter-spacing:2px;color:var(--text-dim);margin-bottom:8px}
+.lang-about{color:var(--text-mid);font-size:.9rem;line-height:1.8;max-width:700px}
+.lang-chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.lchip{padding:4px 12px;border-radius:100px;font-family:var(--mono);font-size:.62rem;letter-spacing:1px;background:var(--bg3);border:1px solid var(--border);color:var(--text-dim)}
+.lib-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px}
+.lib-card{background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:20px;transition:all .2s;position:relative;overflow:hidden}
+.lib-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;opacity:0;transition:opacity .2s}
+.lib-card:hover{border-color:rgba(255,255,255,0.14);transform:translateY(-2px)}
+.lib-card:hover::before{opacity:1}
+.lib-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px}
+.lib-nm{font-family:var(--mono);font-size:.88rem;font-weight:500;color:#fff}
+.lib-ver{font-family:var(--mono);font-size:.6rem;color:var(--text-dim);background:var(--bg3);border:1px solid var(--border);padding:2px 8px;border-radius:4px}
+.lib-desc{color:var(--text-mid);font-size:.83rem;line-height:1.65;margin-bottom:12px}
+.lib-for{font-family:var(--mono);font-size:.65rem;color:var(--text-dim);margin-bottom:10px}
+.lib-for b{color:var(--green)}
+.inst{background:var(--bg);border:1px solid var(--border);border-radius:7px;padding:8px 12px;display:flex;justify-content:space-between;align-items:center;gap:10px}
+.inst-cmd{font-family:var(--mono);font-size:.7rem;color:var(--green);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.cpybtn{background:none;border:1px solid var(--border);padding:4px 8px;border-radius:5px;font-family:var(--mono);font-size:.58rem;color:var(--text-dim);cursor:pointer;transition:all .2s;white-space:nowrap}
+.cpybtn:hover{color:var(--gold);border-color:var(--gold)}
+.lib-foot{display:flex;justify-content:space-between;align-items:center;margin-top:10px}
+.lib-stars{font-family:var(--mono);font-size:.65rem;color:var(--text-dim)}
+.lvl{font-family:var(--mono);font-size:.58rem;letter-spacing:1px;padding:3px 9px;border-radius:100px}
+.lvl-b{background:rgba(52,211,153,.1);color:var(--green);border:1px solid rgba(52,211,153,.2)}
+.lvl-m{background:rgba(240,192,64,.1);color:var(--gold);border:1px solid rgba(240,192,64,.2)}
+.lvl-a{background:rgba(248,113,113,.1);color:var(--red);border:1px solid rgba(248,113,113,.2)}
 
-/* FOUNDERS */
-#founders{background:var(--bg2)}
-.mission-box{background:var(--card);border:1px solid var(--border);border-radius:24px;padding:3rem;margin-bottom:3rem;position:relative;overflow:hidden}
-.mission-box::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--grad1)}
-.m-quote{font-family:'Unbounded',sans-serif;font-size:clamp(1rem,2.5vw,1.55rem);font-weight:700;line-height:1.4;letter-spacing:-.5px;margin-bottom:1.2rem}
-.m-quote .hl{background:var(--grad1);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-.mission-box p{color:var(--muted);font-size:.93rem;line-height:1.85;max-width:720px}
-.founders-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem}
-.founder-card{background:var(--card);border:1px solid var(--border);border-radius:20px;padding:2.5rem;transition:border-color .3s,transform .3s;position:relative;overflow:hidden}
-.founder-card::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:var(--grad1);opacity:0;transition:opacity .3s}
-.founder-card:hover{border-color:rgba(0,212,255,.35);transform:translateY(-4px)}
-.founder-card:hover::after{opacity:1}
-.f-top{display:flex;align-items:center;gap:1.5rem;margin-bottom:1.5rem}
-.f-av{width:78px;height:78px;border-radius:18px;display:flex;align-items:center;justify-content:center;font-family:'Unbounded',sans-serif;font-size:1.6rem;font-weight:900;color:#fff;flex-shrink:0}
-.fa1{background:var(--grad1)}.fa2{background:var(--grad2)}
-.f-name{font-family:'Unbounded',sans-serif;font-size:1.05rem;font-weight:800;margin-bottom:.2rem;letter-spacing:-.3px}
-.f-role{font-family:'Fira Code',monospace;font-size:.7rem;color:var(--a1);letter-spacing:.8px}
-.founder-card p{color:var(--muted);font-size:.87rem;line-height:1.8;margin-bottom:1.5rem}
-.f-skills{display:flex;flex-wrap:wrap;gap:.35rem;margin-bottom:1.5rem}
-.f-skill{font-size:.67rem;font-family:'Fira Code',monospace;padding:.2rem .6rem;border-radius:5px;background:rgba(123,47,255,.12);border:1px solid rgba(123,47,255,.25);color:#b08dff}
-.f-links{display:flex;gap:.5rem;flex-wrap:wrap}
-.f-link{display:inline-flex;align-items:center;gap:.4rem;padding:.38rem .8rem;border-radius:7px;border:1px solid var(--border);color:var(--muted);text-decoration:none;font-size:.78rem;font-weight:500;transition:border-color .2s,color .2s,background .2s}
-.f-link:hover{border-color:var(--a1);color:var(--a1);background:rgba(0,212,255,.06)}
+/* ── JOBS SECTION ── */
+#jobs{background:var(--bg2)}
+.job-filters{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:32px}
+.jf{padding:7px 16px;border-radius:8px;font-family:var(--mono);font-size:.65rem;letter-spacing:1px;border:1px solid var(--border);color:var(--text-dim);background:var(--bg3);cursor:pointer;transition:all .2s}
+.jf.act{border-color:var(--gold);color:var(--gold);background:var(--gold-glow)}
+.jobs-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:16px}
+.job-card{background:var(--bg3);border:1px solid var(--border);border-radius:12px;padding:22px;transition:all .2s;cursor:default}
+.job-card:hover{border-color:rgba(255,255,255,.14);background:var(--bg4)}
+.job-head{display:flex;align-items:flex-start;gap:14px;margin-bottom:14px}
+.job-icon{font-size:2rem;width:52px;height:52px;background:var(--bg2);border:1px solid var(--border);border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.job-title{font-family:var(--mono);font-size:.88rem;font-weight:500;color:#fff;margin-bottom:4px}
+.job-co{font-size:.82rem;color:var(--text-mid)}
+.job-desc{color:var(--text-mid);font-size:.83rem;line-height:1.65;margin-bottom:14px}
+.job-tags{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px}
+.jtag{font-family:var(--mono);font-size:.6rem;letter-spacing:.5px;padding:3px 9px;border-radius:5px;background:var(--bg2);border:1px solid var(--border);color:var(--text-dim)}
+.job-meta{display:flex;gap:14px;align-items:center;flex-wrap:wrap}
+.jsal{font-family:var(--mono);font-size:.72rem;color:var(--green)}
+.jlvl{font-family:var(--mono);font-size:.62rem;padding:3px 10px;border-radius:100px;border:1px solid}
 
-/* WHY */
-#why{background:var(--bg)}
-.why-layout{display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:start}
-.why-panel{background:var(--card);border:1px solid var(--border);border-radius:20px;padding:2rem}
-.why-panel-title{font-family:'Unbounded',sans-serif;font-size:.75rem;font-weight:700;color:var(--muted2);letter-spacing:2px;text-transform:uppercase;margin-bottom:1.5rem;padding-bottom:1rem;border-bottom:1px solid var(--border)}
-.metric2{display:flex;align-items:center;justify-content:space-between;padding:.9rem 0;border-bottom:1px solid var(--border)}
-.metric2:last-child{border-bottom:none}
-.metric2-left{display:flex;align-items:center;gap:.8rem}
-.metric2-icon{width:34px;height:34px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:.9rem;background:rgba(0,212,255,.08);border:1px solid var(--border)}
-.metric2-label{font-size:.83rem;color:var(--muted)}
-.metric2-val{font-family:'Unbounded',sans-serif;font-size:1.15rem;font-weight:800;background:var(--grad1);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-.why-list{list-style:none}
-.why-item{display:flex;gap:1.1rem;padding:1.3rem 0;border-bottom:1px solid var(--border);transition:padding-left .3s}
-.why-item:last-child{border-bottom:none}
-.why-item:hover{padding-left:.5rem}
-.why-check{width:26px;height:26px;flex-shrink:0;background:rgba(0,255,136,.1);border:1px solid rgba(0,255,136,.3);border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:.68rem;color:var(--a4);margin-top:3px}
-.why-item h4{font-family:'Unbounded',sans-serif;font-size:.8rem;font-weight:700;margin-bottom:.3rem;letter-spacing:-.2px}
-.why-item p{color:var(--muted);font-size:.85rem;line-height:1.6}
+/* ── PLATFORMS SECTION ── */
+.platform-cats{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:32px}
+.pcat{padding:7px 16px;border-radius:8px;font-family:var(--mono);font-size:.65rem;letter-spacing:1px;border:1px solid var(--border);color:var(--text-dim);background:var(--bg2);cursor:pointer;transition:all .2s}
+.pcat.act,.pcat:hover{border-color:var(--blue);color:var(--blue);background:var(--blue-glow)}
+.platforms-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:14px}
+.p-card{background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:20px;transition:all .2s;cursor:pointer;position:relative}
+.p-card:hover{border-color:rgba(79,143,255,.3);transform:translateY(-2px);box-shadow:0 8px 32px rgba(0,0,0,.3)}
+.p-head{display:flex;align-items:center;gap:12px;margin-bottom:12px}
+.p-emoji{font-size:1.8rem;width:48px;height:48px;background:var(--bg3);border:1px solid var(--border);border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.p-name{font-family:var(--mono);font-size:.88rem;font-weight:500;color:#fff}
+.p-country{font-family:var(--mono);font-size:.6rem;color:var(--text-dim);letter-spacing:1px;margin-top:2px}
+.p-desc{color:var(--text-mid);font-size:.82rem;line-height:1.6;margin-bottom:12px}
+.p-tags{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:12px}
+.ptag{font-family:var(--mono);font-size:.58rem;letter-spacing:.5px;padding:3px 8px;border-radius:5px;background:var(--bg3);border:1px solid var(--border);color:var(--text-dim)}
+.ptag.hot{border-color:rgba(240,192,64,.3);color:var(--gold);background:var(--gold-glow)}
+.ptag.intern{border-color:rgba(52,211,153,.3);color:var(--green);background:var(--green-glow)}
+.ptag.gov{border-color:rgba(79,143,255,.3);color:var(--blue);background:var(--blue-glow)}
+.p-footer{display:flex;justify-content:space-between;align-items:center}
+.p-roles{font-family:var(--mono);font-size:.62rem;color:var(--text-dim)}
+.how-btn{background:var(--bg3);border:1px solid var(--border);padding:6px 12px;border-radius:7px;font-family:var(--mono);font-size:.62rem;color:var(--text-mid);cursor:pointer;transition:all .2s;display:flex;align-items:center;gap:5px}
+.how-btn:hover{border-color:var(--blue);color:var(--blue)}
+.p-badge{position:absolute;top:12px;right:12px;font-family:var(--mono);font-size:.55rem;letter-spacing:1px;padding:3px 8px;border-radius:100px}
+.badge-new{background:rgba(52,211,153,.1);color:var(--green);border:1px solid rgba(52,211,153,.2)}
+.badge-pop{background:rgba(240,192,64,.1);color:var(--gold);border:1px solid rgba(240,192,64,.2)}
+.badge-gov{background:rgba(79,143,255,.1);color:var(--blue);border:1px solid rgba(79,143,255,.2)}
+.badge-int{background:rgba(167,139,250,.1);color:var(--purple);border:1px solid rgba(167,139,250,.2)}
 
-/* CONTACT */
-#contact{background:var(--bg2)}
-.contact-layout{display:grid;grid-template-columns:1fr 1.3fr;gap:3rem}
-.contact-left h3{font-family:'Unbounded',sans-serif;font-size:1.1rem;font-weight:800;margin-bottom:.5rem;letter-spacing:-.3px}
-.contact-left p{color:var(--muted);font-size:.9rem;margin-bottom:1.8rem;line-height:1.8}
-.c-item{display:flex;align-items:center;gap:1rem;padding:1rem 1.2rem;background:var(--card);border:1px solid var(--border);border-radius:12px;margin-bottom:.7rem;text-decoration:none;color:var(--text);transition:border-color .2s,transform .2s}
-.c-item:hover{border-color:var(--a1);transform:translateX(4px)}
-.c-icon{width:40px;height:40px;flex-shrink:0;background:rgba(0,212,255,.1);border:1px solid rgba(0,212,255,.2);border-radius:10px;display:flex;align-items:center;justify-content:center;color:var(--a1);font-size:.95rem}
-.c-text strong{display:block;font-size:.87rem;font-weight:600}
-.c-text small{color:var(--muted);font-size:.74rem}
-.cf{background:var(--card);border:1px solid var(--border);border-radius:24px;padding:2.5rem}
-.cf-title{font-family:'Unbounded',sans-serif;font-size:.95rem;font-weight:800;margin-bottom:.3rem;letter-spacing:-.3px}
-.cf-sub{color:var(--muted);font-size:.8rem;margin-bottom:2rem;line-height:1.6}
-.fg{margin-bottom:1rem}
-.fg label{display:block;font-size:.7rem;font-family:'Fira Code',monospace;color:var(--muted2);letter-spacing:1px;text-transform:uppercase;margin-bottom:.4rem}
-.fg input,.fg select,.fg textarea{width:100%;background:rgba(0,3,8,.8);border:1px solid var(--border);border-radius:10px;padding:.78rem 1rem;color:var(--text);font-family:'Outfit',sans-serif;font-size:.9rem;outline:none;transition:border-color .2s,box-shadow .2s}
-.fg input:focus,.fg select:focus,.fg textarea:focus{border-color:var(--a1);box-shadow:0 0 0 3px rgba(0,212,255,.1)}
-.fg textarea{resize:vertical;min-height:90px}
-.fg select option{background:#000308}
-.fg-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
-.wa-btn{width:100%;display:flex;align-items:center;justify-content:center;gap:.8rem;background:linear-gradient(135deg,#25D366,#128C7E);color:#fff;border:none;padding:1rem;border-radius:12px;font-family:'Unbounded',sans-serif;font-weight:700;font-size:.85rem;cursor:pointer;transition:transform .2s,box-shadow .2s;margin-top:.5rem;letter-spacing:-.3px}
-.wa-btn:hover{transform:translateY(-2px);box-shadow:0 8px 30px rgba(37,211,102,.3)}
-.wa-btn i{font-size:1.2rem}
-.form-ok{display:none;text-align:center;padding:3rem 1rem}
-.form-ok .ok-icon{font-size:3rem;color:var(--a4);margin-bottom:1rem;display:block;animation:bounceIn .6s ease}
-.form-ok h3{font-family:'Unbounded',sans-serif;font-size:1rem;margin-bottom:.5rem}
-.form-ok p{color:var(--muted);font-size:.88rem;line-height:1.7}
+/* ── MODAL ── */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.85);z-index:2000;display:flex;align-items:center;justify-content:center;padding:20px;opacity:0;pointer-events:none;transition:opacity .25s;backdrop-filter:blur(6px)}
+.modal-overlay.open{opacity:1;pointer-events:all}
+.modal{background:var(--bg2);border:1px solid var(--border2);border-radius:16px;max-width:640px;width:100%;max-height:88vh;overflow:hidden;display:flex;flex-direction:column;transform:scale(.95);transition:transform .25s}
+.modal-overlay.open .modal{transform:scale(1)}
+.modal-head{padding:24px 28px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-shrink:0}
+.modal-title-row{display:flex;align-items:center;gap:14px}
+.modal-emoji{font-size:2rem;width:52px;height:52px;background:var(--bg3);border:1px solid var(--border);border-radius:10px;display:flex;align-items:center;justify-content:center}
+.modal-name{font-family:var(--mono);font-size:1rem;font-weight:500;color:#fff}
+.modal-sub{font-family:var(--mono);font-size:.62rem;color:var(--text-dim);letter-spacing:1px;margin-top:2px}
+.modal-close{width:32px;height:32px;border-radius:8px;background:var(--bg3);border:1px solid var(--border);color:var(--text-dim);font-size:1rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .2s;flex-shrink:0}
+.modal-close:hover{border-color:var(--red);color:var(--red)}
+.modal-body{padding:24px 28px;overflow-y:auto}
+.modal-body::-webkit-scrollbar{width:4px}
+.modal-body::-webkit-scrollbar-thumb{background:#1e2535;border-radius:3px}
+.m-section{margin-bottom:24px}
+.m-sec-title{font-family:var(--mono);font-size:.65rem;letter-spacing:2px;color:var(--gold);margin-bottom:14px;padding-bottom:8px;border-bottom:1px solid var(--border)}
+.step-list{list-style:none}
+.step-item{display:flex;gap:14px;padding:12px 0;border-bottom:1px solid var(--border)}
+.step-item:last-child{border-bottom:none}
+.step-num{font-family:var(--display);font-size:1.4rem;color:var(--gold);min-width:32px;line-height:1}
+.step-content .step-t{font-size:.88rem;font-weight:600;color:#fff;margin-bottom:3px}
+.step-content .step-d{font-size:.82rem;color:var(--text-mid);line-height:1.6}
+.tip-box{background:var(--bg3);border:1px solid rgba(240,192,64,.2);border-radius:8px;padding:14px 16px;display:flex;gap:10px}
+.tip-box .tip-icon{font-size:1.1rem;flex-shrink:0}
+.tip-box p{font-size:.83rem;color:var(--text-mid);line-height:1.65}
+.tip-box p strong{color:var(--gold)}
+.info-row{display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--border);font-size:.85rem}
+.info-row:last-child{border-bottom:none}
+.info-k{color:var(--text-dim);font-family:var(--mono);font-size:.68rem;letter-spacing:1px}
+.info-v{color:#fff;font-weight:500;text-align:right}
+.modal-footer{padding:16px 28px;border-top:1px solid var(--border);display:flex;gap:12px;flex-shrink:0}
+.mf-btn{flex:1;padding:12px;border-radius:8px;font-family:var(--mono);font-size:.72rem;letter-spacing:1px;cursor:pointer;transition:all .2s;text-decoration:none;display:flex;align-items:center;justify-content:center;gap:8px}
+.mf-primary{background:linear-gradient(135deg,var(--gold),var(--orange));color:#07080c;border:none;font-weight:600}
+.mf-primary:hover{opacity:.88}
+.mf-secondary{background:transparent;color:var(--text-mid);border:1px solid var(--border)}
+.mf-secondary:hover{border-color:var(--blue);color:var(--blue)}
+
+/* ── ROADMAP ── */
+.road-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:16px}
+.road-card{background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:24px;position:relative;overflow:hidden}
+.road-n{position:absolute;top:12px;right:16px;font-family:var(--display);font-size:4rem;color:rgba(255,255,255,.03);line-height:1}
+.road-phase{font-family:var(--mono);font-size:.62rem;letter-spacing:2px;color:var(--gold);margin-bottom:8px}
+.road-title{font-family:var(--display);font-size:1.2rem;letter-spacing:.5px;color:#fff;margin-bottom:12px}
+.road-list{list-style:none}
+.road-list li{font-family:var(--mono);font-size:.7rem;color:var(--text-mid);padding:5px 0;border-bottom:1px solid var(--border);display:flex;gap:8px;align-items:center}
+.road-list li:last-child{border-bottom:none}
+.road-list li::before{content:'›';color:var(--gold)}
 
 /* FOOTER */
-footer{background:var(--bg);border-top:1px solid var(--border);padding:3.5rem 5% 2rem;position:relative;z-index:2}
-.footer-top{max-width:1160px;margin:0 auto;display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:3rem;margin-bottom:3rem}
-.footer-brand p{color:var(--muted);font-size:.83rem;margin-top:.8rem;max-width:260px;line-height:1.7}
-.footer-col h4{font-family:'Unbounded',sans-serif;font-size:.72rem;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted2);margin-bottom:1.2rem}
-.footer-col ul{list-style:none}
-.footer-col li{margin-bottom:.7rem}
-.footer-col a{color:var(--muted);text-decoration:none;font-size:.83rem;transition:color .2s}
-.footer-col a:hover{color:var(--a1)}
-.footer-bottom{max-width:1160px;margin:0 auto;border-top:1px solid var(--border);padding-top:2rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem}
-.footer-bottom p{color:var(--muted2);font-size:.77rem}
-.socials{display:flex;gap:.6rem}
-.socials a{width:34px;height:34px;border:1px solid var(--border);border-radius:8px;display:flex;align-items:center;justify-content:center;color:var(--muted2);text-decoration:none;font-size:.83rem;transition:border-color .2s,color .2s,background .2s}
-.socials a:hover{border-color:var(--a1);color:var(--a1);background:rgba(0,212,255,.08)}
+footer{background:var(--bg2);border-top:1px solid var(--border);padding:48px 5% 28px}
+.foot-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:40px;margin-bottom:40px}
+@media(max-width:800px){.foot-grid{grid-template-columns:1fr 1fr}}
+.foot-brand{font-family:var(--display);font-size:1.6rem;letter-spacing:2px;color:var(--gold);margin-bottom:10px}
+.foot-desc{color:var(--text-dim);font-size:.88rem;line-height:1.8}
+.foot-h{font-family:var(--mono);font-size:.62rem;letter-spacing:2px;color:var(--text-dim);margin-bottom:14px;text-transform:uppercase}
+.foot-links{list-style:none;display:flex;flex-direction:column;gap:10px}
+.foot-links a{color:var(--text-dim);font-size:.88rem;text-decoration:none;transition:color .2s}
+.foot-links a:hover{color:var(--gold)}
+.foot-bottom{border-top:1px solid var(--border);padding-top:20px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;font-family:var(--mono);font-size:.62rem;color:var(--text-dim)}
 
-/* SCROLL REVEAL */
-.reveal{opacity:0;transform:translateY(32px);transition:opacity .7s ease,transform .7s ease}
-.reveal.visible{opacity:1;transform:translateY(0)}
-
-/* SCROLLBAR */
-::-webkit-scrollbar{width:5px}
-::-webkit-scrollbar-track{background:var(--bg)}
-::-webkit-scrollbar-thumb{background:rgba(0,212,255,.3);border-radius:10px}
-
-/* RESPONSIVE */
-@media(max-width:900px){
-  .founders-grid,.why-layout,.contact-layout{grid-template-columns:1fr}
-  .footer-top{grid-template-columns:1fr 1fr}
-}
-@media(max-width:640px){
-  .nav-links{display:none}.hamburger{display:block}
-  .hero-h1{letter-spacing:-1.5px}
-  .stats-band{flex-direction:column}
-  .stat-block{border-right:none;border-bottom:1px solid var(--border)}
-  .stat-block:last-child{border-bottom:none}
-  .fg-row{grid-template-columns:1fr}
-  .footer-top{grid-template-columns:1fr}
-  body{cursor:auto}
-  #cursor,#cursor-ring{display:none}
-}
+/* hidden platform filter */
+.p-card[data-cat].hidden{display:none}
+.job-card[data-type].hidden{display:none}
 </style>
 </head>
 <body>
 
-<div id="cursor"></div>
-<div id="cursor-ring"></div>
-<div class="grid-bg"></div>
-
-<!-- MOBILE MENU -->
-<div class="mobile-menu" id="mobileMenu">
-  <button class="mobile-close" onclick="closeMobile()"><i class="fa fa-times"></i></button>
-  <a href="#how" onclick="closeMobile()">How It Works</a>
-  <a href="#services" onclick="closeMobile()">Services</a>
-  <a href="#founders" onclick="closeMobile()">About</a>
-  <a href="#why" onclick="closeMobile()">Why Us</a>
-  <a href="#contact" onclick="closeMobile()">Contact</a>
-</div>
-
 <!-- NAV -->
 <nav>
-  <a class="logo" href="#hero"><div class="logo-dot"></div>NextGen<span>Tech Labs</span></a>
+  <a href="#hero" class="nav-logo">AI CAREER HUB<span>JOBS · SKILLS · PLATFORMS</span></a>
   <ul class="nav-links">
-    <li><a href="#how">How It Works</a></li>
-    <li><a href="#services">Services</a></li>
-    <li><a href="#founders">About</a></li>
-    <li><a href="#why">Why Us</a></li>
-    <li><a href="#contact" class="nav-cta">Book Free Session →</a></li>
+    <li><a href="#languages">LANGUAGES</a></li>
+    <li><a href="#jobs">AI JOBS</a></li>
+    <li><a href="#platforms">PLATFORMS</a></li>
+    <li><a href="#roadmap">ROADMAP</a></li>
   </ul>
-  <button class="hamburger" onclick="openMobile()"><i class="fa fa-bars"></i></button>
+  <a href="#platforms" class="nav-btn">→ FIND JOBS</a>
 </nav>
 
 <!-- HERO -->
 <section id="hero">
-  <div class="orb orb1"></div>
-  <div class="orb orb2"></div>
-  <div class="hero-chip"><div class="chip-dot"></div>Now accepting institutional partnerships worldwide</div>
-  <h1 class="hero-h1">
-    <span>Where Industry</span>
-    <span class="h1-g1">Meets Education.</span>
-    <span class="h1-g2">Skills That Matter.</span>
-  </h1>
-  <p class="hero-sub">NextGen Tech Labs deploys world-class industry professionals directly into your institution. Not theory. Not textbooks. Real practitioners who do this work every day — teaching the next generation to do the same.</p>
-  <div class="hero-btns">
-    <a href="#contact" class="btn-p"><i class="fa fa-calendar-check"></i> Book a Free Demo Session</a>
-    <a href="#services" class="btn-o"><i class="fa fa-layer-group"></i> Explore Programs</a>
-  </div>
-  <div class="ticker-wrap">
-    <div class="ticker">
-      <span class="ticker-item"><span class="d">◆</span>Cybersecurity &amp; Ethical Hacking</span>
-      <span class="ticker-item"><span class="d">◆</span>Artificial Intelligence &amp; ML</span>
-      <span class="ticker-item"><span class="d">◆</span>Data Analytics &amp; Visualization</span>
-      <span class="ticker-item"><span class="d">◆</span>Full-Stack Development</span>
-      <span class="ticker-item"><span class="d">◆</span>Digital Marketing &amp; Growth</span>
-      <span class="ticker-item"><span class="d">◆</span>Cloud Computing &amp; DevOps</span>
-      <span class="ticker-item"><span class="d">◆</span>Placement &amp; Career Readiness</span>
-      <span class="ticker-item"><span class="d">◆</span>Blockchain &amp; Web3</span>
-      <span class="ticker-item"><span class="d">◆</span>Cybersecurity &amp; Ethical Hacking</span>
-      <span class="ticker-item"><span class="d">◆</span>Artificial Intelligence &amp; ML</span>
-      <span class="ticker-item"><span class="d">◆</span>Data Analytics &amp; Visualization</span>
-      <span class="ticker-item"><span class="d">◆</span>Full-Stack Development</span>
-      <span class="ticker-item"><span class="d">◆</span>Digital Marketing &amp; Growth</span>
-      <span class="ticker-item"><span class="d">◆</span>Cloud Computing &amp; DevOps</span>
-      <span class="ticker-item"><span class="d">◆</span>Placement &amp; Career Readiness</span>
-      <span class="ticker-item"><span class="d">◆</span>Blockchain &amp; Web3</span>
+  <div class="hero-mesh"></div>
+  <div class="hero-dots"></div>
+  <div class="hero-content">
+    <div class="hero-badge"><span class="dot"></span> UPDATED 2025 · AI JOB MARKET GUIDE</div>
+    <h1>YOUR AI<br><span class="g">CAREER</span><br><span class="b">BLUEPRINT</span></h1>
+    <p class="hero-sub">Master the right languages, target the right jobs, and apply on the right platforms. Everything an aspiring AI developer needs — from ITI to FAANG, from internship to full-time.</p>
+    <div class="hero-pills">
+      <span class="pill hot">🔥 ML Engineer #1 Demand</span>
+      <span class="pill hot">⚡ ₹8L–₹40L Salary Range</span>
+      <span class="pill">Python Required</span>
+      <span class="pill">60+ Job Portals</span>
+      <span class="pill">Internship Portals</span>
+      <span class="pill">Govt Tech Jobs</span>
     </div>
+    <div class="hero-btns">
+      <a href="#jobs" class="btn-g">→ EXPLORE AI JOBS</a>
+      <a href="#platforms" class="btn-o">60+ PLATFORMS ↓</a>
+    </div>
+  </div>
+  <div class="hero-stats">
+    <div class="hstat"><span class="hstat-n">6</span><span class="hstat-l">LANGUAGES</span></div>
+    <div class="hstat"><span class="hstat-n">50+</span><span class="hstat-l">LIBRARIES</span></div>
+    <div class="hstat"><span class="hstat-n">20+</span><span class="hstat-l">AI JOB ROLES</span></div>
+    <div class="hstat"><span class="hstat-n">60+</span><span class="hstat-l">JOB PLATFORMS</span></div>
   </div>
 </section>
 
-<!-- STATS -->
-<div class="stats-band">
-  <div class="stat-block reveal"><span class="sn" data-target="1000" data-suffix="+">0</span><div class="sl">Students Achieved Their Dreams</div></div>
-  <div class="stat-block reveal"><span class="sn" data-target="80" data-suffix="+">0</span><div class="sl">Partner Institutions</div></div>
-  <div class="stat-block reveal"><span class="sn" data-target="25" data-suffix="+">0</span><div class="sl">Industry Trainers</div></div>
-  <div class="stat-block reveal"><span class="sn" data-target="92" data-suffix="%">0</span><div class="sl">Placement Improvement Rate</div></div>
-</div>
+<!-- TICKER -->
+<div class="ticker"><div class="ticker-inner" id="tick1"></div></div>
 
-<!-- HOW IT WORKS -->
-<section id="how">
-  <div class="container">
-    <div class="sec-tag reveal">Process</div>
-    <h2 class="reveal">Built for <span class="g1">Zero Effort</span><br/>on Your Side</h2>
-    <p class="sec-sub reveal">From the moment you reach out, we take over everything. Your only job is to give us a room and a batch.</p>
-    <div class="steps">
-      <div class="step reveal">
-        <div class="step-n">01</div>
-        <div class="step-ic">📋</div>
-        <h3>Share Your Requirement</h3>
-        <p>Tell us the topic, batch size, and preferred date. We respond within 24 hours with a curated trainer profile matched to your institution's level.</p>
-      </div>
-      <div class="step reveal">
-        <div class="step-n">02</div>
-        <div class="step-ic">🎯</div>
-        <h3>We Match the Expert</h3>
-        <p>Our team selects the best-fit industry professional — verified, experienced, and briefed on your students' background before they step in.</p>
-      </div>
-      <div class="step reveal">
-        <div class="step-n">03</div>
-        <div class="step-ic">⚡</div>
-        <h3>Workshop Delivered</h3>
-        <p>A high-impact, hands-on session at your campus. Real tools. Real scenarios. Students leave with practical knowledge and measurable confidence.</p>
-      </div>
-      <div class="step reveal">
-        <div class="step-n">04</div>
-        <div class="step-ic">📊</div>
-        <h3>Report &amp; Partnership</h3>
-        <p>You receive a detailed session report, student feedback summary, and a proposal for continued engagement. We become your long-term training partner.</p>
-      </div>
-    </div>
-  </div>
+<!-- LANGUAGES -->
+<section id="languages">
+  <div class="sec-label fi">AI LANGUAGES & LIBRARIES</div>
+  <h2 class="sec-title fi">Master These <span>Technologies</span></h2>
+  <p class="sec-desc fi">The languages and libraries that power AI tools, models, and products globally.</p>
+
+  <div class="lang-tabs fi" id="langTabs"></div>
+  <div id="langPanels"></div>
 </section>
 
-<!-- SERVICES -->
-<section id="services">
-  <div class="container">
-    <div class="sec-tag reveal">Programs</div>
-    <h2 class="reveal">Every Skill <span class="g1">Industry Demands</span></h2>
-    <p class="sec-sub reveal">Every session is delivered by a practitioner who does this work daily — not someone who only teaches it.</p>
-    <div class="svc-grid">
-      <div class="svc-card reveal">
-        <div class="svc-icon si1">🛡️</div>
-        <h3>Cybersecurity &amp; Ethical Hacking</h3>
-        <p>Penetration testing, vulnerability assessment, SOC fundamentals, and real-world attack simulation built for the next generation of security professionals.</p>
-        <div class="tags"><span class="tag">Burp Suite</span><span class="tag">Nmap</span><span class="tag">Metasploit</span><span class="tag">Wireshark</span><span class="tag">OWASP Top 10</span><span class="tag">Kali Linux</span></div>
-      </div>
-      <div class="svc-card reveal">
-        <div class="svc-icon si2">🤖</div>
-        <h3>Artificial Intelligence &amp; ML</h3>
-        <p>From Python fundamentals to model deployment — students build real AI systems. Includes generative AI, computer vision, and prompt engineering modules.</p>
-        <div class="tags"><span class="tag">Python</span><span class="tag">TensorFlow</span><span class="tag">Scikit-learn</span><span class="tag">LLMs</span><span class="tag">Computer Vision</span></div>
-      </div>
-      <div class="svc-card reveal">
-        <div class="svc-icon si3">📊</div>
-        <h3>Data Analytics &amp; Visualization</h3>
-        <p>Teaching students to transform raw data into boardroom-ready insights using the exact tools that top companies use every day.</p>
-        <div class="tags"><span class="tag">Power BI</span><span class="tag">Tableau</span><span class="tag">SQL</span><span class="tag">Python</span><span class="tag">Excel Advanced</span></div>
-      </div>
-      <div class="svc-card reveal">
-        <div class="svc-icon si4">💻</div>
-        <h3>Full-Stack Development</h3>
-        <p>End-to-end web application development bootcamps where students ship a live project by the end of the session. GitHub-first methodology throughout.</p>
-        <div class="tags"><span class="tag">React</span><span class="tag">Node.js</span><span class="tag">Django</span><span class="tag">REST APIs</span><span class="tag">GitHub</span></div>
-      </div>
-      <div class="svc-card reveal">
-        <div class="svc-icon si5">📣</div>
-        <h3>Digital Marketing &amp; Growth</h3>
-        <p>Performance marketing, SEO, social media strategy, and analytics — the skills startups and enterprises are actively hiring for right now.</p>
-        <div class="tags"><span class="tag">Google Ads</span><span class="tag">Meta Ads</span><span class="tag">SEO</span><span class="tag">Analytics</span><span class="tag">Email Marketing</span></div>
-      </div>
-      <div class="svc-card reveal">
-        <div class="svc-icon si6">🎤</div>
-        <h3>Placement &amp; Career Readiness</h3>
-        <p>Resume building, mock interviews, group discussion practice — delivered by HR professionals and senior engineers who have actively hired freshers.</p>
-        <div class="tags"><span class="tag">Mock Interviews</span><span class="tag">GD Prep</span><span class="tag">Resume Clinic</span><span class="tag">Communication</span></div>
-      </div>
-    </div>
-  </div>
+<!-- JOBS -->
+<section id="jobs">
+  <div class="sec-label fi">TARGET ROLES</div>
+  <h2 class="sec-title fi">AI Jobs to <span>Target</span></h2>
+  <p class="sec-desc fi">Real roles companies hire for. Filter by experience level, salary range, and domain.</p>
+  <div class="job-filters fi" id="jobFilters"></div>
+  <div class="jobs-grid fi" id="jobsGrid"></div>
 </section>
 
-<!-- FOUNDERS -->
-<section id="founders">
-  <div class="container">
-    <div class="sec-tag reveal">Leadership</div>
-    <h2 class="reveal">Built by <span class="g2">Practitioners,</span><br/>Not Professors</h2>
-    <p class="sec-sub reveal">Our founders have worked inside the industry, taught inside institutions, and understand the gap firsthand. That is what makes this different.</p>
-    <div class="mission-box reveal">
-      <div class="m-quote">"The world does not need more degrees.<br/>It needs people who can <span class="hl">actually do the work.</span><br/>We are here to make that happen — at scale."</div>
-      <p>NextGen Tech Labs was founded on a single belief: that the gap between what colleges teach and what companies need is not a small problem — it is a crisis. We exist to fix it by bringing the people who live and breathe this work directly into classrooms. Our vision is not bound by any region or geography. It is global — every institution, every student, every skill gap that stands between potential and opportunity.</p>
-    </div>
-    <div class="founders-grid">
-      <div class="founder-card reveal">
-        <div class="f-top">
-          <div class="f-av fa1">PM</div>
-          <div>
-            <div class="f-name">Prashant Mishra</div>
-            <div class="f-role">FOUNDER &amp; CEO · CYBERSECURITY</div>
-          </div>
-        </div>
-        <p>Prashant is a cybersecurity practitioner who has worked with C-DAC under MeitY (Government of India), conducted offensive and defensive security operations, and has helped over a thousand students transform their career trajectories. He served as Visiting Faculty in Cryptography and Network Security at SSCBS, University of Delhi, and currently leads cybersecurity training at NIIT Foundation. His philosophy is simple — stop teaching security from slides and start teaching it from real attack scenarios. NextGen Tech Labs was born from a frustration with the gap between what industry demands and what institutions deliver, and a conviction that the fix is entirely achievable.</p>
-        <div class="f-skills"><span class="f-skill">VAPT</span><span class="f-skill">Penetration Testing</span><span class="f-skill">SOC Operations</span><span class="f-skill">Malware Analysis</span><span class="f-skill">AI &amp; ML</span><span class="f-skill">CEH v13</span></div>
-        <div class="f-links">
-          <a href="https://linkedin.com/in/imprashantt" target="_blank" rel="noopener" class="f-link"><i class="fab fa-linkedin"></i> LinkedIn</a>
-          <a href="mailto:prashant.builds@gmail.com" class="f-link"><i class="fa fa-envelope"></i> Email</a>
-          <a href="https://wa.me/918511565780" target="_blank" class="f-link"><i class="fab fa-whatsapp"></i> WhatsApp</a>
-        </div>
-      </div>
-      <div class="founder-card reveal">
-        <div class="f-top">
-          <div class="f-av fa2">PS</div>
-          <div>
-            <div class="f-name">Prashant Sharma</div>
-            <div class="f-role">CO-FOUNDER &amp; COO · OPERATIONS &amp; GROWTH</div>
-          </div>
-        </div>
-        <p>Prashant Sharma brings seven years of institutional partnership and operations leadership to NextGen Tech Labs. Before co-founding the company, he led strategic partnerships for EdTech platforms across South and Southeast Asia, working directly with 40+ universities to restructure their industry exposure frameworks. He holds an MBA in Strategy from a premier institution and has previously scaled training operations from a 3-person founding team to a 50-member organization with multi-country presence. Prashant's conviction is straightforward: most institutions have the intent but lack the infrastructure to bridge the industry gap — and that is precisely the problem NextGen Tech Labs was engineered to solve, at any scale.</p>
-        <div class="f-skills"><span class="f-skill">Strategic Partnerships</span><span class="f-skill">EdTech Operations</span><span class="f-skill">Institutional Sales</span><span class="f-skill">Team Scaling</span><span class="f-skill">MBA Strategy</span></div>
-        <div class="f-links">
-	  <a href="https://www.linkedin.com/in/prashantt-sharmaa/" target="_blank" rel="noopener" class="f-link"><i class="fab fa-linkedin"></i> LinkedIn</a>
-          <a href="mailto:prashantsharma11aug@gmail.com" class="f-link"><i class="fa fa-envelope"></i> Email</a>
-          <a href="https://wa.me/917027181375" target="_blank" class="f-link"><i class="fab fa-whatsapp"></i> WhatsApp</a>
-        </div>
-      </div>
-    </div>
-  </div>
+<!-- PLATFORMS -->
+<section id="platforms">
+  <div class="sec-label fi">60+ PLATFORMS</div>
+  <h2 class="sec-title fi">Where to <span>Apply</span></h2>
+  <p class="sec-desc fi">Job boards, internship portals, government tech platforms — click any card to see the full how-to-apply guide.</p>
+  <div class="platform-cats fi" id="platCats"></div>
+  <div class="platforms-grid fi" id="platformsGrid"></div>
 </section>
 
-<!-- WHY US -->
-<section id="why">
-  <div class="container">
-    <div class="sec-tag reveal">Differentiation</div>
-    <h2 class="reveal">Why Institutions <span class="g3">Choose Us</span></h2>
-    <p class="sec-sub reveal">Every competitor sends trainers. We send outcomes. Here is the operational difference.</p>
-    <div class="why-layout">
-      <div class="reveal">
-        <div class="why-panel">
-          <div class="why-panel-title">Performance at a Glance</div>
-          <div class="metric2"><div class="metric2-left"><div class="metric2-icon">🎓</div><div class="metric2-label">Students Transformed</div></div><div class="metric2-val">1,000+</div></div>
-          <div class="metric2"><div class="metric2-left"><div class="metric2-icon">🏛️</div><div class="metric2-label">Partner Institutions</div></div><div class="metric2-val">80+</div></div>
-          <div class="metric2"><div class="metric2-left"><div class="metric2-icon">⭐</div><div class="metric2-label">Avg. Session Rating</div></div><div class="metric2-val">4.8 / 5</div></div>
-          <div class="metric2"><div class="metric2-left"><div class="metric2-icon">📈</div><div class="metric2-label">Placement Improvement</div></div><div class="metric2-val">92%</div></div>
-          <div class="metric2"><div class="metric2-left"><div class="metric2-icon">⏱️</div><div class="metric2-label">Booking to Delivery</div></div><div class="metric2-val">48 hrs</div></div>
-          <div class="metric2"><div class="metric2-left"><div class="metric2-icon">🔁</div><div class="metric2-label">Institutions Renewed</div></div><div class="metric2-val">94%</div></div>
-        </div>
-      </div>
-      <ul class="why-list reveal">
-        <li class="why-item"><div class="why-check"><i class="fa fa-check"></i></div><div><h4>Real practitioners, not career trainers</h4><p>Every professional we deploy has active industry experience. They solve real problems during the week and teach from that experience when they step into your classrooms.</p></div></li>
-        <li class="why-item"><div class="why-check"><i class="fa fa-check"></i></div><div><h4>Zero administrative burden on your institution</h4><p>We handle trainer selection, logistics, content alignment, and post-session documentation. You provide a room and a batch — we handle everything else.</p></div></li>
-        <li class="why-item"><div class="why-check"><i class="fa fa-check"></i></div><div><h4>NAAC-aligned session reports included</h4><p>Every workshop generates a professional report that institutions can directly use for NAAC, NBA, or NIRF documentation and audit requirements.</p></div></li>
-        <li class="why-item"><div class="why-check"><i class="fa fa-check"></i></div><div><h4>First demo session at absolutely no cost</h4><p>No contracts. No payment. No commitment. Let your students experience a full session and then decide. We earn your trust before we earn your money.</p></div></li>
-        <li class="why-item"><div class="why-check"><i class="fa fa-check"></i></div><div><h4>Annual retainer plans with measurable outcomes</h4><p>Institutions on retainer receive regular sessions, dedicated trainer assignment, and a semester-end placement impact report to demonstrate ROI.</p></div></li>
-        <li class="why-item"><div class="why-check"><i class="fa fa-check"></i></div><div><h4>Fully customized to your curriculum and goals</h4><p>Every session is briefed against your department, semester, and student profile. We don't send a generic presentation — we build around your institution.</p></div></li>
-      </ul>
-    </div>
-  </div>
-</section>
-
-<!-- CONTACT -->
-<section id="contact">
-  <div class="container">
-    <div class="sec-tag reveal">Contact</div>
-    <h2 class="reveal">Start with a <span class="g1">Free Session.</span><br/>No Commitment.</h2>
-    <p class="sec-sub reveal">Fill the form and we respond within 24 hours with a confirmed trainer profile and available dates for your institution.</p>
-    <div class="contact-layout">
-      <div>
-        <div class="contact-left reveal">
-          <h3>Reach Us Directly</h3>
-          <p>Prefer a conversation before filling a form? Call or message us on WhatsApp. We respond fast and personally.</p>
-        </div>
-        <a href="https://wa.me/918511565780" target="_blank" class="c-item reveal">
-          <div class="c-icon" style="background:rgba(37,211,102,0.1);border-color:rgba(37,211,102,0.25);color:#25D366"><i class="fab fa-whatsapp"></i></div>
-          <div class="c-text"><strong>+91 85115 65780</strong><small>WhatsApp — fastest response</small></div>
-        </a>
-        <a href="tel:+918511565780" class="c-item reveal">
-          <div class="c-icon"><i class="fa fa-phone"></i></div>
-          <div class="c-text"><strong>+91 85115 65780</strong><small>Call — Mon to Sat, 10am–7pm</small></div>
-        </a>
-        <a href="mailto:prashant.builds@gmail.com" class="c-item reveal">
-          <div class="c-icon"><i class="fa fa-envelope"></i></div>
-          <div class="c-text"><strong>prashant.builds@gmail.com</strong><small>Email — reply within 12 hours</small></div>
-        </a>
-        <a href="https://linkedin.com/in/imprashantt" target="_blank" class="c-item reveal">
-          <div class="c-icon" style="background:rgba(0,119,181,0.1);border-color:rgba(0,119,181,0.3);color:#0077b5"><i class="fab fa-linkedin-in"></i></div>
-          <div class="c-text"><strong>linkedin.com/in/imprashantt</strong><small>Connect with our CEO</small></div>
-        </a>
-      </div>
-      <div class="cf reveal">
-        <div class="cf-title">📋 Request a Free Workshop</div>
-        <div class="cf-sub">Takes 60 seconds. Clicking submit opens WhatsApp with your details pre-filled — just tap send and Prashant will confirm within 24 hours.</div>
-        <div id="cfWrap">
-          <div class="fg-row">
-            <div class="fg"><label>Your Name *</label><input type="text" id="f_name" placeholder="Dr. / Prof. / Mr. Name"/></div>
-            <div class="fg"><label>Designation *</label><input type="text" id="f_desig" placeholder="Principal / HOD / T&amp;P Officer"/></div>
-          </div>
-          <div class="fg"><label>Institution Name *</label><input type="text" id="f_inst" placeholder="Full institution name"/></div>
-          <div class="fg-row">
-            <div class="fg"><label>Phone / WhatsApp *</label><input type="tel" id="f_phone" placeholder="+91 XXXXX XXXXX"/></div>
-            <div class="fg"><label>Email</label><input type="email" id="f_email" placeholder="your@email.com"/></div>
-          </div>
-          <div class="fg">
-            <label>Program of Interest *</label>
-            <select id="f_topic">
-              <option value="">— Select a program —</option>
-              <option>Cybersecurity &amp; Ethical Hacking</option>
-              <option>Artificial Intelligence &amp; Machine Learning</option>
-              <option>Data Analytics &amp; Visualization</option>
-              <option>Full-Stack Web Development</option>
-              <option>Digital Marketing &amp; Growth</option>
-              <option>Placement &amp; Career Readiness</option>
-              <option>Cloud Computing &amp; DevOps</option>
-              <option>Multiple Programs / Annual Plan</option>
-              <option>Not sure — need guidance</option>
-            </select>
-          </div>
-          <div class="fg-row">
-            <div class="fg"><label>Expected Batch Size</label><input type="text" id="f_batch" placeholder="e.g. 60 students"/></div>
-            <div class="fg"><label>Preferred Date</label><input type="date" id="f_date"/></div>
-          </div>
-          <div class="fg"><label>Additional Requirements</label><textarea id="f_msg" placeholder="Any specific topics, student level, or scheduling needs..."></textarea></div>
-          <button class="wa-btn" onclick="sendToWA()"><i class="fab fa-whatsapp"></i>Send via WhatsApp — Instant Confirmation</button>
-        </div>
-        <div class="form-ok" id="cfOk">
-          <span class="ok-icon"><i class="fa fa-check-circle"></i></span>
-          <h3>WhatsApp Opened!</h3>
-          <p>Your details are pre-filled in WhatsApp. Just tap Send — Prashant will confirm your free session within 24 hours.</p>
-        </div>
-      </div>
-    </div>
-  </div>
+<!-- ROADMAP -->
+<section id="roadmap">
+  <div class="sec-label fi">LEARNING PATH</div>
+  <h2 class="sec-title fi">Your <span>Roadmap</span></h2>
+  <p class="sec-desc fi">Follow this 6-phase journey from absolute beginner to production AI engineer.</p>
+  <div class="road-grid fi" id="roadmapGrid"></div>
 </section>
 
 <!-- FOOTER -->
 <footer>
-  <div class="footer-top">
-    <div class="footer-brand">
-      <a class="logo" href="#hero"><div class="logo-dot"></div>NextGen<span>Tech Labs</span></a>
-      <p>Bridging the gap between industry and education. Real professionals. Real skills. Real outcomes — for every institution, everywhere.</p>
+  <div class="foot-grid">
+    <div>
+      <div class="foot-brand">AI CAREER HUB</div>
+      <p class="foot-desc">Complete guide to AI careers — languages, jobs, and 60+ platforms for Indian developers aiming at AI & tech roles in 2025.</p>
     </div>
-    <div class="footer-col">
-      <h4>Company</h4>
-      <ul>
-        <li><a href="#how">How It Works</a></li>
-        <li><a href="#services">Our Programs</a></li>
-        <li><a href="#founders">About Us</a></li>
-        <li><a href="#why">Why Choose Us</a></li>
+    <div>
+      <div class="foot-h">Languages</div>
+      <ul class="foot-links">
+        <li><a href="#languages">Python</a></li><li><a href="#languages">JavaScript</a></li>
+        <li><a href="#languages">R Language</a></li><li><a href="#languages">Julia</a></li>
+        <li><a href="#languages">C / C++</a></li><li><a href="#languages">Scala</a></li>
       </ul>
     </div>
-    <div class="footer-col">
-      <h4>Programs</h4>
-      <ul>
-        <li><a href="#services">Cybersecurity</a></li>
-        <li><a href="#services">AI &amp; ML</a></li>
-        <li><a href="#services">Data Analytics</a></li>
-        <li><a href="#services">Full-Stack Dev</a></li>
+    <div>
+      <div class="foot-h">Job Types</div>
+      <ul class="foot-links">
+        <li><a href="#jobs">ML Engineer</a></li><li><a href="#jobs">Data Scientist</a></li>
+        <li><a href="#jobs">AI Researcher</a></li><li><a href="#jobs">MLOps Engineer</a></li>
+        <li><a href="#jobs">NLP Engineer</a></li><li><a href="#jobs">AI Internship</a></li>
       </ul>
     </div>
-    <div class="footer-col">
-      <h4>Contact</h4>
-      <ul>
-        <li><a href="https://wa.me/918511565780" target="_blank">WhatsApp Us</a></li>
-        <li><a href="tel:+918511565780">Call Us</a></li>
-        <li><a href="mailto:prashant.builds@gmail.com">Email Us</a></li>
-        <li><a href="https://linkedin.com/in/imprashantt" target="_blank">LinkedIn</a></li>
+    <div>
+      <div class="foot-h">Platforms</div>
+      <ul class="foot-links">
+        <li><a href="#platforms">LinkedIn</a></li><li><a href="#platforms">Internshala</a></li>
+        <li><a href="#platforms">Naukri</a></li><li><a href="#platforms">NASSCOM</a></li>
+        <li><a href="#platforms">Govt Portals</a></li><li><a href="#platforms">Global Boards</a></li>
       </ul>
     </div>
   </div>
-  <div class="footer-bottom">
-    <p>© 2025 NextGen Tech Labs. All rights reserved. Empowering institutions worldwide.</p>
-    <div class="socials">
-      <a href="https://linkedin.com/in/imprashantt" target="_blank"><i class="fab fa-linkedin-in"></i></a>
-      <a href="https://wa.me/918511565780" target="_blank"><i class="fab fa-whatsapp"></i></a>
-      <a href="mailto:prashant.builds@gmail.com"><i class="fa fa-envelope"></i></a>
-    </div>
+  <div class="foot-bottom">
+    <span>© 2025 AI Career Hub · Built for Indian AI Developers</span>
+    <span style="color:var(--gold)">PYTHON · PYTORCH · LANGCHAIN · TRANSFORMERS</span>
   </div>
 </footer>
 
+<!-- MODAL -->
+<div class="modal-overlay" id="modalOverlay" onclick="closeModalOutside(event)">
+  <div class="modal" id="modal">
+    <div class="modal-head">
+      <div class="modal-title-row">
+        <div class="modal-emoji" id="mEmoji"></div>
+        <div><div class="modal-name" id="mName"></div><div class="modal-sub" id="mSub"></div></div>
+      </div>
+      <button class="modal-close" onclick="closeModal()">✕</button>
+    </div>
+    <div class="modal-body" id="mBody"></div>
+    <div class="modal-footer">
+      <a class="mf-btn mf-primary" id="mLink" href="#" target="_blank">→ OPEN PLATFORM</a>
+      <button class="mf-btn mf-secondary" onclick="closeModal()">✕ CLOSE</button>
+    </div>
+  </div>
+</div>
+
 <script>
-// CURSOR
-const cur=document.getElementById('cursor'),ring=document.getElementById('cursor-ring');
-let mx=0,my=0,rx=0,ry=0;
-document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cur.style.left=mx+'px';cur.style.top=my+'px'});
-(function animR(){rx+=(mx-rx)*.12;ry+=(my-ry)*.12;ring.style.left=rx+'px';ring.style.top=ry+'px';requestAnimationFrame(animR)})();
-document.querySelectorAll('a,button,.svc-card,.founder-card,.step,.stat-block').forEach(el=>{
-  el.addEventListener('mouseenter',()=>{cur.style.width='20px';cur.style.height='20px';ring.style.width='54px';ring.style.height='54px'});
-  el.addEventListener('mouseleave',()=>{cur.style.width='12px';cur.style.height='12px';ring.style.width='36px';ring.style.height='36px'});
-});
+// ─── DATA ─────────────────────────────────────────────────────────────────────
 
-// NAV SCROLL
-window.addEventListener('scroll',()=>{document.querySelector('nav').style.padding=window.scrollY>60?'.7rem 5%':'1rem 5%'});
+const LANGS = [
+  {
+    id:'py', label:'🐍 Python', icon:'🐍', color:'#3b82f6',
+    title:'Python', sub:'THE #1 AI LANGUAGE',
+    about:'Python dominates AI/ML with the richest ecosystem ever built. Simple syntax, massive community, and libraries for every AI need. Every ML engineer, data scientist, and AI researcher starts here.',
+    chips:['#1 AI Language','Most Libraries','Beginner Friendly','GPU Support','Full Stack AI'],
+    libs:[
+      {name:'TensorFlow',ver:'v2.17',icon:'🔶',desc:'Google\'s production-grade deep learning framework. Powers neural networks, computer vision, NLP, and large-scale ML systems.',for:'Deep Learning · Neural Nets · Production AI · Mobile',cmd:'pip install tensorflow',stars:'185K ★',lvl:'m'},
+      {name:'PyTorch',ver:'v2.4',icon:'🔥',desc:'Meta\'s research-favorite framework with dynamic computation graphs. Most popular in academia and for building LLMs and vision models.',for:'Research · LLMs · Computer Vision · Custom Models',cmd:'pip install torch torchvision',stars:'82K ★',lvl:'m'},
+      {name:'Scikit-learn',ver:'v1.5',icon:'🔬',desc:'The best classical ML library. Consistent API for 100+ algorithms — SVM, Random Forest, KNN, clustering, preprocessing, pipelines.',for:'Classical ML · Pipelines · Preprocessing · Evaluation',cmd:'pip install scikit-learn',stars:'59K ★',lvl:'b'},
+      {name:'Keras',ver:'v3.5',icon:'🧠',desc:'High-level neural network API supporting TF, PyTorch, and JAX backends. Fastest way to build and prototype deep learning models.',for:'NN Prototyping · CNNs · RNNs · Transfer Learning',cmd:'pip install keras',stars:'61K ★',lvl:'b'},
+      {name:'Transformers (HF)',ver:'v4.44',icon:'🤗',desc:'Hugging Face\'s library with 500K+ pretrained models — GPT, BERT, LLaMA, Whisper, Stable Diffusion. Core for modern NLP and GenAI.',for:'LLMs · NLP · Text Generation · Image Generation',cmd:'pip install transformers',stars:'132K ★',lvl:'m'},
+      {name:'NumPy',ver:'v2.1',icon:'🔢',desc:'Foundation of all scientific Python. N-dimensional arrays, matrix math, linear algebra, Fourier transforms. Every ML library uses it.',for:'Arrays · Linear Algebra · Numerical Math · Tensors',cmd:'pip install numpy',stars:'27K ★',lvl:'b'},
+      {name:'Pandas',ver:'v2.2',icon:'🐼',desc:'Data manipulation powerhouse. DataFrames for structured data, CSV/JSON/SQL I/O, time series. All AI projects start here.',for:'Data Cleaning · EDA · DataFrames · ETL Pipelines',cmd:'pip install pandas',stars:'43K ★',lvl:'b'},
+      {name:'LangChain',ver:'v0.3',icon:'⛓️',desc:'Framework for LLM-powered apps. Chains, agents, RAG, memory, vector search. The standard for building AI assistants and chatbots.',for:'LLM Apps · RAG · AI Agents · Chatbots · Tool Use',cmd:'pip install langchain',stars:'90K ★',lvl:'m'},
+      {name:'OpenCV',ver:'v4.10',icon:'👁️',desc:'2,500+ computer vision algorithms. Image processing, object detection, face recognition, video analysis, camera calibration.',for:'Computer Vision · Object Detection · Video · Face AI',cmd:'pip install opencv-python',stars:'78K ★',lvl:'m'},
+      {name:'XGBoost',ver:'v2.1',icon:'🚀',desc:'Industry-winning gradient boosting. Top choice for tabular data competitions (Kaggle) and production ML with structured data.',for:'Tabular Data · Kaggle · Classification · Regression',cmd:'pip install xgboost lightgbm',stars:'26K ★',lvl:'m'},
+      {name:'JAX',ver:'v0.4',icon:'⚡',desc:'Google\'s NumPy + autograd + XLA compilation. Used by DeepMind for research. Hardware-accelerated scientific computing.',for:'Research · TPU/GPU · Custom Training · Scientific ML',cmd:'pip install jax jaxlib',stars:'30K ★',lvl:'a'},
+      {name:'FastAPI',ver:'v0.115',icon:'🌐',desc:'Build AI APIs at lightning speed. The standard for serving ML models in production. Async, typed, auto-documentation included.',for:'AI API · Model Serving · REST Backend · Deployment',cmd:'pip install fastapi uvicorn',stars:'78K ★',lvl:'b'},
+    ]
+  },
+  {
+    id:'js', label:'🟨 JavaScript', icon:'🟨', color:'#f59e0b',
+    title:'JavaScript / TS', sub:'AI IN THE BROWSER',
+    about:'JavaScript brings AI directly to the browser and Node.js. With TensorFlow.js and Transformers.js you run ML models client-side. TypeScript adds type safety for large AI app codebases.',
+    chips:['Browser AI','No Server Needed','Node.js','TypeScript','Real-time Inference'],
+    libs:[
+      {name:'TensorFlow.js',ver:'v4.21',icon:'🔶',desc:'Run TensorFlow models in browser or Node.js. Train from scratch or convert Python TF models. WebGL-accelerated inference.',for:'Browser ML · Real-time AI · Client-side Inference',cmd:'npm install @tensorflow/tfjs',stars:'18K ★',lvl:'m'},
+      {name:'Transformers.js',ver:'v3.0',icon:'🤗',desc:'Hugging Face transformers running 100% in browser via ONNX. NLP, speech, vision — all offline without a server.',for:'Browser NLP · Offline AI · ONNX · Text/Audio Tasks',cmd:'npm install @xenova/transformers',stars:'12K ★',lvl:'m'},
+      {name:'LangChain.js',ver:'v0.3',icon:'⛓️',desc:'Full LangChain port for JS/TS. Build LLM apps, RAG systems, and AI agents in Node.js or Next.js.',for:'Node.js LLM · Chatbots · RAG · OpenAI/Anthropic',cmd:'npm install langchain',stars:'14K ★',lvl:'m'},
+      {name:'ml5.js',ver:'v1.0',icon:'🧮',desc:'Beginner-friendly ML in the browser. Pose detection, image classification, sound classification — few lines of code.',for:'Beginner ML · Creative AI · Pose · Sketch Recognition',cmd:'npm install ml5',stars:'6.5K ★',lvl:'b'},
+      {name:'Brain.js',ver:'v2.0',icon:'🧠',desc:'GPU-accelerated neural networks in JS. Simple API for feedforward, recurrent, and LSTM networks.',for:'Neural Nets · Node.js · Browser Training · Time Series',cmd:'npm install brain.js',stars:'14K ★',lvl:'b'},
+      {name:'OpenAI SDK (JS)',ver:'v4.52',icon:'🤖',desc:'Official OpenAI client for Node.js. GPT-4, DALL·E, Whisper, Embeddings — all with TypeScript types.',for:'GPT-4 · DALL·E · Whisper · Embeddings · Streaming',cmd:'npm install openai',stars:'9K ★',lvl:'b'},
+    ]
+  },
+  {
+    id:'r', label:'📊 R', icon:'📊', color:'#ef4444',
+    title:'R Language', sub:'STATISTICS & RESEARCH AI',
+    about:'R is the statistician\'s language. Unmatched for statistical analysis, biostatistics, econometrics, and academic AI research. CRAN hosts 20,000+ packages covering every statistical method.',
+    chips:['Statistical AI','Research Grade','Bioinformatics','CRAN 20K+ Packages','Visualization'],
+    libs:[
+      {name:'tidyverse',ver:'v2.0',icon:'📦',desc:'The essential R data science toolkit: ggplot2 (visualization), dplyr (data wrangling), tidyr (reshaping), readr (import). Must-have.',for:'Data Wrangling · Visualization · ETL · EDA in R',cmd:'install.packages("tidyverse")',stars:'Core R pkg',lvl:'b'},
+      {name:'tidymodels',ver:'v1.2',icon:'🤖',desc:'Modern unified ML framework for R. Replaces caret. Consistent API for 200+ models, preprocessing, resampling, tuning.',for:'ML Pipelines · Cross-validation · Hyperparameter Tuning',cmd:'install.packages("tidymodels")',stars:'2K ★',lvl:'m'},
+      {name:'torch (R)',ver:'v0.13',icon:'🔥',desc:'Full PyTorch bindings for R. Define tensors, build neural networks, train with GPU — all in native R code.',for:'Deep Learning · Custom Models · GPU · Neural Nets in R',cmd:'install.packages("torch")',stars:'900 ★',lvl:'a'},
+      {name:'randomForest',ver:'v4.7',icon:'🌲',desc:'The classic random forest implementation. Ensemble of decision trees for classification and regression. Battle-tested in production.',for:'Classification · Regression · Feature Importance',cmd:'install.packages("randomForest")',stars:'CRAN classic',lvl:'b'},
+    ]
+  },
+  {
+    id:'julia', label:'🔮 Julia', icon:'🔮', color:'#a855f7',
+    title:'Julia', sub:'HIGH-PERFORMANCE SCIENTIFIC AI',
+    about:'Julia solves the "two-language problem" — Python-ease with C-like speed. Beloved in scientific computing, simulations, and high-performance ML. Growing in quantitative finance and physics-based AI.',
+    chips:['JIT Compiled','Near C Speed','Scientific ML','Differentiable','HPC Ready'],
+    libs:[
+      {name:'Flux.jl',ver:'v0.14',icon:'🌊',desc:'Julia\'s primary deep learning library. Differentiable programming, GPU/TPU support, full customizability for novel architectures.',for:'Deep Learning · Custom Architectures · Scientific ML',cmd:'] add Flux',stars:'4.4K ★',lvl:'a'},
+      {name:'MLJ.jl',ver:'v0.20',icon:'🤖',desc:'Julia\'s unified ML framework like scikit-learn. 200+ models, consistent API, pipelines, model composition.',for:'Classical ML · AutoML · Pipelines · Model Evaluation',cmd:'] add MLJ',stars:'1.8K ★',lvl:'m'},
+      {name:'Lux.jl',ver:'v0.5',icon:'✨',desc:'Modern neural network library for Julia. Explicit parameter handling, composable layers, fully differentiable. Research-grade.',for:'Research DL · Explicit NNs · Scientific AI',cmd:'] add Lux',stars:'600 ★',lvl:'a'},
+    ]
+  },
+  {
+    id:'cpp', label:'⚙️ C/C++', icon:'⚙️', color:'#06b6d4',
+    title:'C / C++', sub:'AI ENGINES & EDGE INFERENCE',
+    about:'C++ powers the engines that run AI. TensorFlow and PyTorch are C++ at their core. Used for model inference on edge devices, game AI, robotics, autonomous vehicles, and ultra-low-latency systems.',
+    chips:['Fastest Execution','Edge AI','Robotics','Engine Core','Embedded AI'],
+    libs:[
+      {name:'ONNX Runtime',ver:'v1.19',icon:'🧩',desc:'Microsoft\'s cross-platform inference engine. Run any ML model (TF, PyTorch, sklearn) at maximum speed in C++, Python, C#, Java.',for:'Production Inference · Edge Deployment · Optimization',cmd:'pip install onnxruntime',stars:'14K ★',lvl:'a'},
+      {name:'llama.cpp',ver:'latest',icon:'🦙',desc:'Run LLaMA, Mistral, Gemma on CPU/GPU in C++. Backbone of Ollama and LM Studio. Enables local LLMs on consumer hardware.',for:'Local LLM · CPU AI · Quantized Models · Low-resource',cmd:'pip install llama-cpp-python',stars:'65K ★',lvl:'a'},
+      {name:'TensorRT',ver:'v10',icon:'⚡',desc:'NVIDIA\'s optimization SDK for deep learning inference. Maximizes throughput and minimizes latency on NVIDIA GPUs.',for:'GPU Inference · NVIDIA · Autonomous Vehicles · Speed',cmd:'pip install tensorrt',stars:'10K ★',lvl:'a'},
+      {name:'OpenCV (C++)',ver:'v4.10',icon:'👁️',desc:'Full computer vision library in C++. Robotics perception, real-time video, autonomous vehicle vision, embedded systems.',for:'Robotics Vision · Real-time · Embedded · Autonomous',cmd:'apt install libopencv-dev',stars:'78K ★',lvl:'m'},
+    ]
+  },
+  {
+    id:'scala', label:'🔴 Scala', icon:'🔴', color:'#f97316',
+    title:'Scala / Java', sub:'BIG DATA & DISTRIBUTED AI',
+    about:'Scala powers Big Data AI via Apache Spark. When you need AI on terabytes of data distributed across clusters, Scala + Spark is the gold standard. Java is used for enterprise AI systems.',
+    chips:['Distributed ML','Apache Spark','Petabyte Scale','JVM Ecosystem','Enterprise'],
+    libs:[
+      {name:'Apache Spark MLlib',ver:'v3.5',icon:'✨',desc:'Distributed ML on Apache Spark. Classification, regression, clustering, collaborative filtering at petabyte scale across clusters.',for:'Big Data ML · Distributed Training · PySpark · Scale',cmd:'pip install pyspark',stars:'39K ★',lvl:'a'},
+      {name:'Deeplearning4j',ver:'v1.0',icon:'🌊',desc:'Enterprise deep learning for Java/Scala JVM. Distributed training, Android support, for teams in JVM infrastructure.',for:'Java DL · Android AI · JVM · Enterprise Systems',cmd:'# Maven: deeplearning4j-core',stars:'13K ★',lvl:'a'},
+      {name:'Weka',ver:'v3.9',icon:'🔬',desc:'Classic Java ML workbench with GUI and API. Data preprocessing, classification, regression, clustering. Great for Java developers.',for:'Java ML · GUI ML Tool · Education · Rapid Prototype',cmd:'# Download from weka.sourceforge.io',stars:'CTAN classic',lvl:'b'},
+    ]
+  }
+];
 
-// MOBILE MENU
-function openMobile(){document.getElementById('mobileMenu').classList.add('open')}
-function closeMobile(){document.getElementById('mobileMenu').classList.remove('open')}
+const JOBS = [
+  {title:'ML Engineer',co:'Tech / Product Companies',icon:'🤖',type:'fulltime',level:'mid',sal:'₹8L – ₹25L/yr',desc:'Build, train, and deploy machine learning models at scale. Design ML pipelines, optimize model performance, and integrate predictions into products.',tags:['Python','PyTorch','MLOps','Docker','SQL'],color:'#3b82f6'},
+  {title:'Data Scientist',co:'Finance / E-commerce / Health',icon:'📊',type:'fulltime',level:'entry',sal:'₹6L – ₹18L/yr',desc:'Extract insights from data using statistical analysis and ML. Build dashboards, A/B tests, customer segmentation, and predictive models.',tags:['Python','R','SQL','Tableau','Statistics'],color:'#10b981'},
+  {title:'AI/ML Research Scientist',co:'Google / Meta / OpenAI / Labs',icon:'🔬',type:'fulltime',level:'senior',sal:'₹30L – ₹1Cr+/yr',desc:'Push the frontiers of AI research. Publish papers, develop novel architectures, work on foundation models and next-gen AI systems.',tags:['PyTorch','JAX','Math','PhD preferred','LLMs'],color:'#a78bfa'},
+  {title:'NLP Engineer',co:'Fintech / SaaS / AI Startups',icon:'💬',type:'fulltime',level:'mid',sal:'₹10L – ₹28L/yr',desc:'Build language understanding systems — chatbots, information extraction, sentiment analysis, summarization, and LLM-powered features.',tags:['Transformers','BERT','GPT','Python','LangChain'],color:'#f59e0b'},
+  {title:'Computer Vision Engineer',co:'Automotive / Healthcare / Retail',icon:'👁️',type:'fulltime',level:'mid',sal:'₹9L – ₹24L/yr',desc:'Build vision systems for object detection, medical imaging, autonomous vehicles, quality inspection, and AR/VR applications.',tags:['OpenCV','YOLO','PyTorch','C++','CUDA'],color:'#06b6d4'},
+  {title:'MLOps / AI Infrastructure Eng.',co:'Startups / Enterprises',icon:'⚙️',type:'fulltime',level:'mid',sal:'₹10L – ₹30L/yr',desc:'Bridge ML and DevOps. Build CI/CD pipelines for models, manage feature stores, monitor drift, ensure reliable model deployment at scale.',tags:['Kubernetes','Docker','MLflow','Airflow','AWS'],color:'#f97316'},
+  {title:'Data Engineer',co:'All Industries',icon:'🔧',type:'fulltime',level:'entry',sal:'₹5L – ₹16L/yr',desc:'Build data pipelines, warehouses, and lakes that feed AI models. ETL, Spark, SQL databases, and streaming with Kafka.',tags:['Spark','SQL','Kafka','Airflow','Python'],color:'#84cc16'},
+  {title:'AI Product Manager',co:'Tech Companies',icon:'🎯',type:'fulltime',level:'senior',sal:'₹15L – ₹45L/yr',desc:'Define AI product vision, work with engineers and researchers, translate user needs into AI features. No coding required but ML literacy essential.',tags:['Product','Strategy','Data Literacy','Roadmaps'],color:'#ec4899'},
+  {title:'AI/ML Intern',co:'Startups & MNCs',icon:'🎓',type:'intern',level:'entry',sal:'₹10K – ₹50K/month',desc:'3–6 month internship. Work on real ML projects — data cleaning, model training, API integration. Best way to enter the industry.',tags:['Python','ML Basics','Jupyter','Git','Kaggle'],color:'#34d399'},
+  {title:'Research Intern (AI Lab)',co:'IITs / ISRO / DRDO / CSIR',icon:'🧪',type:'intern',level:'entry',sal:'₹15K – ₹25K/month',desc:'Work at research institutions on cutting-edge AI — NLP, vision, robotics, or scientific computing. Excellent for postgrad applications.',tags:['Python','Research','Paper Writing','Maths','GitHub'],color:'#818cf8'},
+  {title:'Data Science Intern',co:'Analytics & Consulting',icon:'📈',type:'intern',level:'entry',sal:'₹8K – ₹30K/month',desc:'Support data teams with analysis, visualization, and basic ML. Great entry point for freshers with Python and SQL skills.',tags:['Python','SQL','Excel','Pandas','Tableau'],color:'#22d3ee'},
+  {title:'Govt. AI/Tech Officer',co:'NIC / ISRO / DRDO / NASSCOM',icon:'🏛️',type:'govt',level:'entry',sal:'₹35K – ₹85K/month',desc:'Government roles for AI and tech professionals. Work on national digital infrastructure, defence AI, space tech, and eGovernance systems.',tags:['UPSC','GATE','Python','System Design','Security'],color:'#f0c040'},
+  {title:'Junior Data Analyst',co:'Banks / Insurance / FMCG',icon:'🗃️',type:'fulltime',level:'entry',sal:'₹3.5L – ₹8L/yr',desc:'Analyze business data, create reports, dashboards, and help leadership make data-driven decisions. Entry level with high volume of openings.',tags:['Excel','SQL','Power BI','Python Basics'],color:'#fb923c'},
+  {title:'Prompt Engineer',co:'AI Startups / Agencies',icon:'✍️',type:'fulltime',level:'entry',sal:'₹6L – ₹15L/yr',desc:'Design and optimize prompts for LLMs (GPT, Claude, Gemini). Evaluate outputs, reduce hallucinations, build AI content workflows.',tags:['GPT-4','Claude','Prompt Design','RAG','Python'],color:'#e879f9'},
+  {title:'AI Trainer / RLHF Specialist',co:'OpenAI / Scale AI / Outlier',icon:'🎯',type:'fulltime',level:'entry',sal:'₹4L – ₹12L/yr (contract)',desc:'Evaluate and rank AI model outputs to improve RLHF training. Requires domain expertise (coding, math, writing) more than ML knowledge.',tags:['Domain Expert','Evaluation','RLHF','Annotation'],color:'#34d399'},
+];
 
-// SCROLL REVEAL
-const obs=new IntersectionObserver((entries)=>{
-  entries.forEach((e,i)=>{if(e.isIntersecting){setTimeout(()=>e.target.classList.add('visible'),i*90);obs.unobserve(e.target)}});
-},{threshold:0.08});
-document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+const PLATFORMS = [
+  // India - General
+  {name:'LinkedIn',emoji:'💼',country:'🌍 Global',cat:'global',desc:'World\'s largest professional network. Best for AI/ML roles at MNCs, startups, and remote jobs. Apply directly or through referrals.',tags:['HOT','MNC','Remote','AI Jobs'],badge:'pop',url:'https://linkedin.com/jobs',
+   info:{type:'Professional Network',best:'MNC, Startups, Remote',jobType:'Full-time, Internship, Contract',free:'Yes (Premium optional)'},
+   steps:[
+     {t:'Optimize Your Profile',d:'Add a professional photo, headline like "ML Engineer | Python | PyTorch", and summary. Add all projects and skills.'},
+     {t:'Use Advanced Search',d:'Search "Machine Learning Engineer India" → Filter by: Date Posted (Last 24hrs), Experience Level, Job Type. Save the search for alerts.'},
+     {t:'Turn On Open To Work',d:'Go to Profile → Add section → Open To Work. Set it to "ML Engineer, Data Scientist" roles privately or publicly.'},
+     {t:'Apply with Easy Apply',d:'Use "Easy Apply" button for fast applications. Have your resume PDF ready. Fill all fields completely.'},
+     {t:'Engage & Network',d:'Comment on AI posts, connect with recruiters at target companies, and message with personalized notes.'},
+   ],
+   tips:'Use the recruiter search: search the company name + "recruiter" or "talent acquisition". Message them directly with a 2-line intro and your resume link.'},
+  {name:'Naukri.com',emoji:'🇮🇳',country:'🇮🇳 India',cat:'india',desc:'India\'s #1 job portal. Massive database of Indian IT and tech jobs including AI/ML, data science, and analytics roles at all levels.',tags:['HOT','#1 India','All Levels','Daily Updates'],badge:'pop',url:'https://naukri.com',
+   info:{type:'Job Board',best:'Indian IT Companies, TCS Infosys, MNCs India',jobType:'Full-time, Contract',free:'Yes (Resume Priority optional)'},
+   steps:[
+     {t:'Create Profile & Upload Resume',d:'Upload a keyword-rich resume with "Machine Learning", "Python", "TensorFlow" prominently. Naukri ranks profiles by keywords.'},
+     {t:'Set Job Alerts',d:'Go to My Jobs → Job Alerts → Set "ML Engineer" + Location + Salary filter. You\'ll get emails for every new post.'},
+     {t:'Apply & Track',d:'Click Apply → Fill mandatory fields → Submit. Use "Quick Apply" where available. Track in My Applications.'},
+     {t:'Keep Profile Fresh',d:'Update your profile every 7 days — even a small change boosts your rank in recruiter searches.'},
+     {t:'Check Recruiter Calls',d:'Many companies call directly — keep your phone number current and check SMS notifications.'},
+   ],
+   tips:'Upload resume in both DOC and PDF. Add "AI", "Machine Learning", "Deep Learning" as key skills to rank higher in recruiter searches.'},
+  {name:'Internshala',emoji:'🎓',country:'🇮🇳 India',cat:'intern',desc:'India\'s #1 internship portal. Thousands of AI/ML, data science, and Python internships from startups and companies across India.',tags:['INTERNSHIP','FREE','Students','Stipend'],badge:'int',url:'https://internshala.com',
+   info:{type:'Internship Portal',best:'Students, Freshers, 0-1 yr exp',jobType:'Internship (1–6 months)',free:'Yes'},
+   steps:[
+     {t:'Register & Build Profile',d:'Create account with college details. Add skills: Python, Machine Learning, Deep Learning, Data Analysis, TensorFlow.'},
+     {t:'Search AI Internships',d:'Go to Internships → Search "Machine Learning" or "Data Science" → Filter by: Work From Home, Stipend range, Duration.'},
+     {t:'Write a Cover Letter',d:'Every application needs a cover letter. Mention: why this company, what you\'ve built (projects), and what you\'ll contribute.'},
+     {t:'Apply Fast',d:'New internships get 200+ applications in 24 hours. Apply within the first few hours for best results.'},
+     {t:'Complete Profile to 100%',d:'Applications with complete profiles get 3x more callbacks. Add education, skills, projects, and a profile photo.'},
+   ],
+   tips:'Apply to "Work From Home" internships — they get fewer applications and are more accessible. Set email alerts for "Python" and "ML" keywords.'},
+  {name:'Indeed',emoji:'🔍',country:'🌍 Global/India',cat:'global',desc:'Aggregates jobs from all sources including company career pages. Strong AI/ML coverage across India, US, UK, and Canada.',tags:['Aggregator','Remote','Global','AI Jobs'],badge:'pop',url:'https://indeed.com',
+   info:{type:'Job Aggregator',best:'All levels, Remote, International',jobType:'Full-time, Part-time, Contract, Internship',free:'Yes'},
+   steps:[
+     {t:'Set Up Resume',d:'Upload or build resume directly on Indeed. Add ML skills, experience, and projects clearly.'},
+     {t:'Advanced Job Search',d:'Search "ML Engineer" in India. Use filters: salary range, experience, date posted. Try "Data Scientist Remote India" for remote roles.'},
+     {t:'Save Jobs & Apply',d:'Save interesting jobs to review later. Use "Apply Now" (redirects to company site) or "Indeed Apply" (stays on site).'},
+     {t:'Set Email Alerts',d:'Save your search query → Subscribe to daily email alerts. You\'ll get new matching jobs every morning.'},
+   ],
+   tips:'Indeed shows salary estimates even when companies don\'t post them — use this to negotiate. The "Remote" filter is very reliable for work-from-home AI roles.'},
+  {name:'Glassdoor',emoji:'🪟',country:'🌍 Global',cat:'global',desc:'Job search with company reviews, salary insights, and interview experiences. Great for researching AI companies before applying.',tags:['Reviews','Salary','Interview Tips','Research'],badge:null,url:'https://glassdoor.com',
+   info:{type:'Job + Reviews Platform',best:'Research-first job hunting, Salary negotiation',jobType:'Full-time, Internship',free:'Yes'},
+   steps:[
+     {t:'Read Company Reviews',d:'Before applying, read reviews for culture, work-life balance, and interview difficulty. Filter by current employees for accuracy.'},
+     {t:'Check Salary Data',d:'Go to Salaries → Enter "Machine Learning Engineer" + your city → Get real salary ranges to benchmark your expectations.'},
+     {t:'Read Interview Experiences',d:'Search company + "interview" → Read questions asked in ML/DS interviews. Prepare specifically for those.'},
+     {t:'Apply for Jobs',d:'Job listings are aggregated from other boards. Use "Easy Apply" or get redirected to company career pages.'},
+   ],
+   tips:'Use Glassdoor primarily for research — salary benchmarks and interview prep. Then apply on LinkedIn or the company\'s own careers page directly.'},
+  // INTERNSHIP
+  {name:'LetsIntern',emoji:'💡',country:'🇮🇳 India',cat:'intern',desc:'Internship portal focused on Indian college students. Active tech and AI internship listings from verified companies.',tags:['INTERNSHIP','Students','Verified','Tech'],badge:'int',url:'https://letsintern.com',
+   info:{type:'Internship Portal',best:'College Students, Freshers',jobType:'Internship',free:'Yes'},
+   steps:[
+     {t:'Sign Up with College Email',d:'Register and verify your college email for higher credibility to employers.'},
+     {t:'Filter AI/Tech Internships',d:'Browse IT/Software category → Search "Machine Learning" or "Python Developer".'},
+     {t:'Apply with Resume + Cover Letter',d:'Keep a template ready. Personalize the first two lines for each company.'},
+     {t:'Follow Up',d:'If you don\'t hear in 5 days, send a polite follow-up email to the recruiter.'},
+   ],
+   tips:'LetsIntern has many early-stage startup internships which offer more hands-on work and sometimes convert to full-time roles.'},
+  {name:'HelloIntern',emoji:'👋',country:'🇮🇳 India',cat:'intern',desc:'Internship listings with focus on STEM and tech domains. AI, data science, and web development internships from SMEs.',tags:['INTERNSHIP','STEM','Tech','Free'],badge:'int',url:'https://hellointern.in',
+   info:{type:'Internship Portal',best:'Students, 2nd/3rd year college',jobType:'Internship (Part-time/Full-time)',free:'Yes'},
+   steps:[
+     {t:'Register & Complete Profile',d:'Add all your skills including Python, ML tools, and GitHub link.'},
+     {t:'Browse by Category',d:'Select "Engineering/IT" or search "Machine Learning" → Browse active listings.'},
+     {t:'Direct Application',d:'Click apply → Fill form → Some listings have direct email addresses for applications.'},
+   ],
+   tips:'Many listings on HelloIntern are from small companies willing to hire students with just basic Python skills — great for first internship.'},
+  {name:'Unstop (formerly D2C)',emoji:'🏆',country:'🇮🇳 India',cat:'intern',desc:'Campus competitions, hackathons, and internship platform. Huge for AI competitions and getting shortlisted for internships through performance.',tags:['INTERNSHIP','Hackathons','Competitions','Campus'],badge:'new',url:'https://unstop.com',
+   info:{type:'Competition + Internship Platform',best:'Students, Competition winners',jobType:'Internship, PPO (Pre-Placement)',free:'Yes'},
+   steps:[
+     {t:'Register & Set Profile',d:'Add college, skills, CGPA, and previous hackathon wins. Complete profile is critical here.'},
+     {t:'Participate in AI Challenges',d:'Join ML competitions, case studies, and hackathons — winning or placing well leads to direct internship offers.'},
+     {t:'Apply to Internships',d:'Go to Opportunities → Internships → Filter by "Technology/AI" → Apply directly.'},
+     {t:'Showcase Your Wins',d:'Add competition results to profile — companies specifically filter for top performers.'},
+   ],
+   tips:'Winning even a second-place position in an Unstop AI hackathon can get you direct internship interview calls from top companies.'},
+  {name:'IIT Research Internship (SURGE)',emoji:'🎓',country:'🇮🇳 India',cat:'intern',desc:'SURGE Program at IIT Kanpur for research internships. Work with professors on AI, ML, robotics, and CS research projects.',tags:['RESEARCH','IIT','Government','INTERNSHIP'],badge:'int',url:'https://surge.iitk.ac.in',
+   info:{type:'Research Internship (Govt-funded)',best:'B.Tech/M.Tech students, AI Research',jobType:'Summer Research Internship (2 months)',free:'Yes (Stipend provided)'},
+   steps:[
+     {t:'Check Eligibility',d:'Must be enrolled in a recognized college. CGPA generally 7.5+ preferred. Applied CS, ML, ECE students eligible.'},
+     {t:'Browse Research Areas',d:'Visit surge.iitk.ac.in → Browse faculty projects → Filter AI/ML/CS related projects.'},
+     {t:'Email Faculty Directly',d:'Write a professional email to the professor: introduce yourself, mention your relevant coursework, attach resume and GitHub.'},
+     {t:'Fill Application Form',d:'If professor agrees, fill the official SURGE application form during the open window (usually Jan–Feb).'},
+   ],
+   tips:'Email professors whose research aligns with YOUR interests — not random professors. Read 1–2 of their papers and mention them in your email.'},
+  // GOVERNMENT
+  {name:'NIC (Govt of India)',emoji:'🏛️',country:'🇮🇳 Govt',cat:'govt',desc:'National Informatics Centre hires software and AI professionals for eGovernance projects. NICSI provides IT services to government departments.',tags:['GOVT','AI','IT','Tech Roles'],badge:'gov',url:'https://nic.in/careers',
+   info:{type:'Government IT Organization',best:'CS/IT graduates, AI enthusiasts for govt sector',jobType:'Full-time Government (Group A/B)',free:'Yes'},
+   steps:[
+     {t:'Check Official Notification',d:'Visit nic.in/careers or check employment news. NIC recruits via UPSC/direct recruitment for Scientific Officers.'},
+     {t:'Eligibility Check',d:'Typically requires B.Tech/MCA/MSc CS. Age limit 30–35 years. Check specific notification for each post.'},
+     {t:'Prepare for Written Test',d:'NIC exam covers: Data Structures, Algorithms, Python/Java, OS, DBMS, Networking, and some ML basics.'},
+     {t:'Apply via UPSC/Direct Portal',d:'Most NIC recruitment goes through UPSC. Apply on upsc.gov.in when notification is released.'},
+   ],
+   tips:'NIC also offers internships under the NIC Internship Scheme — check their website for quarterly internship openings in AI/ML projects.'},
+  {name:'ISRO (Space Tech AI)',emoji:'🚀',country:'🇮🇳 Govt',cat:'govt',desc:'Indian Space Research Organisation uses AI for satellite image analysis, robotics, navigation, and mission planning. Dream employer for tech enthusiasts.',tags:['GOVT','Space Tech','AI','Dream Job'],badge:'gov',url:'https://isro.gov.in/careers',
+   info:{type:'Government Space Research',best:'CS/ECE/Mech engineers, AI/Vision researchers',jobType:'Scientist/Engineer (Permanent)',free:'Yes'},
+   steps:[
+     {t:'Monitor ISRO Recruitment Portal',d:'Visit isro.gov.in/careers regularly. Notification comes 1–2 times a year. Subscribe to their email alerts.'},
+     {t:'Appear for ICRB Exam',d:'ISRO Centralised Recruitment Board (ICRB) conducts written test. Covers: CS fundamentals, Electronics, Mathematics, Aptitude.'},
+     {t:'Interview for Scientist-Engineer SC',d:'Written test shortlisted candidates go to interview. Expect deep technical questions on your domain (AI/ML/CS).'},
+     {t:'Final Selection & Joining',d:'Document verification, medical test, and posting at any ISRO center (Bangalore, Ahmedabad, Thiruvananthapuram, etc.)'},
+   ],
+   tips:'ISRO also offers RESPOND and RESPOND-SSPO research project grants to colleges — these often come with intern/research positions for students.'},
+  {name:'DRDO (Defence AI)',emoji:'🛡️',country:'🇮🇳 Govt',cat:'govt',desc:'Defence Research and Development Organisation works on AI for defence — autonomous systems, signal processing, surveillance, and cybersecurity.',tags:['GOVT','Defence','AI','Research'],badge:'gov',url:'https://drdo.gov.in/jobs',
+   info:{type:'Government Defence Research',best:'CS/ECE engineers, AI researchers, Cybersecurity',jobType:'Scientist B (Entry) to Scientist G',free:'Yes'},
+   steps:[
+     {t:'Check DRDO Recruitment Notice',d:'Visit drdo.gov.in → Career → Check for "Scientist B" recruitment. Conducted via RAC (Recruitment and Assessment Centre).'},
+     {t:'Prepare for Written Test',d:'Syllabus includes: CS core subjects, Python/C++, ML basics, Electronics, General Science, and Defence awareness.'},
+     {t:'Apply via RAC Portal',d:'All applications go through rac.gov.in. Create account, fill form, upload documents during notification window.'},
+     {t:'Interview Process',d:'Multi-stage: Written → Technical Interview → HR Interview. Questions are domain-specific and research-oriented.'},
+   ],
+   tips:'DRDO also has a Summer Research Fellowship through Indian Academy of Sciences (IAS) — excellent research experience and adds weight to your profile.'},
+  {name:'SSC CGL (Tech Posts)',emoji:'🏅',country:'🇮🇳 Govt',cat:'govt',desc:'Staff Selection Commission Combined Graduate Level exam has Statistical Investigator, Junior Statistical Officer, and data analyst roles in central govt.',tags:['GOVT','Statistical','Data','SSC'],badge:'gov',url:'https://ssc.nic.in',
+   info:{type:'Government Exam Board',best:'Statistics, Data Analysis background',jobType:'Group B/C Central Government posts',free:'Yes'},
+   steps:[
+     {t:'Check Notification',d:'Visit ssc.nic.in → Examinations → CGL. Look for "Statistical Investigator Grade II" or "Junior Statistical Officer" posts.'},
+     {t:'Register on SSC Portal',d:'Create account on ssc.nic.in → Fill application form → Pay fee → Upload photo & signature.'},
+     {t:'Tier 1 Preparation',d:'General Intelligence, Quantitative Aptitude, English, General Awareness. 60 minutes, 100 marks. MCQ format.'},
+     {t:'Tier 2 Preparation',d:'Statistics paper for JSO post — covers probability, sampling, econometrics. Maths/English for other posts.'},
+   ],
+   tips:'JSO (Junior Statistical Officer) requires Statistics as a subject in graduation. Data-related govt posts are growing with India\'s Digital India initiative.'},
+  {name:'NASSCOM Jobs',emoji:'💻',country:'🇮🇳 India',cat:'india',desc:'NASSCOM FutureSkills Prime and job portal for tech and AI roles. Industry body for Indian IT with direct connections to top tech companies.',tags:['AI Focus','Tech Industry','Certification','HOT'],badge:'new',url:'https://jobs.nasscom.in',
+   info:{type:'IT Industry Job Board',best:'IT professionals, AI/Data science specialists',jobType:'Full-time, Contract, Remote',free:'Yes'},
+   steps:[
+     {t:'Get FutureSkills Certified',d:'Complete NASSCOM FutureSkills certifications in AI/ML/DS — these are recognized across Indian IT companies.'},
+     {t:'Create Profile on Jobs Portal',d:'Visit jobs.nasscom.in → Build profile → Add your NASSCOM certifications for higher visibility.'},
+     {t:'Apply to AI/ML Roles',d:'Filter by "Artificial Intelligence", "Data Science", or "Machine Learning" → Apply directly.'},
+     {t:'Attend NASSCOM Events',d:'Join NASSCOM Tech summits and career fairs — companies actively recruit there and it\'s excellent networking.'},
+   ],
+   tips:'NASSCOM FutureSkills AI certification adds instant credibility with Indian IT companies like Infosys, Wipro, TCS, HCL who trust NASSCOM benchmarks.'},
+  // GLOBAL
+  {name:'Wellfound (AngelList)',emoji:'🚀',country:'🌍 Global',cat:'global',desc:'Startup job board. Best for AI startup roles with equity, early-stage companies, and remote positions. Direct connection to startup founders.',tags:['Startups','Equity','Remote','Direct Apply'],badge:'pop',url:'https://wellfound.com',
+   info:{type:'Startup Job Board',best:'Engineers wanting equity, early-stage startups',jobType:'Full-time, Remote, Part-time',free:'Yes'},
+   steps:[
+     {t:'Create Profile',d:'Add photo, bio, skills, salary expectations, and whether you want equity. The more complete, the better matches.'},
+     {t:'Set Preferences',d:'Set "Open to Startup Opportunities" → Choose roles: ML Engineer, Data Scientist → Set remote preference.'},
+     {t:'Browse & Filter',d:'Filter by: Role, Stage (Seed/Series A), Tech Stack, Remote. AI/ML companies are heavily listed here.'},
+     {t:'Apply Directly',d:'Many applications go directly to founders. Keep your pitch tight: what you build, what impact you\'ve had.'},
+   ],
+   tips:'Startups on Wellfound often respond faster than big companies. Your GitHub and personal projects matter MORE than your degree here.'},
+  {name:'Kaggle Jobs',emoji:'📊',country:'🌍 Global',cat:'global',desc:'Data science competitions platform with job board. Having a strong Kaggle ranking dramatically increases your interview chances at AI companies.',tags:['Data Science','Competitions','Reputation','ML'],badge:null,url:'https://kaggle.com/jobs',
+   info:{type:'Data Science Platform + Jobs',best:'Data Scientists, ML Engineers, Kaggle performers',jobType:'Full-time, Contract',free:'Yes'},
+   steps:[
+     {t:'Build Kaggle Ranking First',d:'Complete competitions and notebooks. Reach "Expert" or "Master" rank — it signals your ML ability to recruiters.'},
+     {t:'Browse Job Listings',d:'Go to kaggle.com → Jobs tab → Filter by role, location, company. Many top AI companies post here.'},
+     {t:'Link Kaggle Profile to Resume',d:'Add your Kaggle profile URL and best competition rank/medals to your resume and LinkedIn.'},
+     {t:'Apply to Posted Roles',d:'Applications typically redirect to company careers pages. Have your Kaggle profile, GitHub, and resume ready.'},
+   ],
+   tips:'A Kaggle "Grandmaster" or "Master" title is more valuable than many certifications. Even "Expert" rank is noticed by data science recruiters.'},
+  {name:'Hugging Face Jobs',emoji:'🤗',country:'🌍 Global',cat:'global',desc:'AI-specific job board from Hugging Face. Focused on NLP, generative AI, LLM, and ML engineering roles at top AI companies worldwide.',tags:['AI-Specific','LLMs','NLP','Remote'],badge:'new',url:'https://huggingface.co/jobs',
+   info:{type:'AI-Specific Job Board',best:'NLP/LLM engineers, GenAI specialists',jobType:'Full-time, Remote',free:'Yes'},
+   steps:[
+     {t:'Build HF Profile',d:'Create Hugging Face account → Upload your own models or demos to the Hub → Your profile becomes a live portfolio.'},
+     {t:'Browse Job Listings',d:'Go to huggingface.co/jobs → Most roles are in NLP, LLMs, GenAI, and ML engineering. Many are remote.'},
+     {t:'Apply with HF Portfolio',d:'Your models and spaces on HF Hub are automatic portfolio items — link them in your applications.'},
+     {t:'Join HF Discord',d:'Many AI companies post informal job openings in the Hugging Face Discord before listing them officially.'},
+   ],
+   tips:'Having a model or Space on Hugging Face Hub that gets good usage/likes is a powerful signal. Build something useful and share it.'},
+  {name:'Stack Overflow Jobs',emoji:'💻',country:'🌍 Global',cat:'global',desc:'Developer-focused job board from Stack Overflow. Strong in software engineering and data science roles. Trusted by tech-savvy developers.',tags:['Developer Jobs','Tech','Remote','Trusted'],badge:null,url:'https://stackoverflow.com/jobs',
+   info:{type:'Developer Job Board',best:'Software Engineers, Data Scientists, Backend devs',jobType:'Full-time, Contract, Remote',free:'Yes'},
+   steps:[
+     {t:'Complete SO Profile',d:'Add your developer story, tech stack, and location preferences. SO reputation score adds credibility.'},
+     {t:'Search AI/ML Roles',d:'Filter by: Python, Machine Learning, Data Science, TensorFlow → Add location or Remote.'},
+     {t:'Apply via Job Listings',d:'Most apply directly on company websites. SO verifies the companies are legitimate.'},
+     {t:'Use "Interesting Jobs" Feature',d:'SO will match you to jobs based on your tag preferences and activity — keep your tech tags updated.'},
+   ],
+   tips:'Build Stack Overflow reputation by answering ML/Python questions. High-rep accounts get private job invitations from companies.'},
+  {name:'Y Combinator Jobs (Work at a Startup)',emoji:'🏅',country:'🌍 Global',cat:'global',desc:'YC-backed startup jobs. All companies are YC alumni — well-funded, fast-growing AI startups with strong culture.',tags:['YC Startups','Funded','AI','Growth'],badge:'pop',url:'https://workatastartup.com',
+   info:{type:'YC Alumni Job Board',best:'Engineers wanting to work at top startups',jobType:'Full-time, Internship (rare)',free:'Yes'},
+   steps:[
+     {t:'Create One Profile',d:'One application works for all YC companies simultaneously. Fill it in detail — describe your best technical project.'},
+     {t:'Browse YC AI Companies',d:'Filter by domain "AI / ML" → See all YC-funded AI startups hiring → Click to read company details.'},
+     {t:'Express Interest',d:'Mark "Interested" on companies → They receive a notification and can reach out to you directly.'},
+     {t:'Prepare for Fast Interviews',d:'YC startups move quickly — usually 1-2 technical rounds and an offer within 1-2 weeks. Be ready.'},
+   ],
+   tips:'Many of today\'s most valuable AI companies (OpenAI was YC W15, Airbnb, Stripe etc.) are YC alumni. Getting into a Seed/Series A YC company can be life-changing.'},
+  {name:'Remote.co',emoji:'🌐',country:'🌍 Remote',cat:'global',desc:'Remote-only job board. All AI/ML jobs are 100% remote. Great for Indian developers targeting international salaries while living in India.',tags:['100% Remote','International','AI','Work From Home'],badge:null,url:'https://remote.co/jobs',
+   info:{type:'Remote Job Board',best:'Developers wanting international remote jobs',jobType:'Full-time Remote, Contract',free:'Yes'},
+   steps:[
+     {t:'Browse Remote AI Jobs',d:'Go to remote.co/jobs → Select Engineering/Tech → Filter for ML/AI/Python roles.'},
+     {t:'Tailor Resume for Remote',d:'Add "Remote Work Experience" or note timezone flexibility. Companies value asynchronous communication skills.'},
+     {t:'Apply via Company Portal',d:'Most listings link to company career pages. Apply there directly.'},
+     {t:'Prepare for Async Interview',d:'Remote interviews often include async video intros, take-home coding challenges, and time-zone flexible calls.'},
+   ],
+   tips:'For Indian developers, remote international jobs typically pay USD/EUR salaries while you live in India — this can mean 5–10x your local salary.'},
+  {name:'We Work Remotely',emoji:'🖥️',country:'🌍 Remote',cat:'global',desc:'One of the oldest remote job boards. Strong tech and developer listings. AI/ML, data science, and backend engineering roles.',tags:['Remote','Developer','Trusted','Global'],badge:null,url:'https://weworkremotely.com',
+   info:{type:'Remote Job Board',best:'Senior developers, International remote',jobType:'Full-time Remote, Contract',free:'Yes'},
+   steps:[
+     {t:'Browse Programming Category',d:'Go to weworkremotely.com → Programming & Dev → Search for AI, ML, Python, Data Science.'},
+     {t:'Read Requirements Carefully',d:'Many postings have timezone requirements (e.g. "Must overlap with US Pacific hours"). Check before applying.'},
+     {t:'Strong Resume Required',d:'Remote jobs are competitive globally. Have strong GitHub, portfolio projects, and measurable past achievements.'},
+   ],
+   tips:'Check the "new" section daily — best remote jobs get hundreds of applications within 24 hours. Speed matters.'},
+  {name:'Toptal',emoji:'🏆',country:'🌍 Global/Freelance',cat:'global',desc:'Exclusive network for top 3% of freelance AI/ML engineers. Very high pay but requires passing a rigorous screening process.',tags:['Elite','Freelance','High Pay','Screened'],badge:null,url:'https://toptal.com',
+   info:{type:'Freelance/Contract Platform (Elite)',best:'Experienced AI engineers (3+ yrs)',jobType:'Freelance, Contract, Part-time',free:'Yes (application process required)'},
+   steps:[
+     {t:'Apply to Join Toptal',d:'Complete the application form. They accept roughly 3% of applicants — be honest about your skills.'},
+     {t:'Language & Personality Screening',d:'Video interview for English fluency and professionalism. This filters out many applicants.'},
+     {t:'Technical Screening',d:'Live coding test in Python/ML. Problem solving and algorithm questions. Depth of ML knowledge tested.'},
+     {t:'Test Project',d:'Complete a paid test project with a real client. If successful, you join the Toptal network.'},
+     {t:'Get Matched to Projects',d:'Toptal matches you to clients. Rates are $80–$200/hr for ML engineers.'},
+   ],
+   tips:'Being a Toptal member is a powerful credential. Even the screening process is worth attempting — you\'ll know exactly where your skills stand.'},
+  // FREELANCE
+  {name:'Upwork',emoji:'💰',country:'🌍 Freelance',cat:'freelance',desc:'World\'s largest freelance platform. Strong demand for Python, ML model building, data analysis, chatbot development, and AI automation projects.',tags:['Freelance','Python','AI Projects','Paid'],badge:null,url:'https://upwork.com',
+   info:{type:'Freelance Marketplace',best:'Freelancers, Part-time AI work, Portfolio building',jobType:'Freelance Projects, Hourly, Fixed-price',free:'Yes (commission taken)'},
+   steps:[
+     {t:'Create Strong Profile',d:'Write a focused headline: "ML Engineer | Python | LLM Apps | Data Analysis". Add portfolio projects with results.'},
+     {t:'Take Upwork Skill Tests',d:'Pass Python, ML, and Data Analysis tests → Badges appear on profile → Increases proposal success rate.'},
+     {t:'Write Targeted Proposals',d:'For each project: read description, identify the problem, propose YOUR specific solution with timeline and rate.'},
+     {t:'Start with Competitive Rate',d:'Start at ₹500–₹1000/hr for first 3–5 projects to build reviews, then raise rates as reputation grows.'},
+     {t:'Deliver & Get 5-Star Reviews',d:'First reviews are critical. Over-deliver on the first few projects to build a strong review history.'},
+   ],
+   tips:'Specialize — "LangChain chatbot developer" or "Time series forecasting specialist" earns 3x more than a generalist "Python developer".'},
+  {name:'Fiverr',emoji:'🎯',country:'🌍 Freelance',cat:'freelance',desc:'Gig-based freelance platform. Create "gigs" for AI services — chatbot development, data analysis, ML models, Python scripts, and automation.',tags:['Freelance','Gigs','AI Services','₹500+'],badge:null,url:'https://fiverr.com',
+   info:{type:'Gig Freelance Marketplace',best:'Packaged AI services, Beginners to Freelancing',jobType:'Fixed-price Gigs',free:'Yes (20% fee on earnings)'},
+   steps:[
+     {t:'Create Gig Packages',d:'Create 3 tiers: Basic (simple script ₹1000), Standard (ML model ₹5000), Premium (full solution ₹15000).'},
+     {t:'Use Right Keywords',d:'Title: "I will build a Python machine learning model for your dataset". Add: Python, ML, Data Analysis, ChatGPT, LangChain as tags.'},
+     {t:'Add Portfolio Samples',d:'Upload screenshots or videos of past projects. Visual proof of work gets 3x more clicks.'},
+     {t:'Respond to Buyer Requests',d:'Go to Buyer Requests section → Find AI/ML project requests → Send tailored offers immediately.'},
+   ],
+   tips:'Most successful Fiverr AI sellers offer "I will integrate ChatGPT/Claude into your app" — this has massive demand right now in 2025.'},
+  {name:'Freelancer.com',emoji:'💼',country:'🌍 Freelance',cat:'freelance',desc:'Another large freelance marketplace with AI, ML, data science, and Python projects posted daily by clients worldwide.',tags:['Freelance','Bid Projects','Global','AI'],badge:null,url:'https://freelancer.com',
+   info:{type:'Bid-based Freelance Platform',best:'Entry to mid level freelancers',jobType:'Fixed-price Projects, Hourly',free:'Yes (membership upgrades available)'},
+   steps:[
+     {t:'Create Profile & Verify',d:'Add all AI/ML skills. Verify your identity and email for higher trust score.'},
+     {t:'Browse AI Projects',d:'Search: "Machine Learning", "Python AI", "ChatGPT Integration", "Data Analysis" → Filter: Budget ₹5000+.'},
+     {t:'Submit Competitive Bids',d:'Write custom bid with: your approach, timeline, past similar work, and a specific question about their project.'},
+     {t:'Compete in Contests',d:'Freelancer has coding and data science contests with cash prizes — winning builds reputation fast.'},
+   ],
+   tips:'Bid on newly posted projects within 30 minutes — early bids get more visibility and often win even at higher prices.'},
+  // GLOBAL BIG TECH
+  {name:'Google Careers',emoji:'🔵',country:'🌍 Global/India',cat:'global',desc:'Google hires ML engineers, research scientists, data scientists, and AI product managers across India (Bangalore, Hyderabad, Gurgaon) and globally.',tags:['FAANG','AI Research','High Pay','Dream Job'],badge:'pop',url:'https://careers.google.com',
+   info:{type:'Direct Company Careers',best:'Experienced AI engineers, Researchers',jobType:'Full-time, Internship (STEP/SWE)',free:'Yes'},
+   steps:[
+     {t:'Build Profile for Google',d:'Google values: strong fundamentals, coding ability (LeetCode), system design, and ML knowledge depth. Prepare these first.'},
+     {t:'Create Google Careers Profile',d:'Go to careers.google.com → Create profile → Upload resume → Apply via the portal.'},
+     {t:'LeetCode Prep (Most Important)',d:'Solve 200+ LeetCode problems (focus on Medium/Hard). Google interviews are highly algorithmic.'},
+     {t:'ML System Design Prep',d:'Study: ML system design, model serving, feature engineering, distributed training. "Designing ML Systems" book is excellent.'},
+     {t:'Referral is Key',d:'A Google employee referral jumps your resume to the top of the pile. Connect with Google employees on LinkedIn.'},
+   ],
+   tips:'Google STEP (Student Training in Engineering Program) is their internship for 1st/2nd year students. Apply in September/October every year.'},
+  {name:'Microsoft Careers',emoji:'🪟',country:'🌍 Global/India',cat:'global',desc:'Microsoft Azure AI, GitHub Copilot, and Bing AI teams actively hire. India offices in Hyderabad and Bangalore with strong AI/ML teams.',tags:['FAANG','Azure AI','Copilot','High Pay'],badge:'pop',url:'https://careers.microsoft.com',
+   info:{type:'Direct Company Careers',best:'ML Engineers, AI product teams, Cloud AI',jobType:'Full-time, Internship',free:'Yes'},
+   steps:[
+     {t:'Target AI Teams',d:'Apply to Azure ML, Microsoft Research India, GitHub Copilot, and Bing AI teams — all heavily hiring.'},
+     {t:'LeetCode + System Design',d:'Prepare algorithms (LeetCode 150+) and system design. MS interviews are thorough and multi-round.'},
+     {t:'Apply via Careers Portal',d:'careers.microsoft.com → Create profile → Set job alerts for "Machine Learning" in India.'},
+     {t:'MSFT Engage Program',d:'Microsoft Engage is their internship for 2nd-year students. Applications open in October. Competitive but worth it.'},
+   ],
+   tips:'Microsoft Research India (MSRI) is one of the top AI research labs in Asia. Look for research internship positions posted on the MSRI website.'},
+  {name:'Amazon Jobs (AWS AI)',emoji:'📦',country:'🌍 Global/India',cat:'global',desc:'Amazon and AWS hire AI/ML engineers for Alexa, SageMaker, Rekognition, and general AWS AI services. Strong presence in Bangalore and Hyderabad.',tags:['FAANG','AWS','Alexa','SageMaker'],badge:'pop',url:'https://amazon.jobs',
+   info:{type:'Direct Company Careers',best:'ML Engineers, Cloud AI, Alexa/AWS teams',jobType:'Full-time, Internship (SDE Intern)',free:'Yes'},
+   steps:[
+     {t:'Study Amazon Leadership Principles',d:'All Amazon interviews include behavioral questions based on 16 Leadership Principles. Have 3 STAR stories per principle ready.'},
+     {t:'LeetCode Preparation',d:'Focus on Amazon-tagged problems on LeetCode. Graph, Trees, DP, and Arrays are common.'},
+     {t:'Apply via amazon.jobs',d:'Create profile → Search "Machine Learning" + "India" → Apply with tailored resume.'},
+     {t:'Amazon ML University',d:'Amazon offers free ML courses via ML University. Completing them shows initiative and covers interview topics.'},
+   ],
+   tips:'Apply to both Amazon (product teams) and AWS (infrastructure/AI services) as they have separate hiring pipelines with different cultures.'},
+  {name:'Meta Careers',emoji:'📘',country:'🌍 Global',cat:'global',desc:'Meta (Facebook) hires AI researchers and ML engineers for PyTorch, Meta AI, WhatsApp AI, and AR/VR AI systems.',tags:['FAANG','PyTorch','AI Research','Meta AI'],badge:null,url:'https://metacareers.com',
+   info:{type:'Direct Company Careers',best:'AI Researchers, Senior ML Engineers',jobType:'Full-time, Internship (University Grad)',free:'Yes'},
+   steps:[
+     {t:'Strong Research Background Needed',d:'Meta AI prefers candidates with published papers or strong open-source contributions (especially to PyTorch).'},
+     {t:'Apply via Meta Careers',d:'metacareers.com → Research or Software Engineering → Filter AI/ML roles.'},
+     {t:'Prepare for Research Interview',d:'Expect deep ML theory questions: backprop, attention mechanisms, RLHF, scaling laws. Whiteboard coding required.'},
+     {t:'University Program',d:'Meta University Program offers internships for 1st/2nd year students — open to international students.'},
+   ],
+   tips:'Contributing to PyTorch open source is the single best thing you can do to get noticed by Meta AI. Even small PRs help.'},
+  // More India
+  {name:'Shine.com',emoji:'✨',country:'🇮🇳 India',cat:'india',desc:'Indian job portal with strong IT and analytics sections. Good for mid-level AI/data roles at Indian companies and SMEs.',tags:['India','IT Jobs','Analytics','Data'],badge:null,url:'https://shine.com',
+   info:{type:'Job Board (India)',best:'Mid-level IT professionals, Analytics',jobType:'Full-time',free:'Yes'},
+   steps:[
+     {t:'Upload Resume',d:'Register and upload keyword-rich resume with AI/ML skills prominently featured.'},
+     {t:'Set Job Alerts',d:'Go to Job Alerts → Set "Data Scientist" or "ML Engineer" + your city → Daily emails.'},
+     {t:'Apply to Matches',d:'Apply to relevant jobs. Shine notifies you when companies view your profile.'},
+   ],
+   tips:'Shine is stronger for Tier-2 cities and mid-size Indian companies — good if targeting local companies rather than MNCs.'},
+  {name:'TimesJobs',emoji:'📰',country:'🇮🇳 India',cat:'india',desc:'Times Group job portal. Covers IT, analytics, data science jobs across India with company profiles and salary benchmarks.',tags:['India','IT','Analytics','Times Group'],badge:null,url:'https://timesjobs.com',
+   info:{type:'Job Board (India)',best:'IT Professionals, Mid-level Analytics',jobType:'Full-time, Contract',free:'Yes'},
+   steps:[
+     {t:'Create Profile',d:'Register with TimesJobs → Build profile with all skills and preferences.'},
+     {t:'Search & Apply',d:'Search "Machine Learning" or "Data Science" → Apply to relevant openings.'},
+     {t:'Fresher Corner',d:'Check the "Freshers" section for entry-level AI/data analyst roles specifically.'},
+   ],
+   tips:'TimesJobs often lists IT roles from Tier-2 companies that are not on LinkedIn — good supplementary job board.'},
+  {name:'Apna Jobs',emoji:'📱',country:'🇮🇳 India',cat:'india',desc:'Mobile-first Indian job app connecting freshers and junior professionals with local companies. Growing tech and IT section.',tags:['India','Freshers','Mobile App','Entry Level'],badge:'new',url:'https://apna.co',
+   info:{type:'Mobile Job App',best:'Freshers, 0-2 yr experience, Local jobs',jobType:'Full-time, Part-time',free:'Yes'},
+   steps:[
+     {t:'Download App',d:'Download Apna app from Play Store → Create profile with skills, resume, and city.'},
+     {t:'Set Tech Preferences',d:'Select "IT & Software" category → Search Python Developer, Data Analyst, ML Intern.'},
+     {t:'Apply in App',d:'One-tap apply with your Apna profile. Companies can call you directly through the app.'},
+   ],
+   tips:'Apna is growing fast in Tier 2-3 cities. Good for freshers looking for first tech jobs in smaller companies.'},
+  {name:'Hirect',emoji:'💬',country:'🇮🇳 India',cat:'india',desc:'Chat-based job platform connecting candidates directly with startup founders and HRs. Instant messaging speeds up hiring process.',tags:['Startups','India','Direct Chat','Fast Hiring'],badge:'new',url:'https://hirect.in',
+   info:{type:'Chat-based Job Platform',best:'Tech professionals targeting startups',jobType:'Full-time, Startup',free:'Yes'},
+   steps:[
+     {t:'Download & Sign Up',d:'Download Hirect app → Create profile → Add tech skills especially Python/AI/ML.'},
+     {t:'Match & Chat',d:'Platform shows you matched jobs → You can chat directly with the founder/HR in real time.'},
+     {t:'Apply & Get Response Fast',d:'Most startups respond within 24-48 hours. Have your GitHub and portfolio link ready to share.'},
+   ],
+   tips:'Hirect is excellent for freshers targeting funded Indian startups — founders often hire directly without lengthy HR processes.'},
+  // More internship
+  {name:'Stipendee',emoji:'💵',country:'🇮🇳 India',cat:'intern',desc:'Internship platform listing paid tech internships across India. Focuses on quality over quantity with verified stipends.',tags:['INTERNSHIP','Paid Stipend','Tech','Verified'],badge:'int',url:'https://stipendee.com',
+   info:{type:'Paid Internship Platform',best:'Students wanting guaranteed stipend internships',jobType:'Internship (1-6 months)',free:'Yes'},
+   steps:[
+     {t:'Register',d:'Create account → Add skills: Python, Machine Learning, Data Analysis → Upload resume.'},
+     {t:'Filter Paid Internships',d:'All listings show stipend upfront → Filter by tech domain and minimum stipend requirement.'},
+     {t:'Apply',d:'Click Apply → Add cover letter → Submit application through platform.'},
+   ],
+   tips:'Stipendee verifies that all listed internships are paid — no more wasting time applying to unpaid internships.'},
+  {name:'iimjobs (Analytics)',emoji:'🎓',country:'🇮🇳 India',cat:'india',desc:'Premium job platform for MBA and analytics professionals. Strong in data science, analytics, and AI leadership roles at senior levels.',tags:['Analytics','Premium','Senior','MBA'],badge:null,url:'https://iimjobs.com',
+   info:{type:'Premium Job Board',best:'Analytics leaders, Senior data professionals, MBAs',jobType:'Full-time (Mid to Senior)',free:'Free browse, Premium apply'},
+   steps:[
+     {t:'Create Premium Profile',d:'Full profile with analytics experience, tools mastered, and team size managed.'},
+     {t:'Target Analytics Manager+ Roles',d:'iimjobs is for mid-senior roles (5+ lakh salary). Freshers won\'t find much here.'},
+     {t:'Use Analytics Jobs Vertical',d:'They have a dedicated analytics/data science section. Sort by "Newest" for fresh openings.'},
+   ],
+   tips:'iimjobs is best after you have 2+ years of analytics experience. Great for roles at consulting firms, e-commerce, and BFSI sector.'},
+  // More govt
+  {name:'sarkariresult.com / sarkarijob',emoji:'🏆',country:'🇮🇳 Govt',cat:'govt',desc:'Aggregator of all government job notifications in India. IT Officer, Programmer, Data Analyst posts in PSUs, banks, and central govt.',tags:['GOVT','All Notifications','PSU','Banks'],badge:'gov',url:'https://sarkariresult.com',
+   info:{type:'Govt Job Aggregator',best:'Anyone targeting govt tech jobs',jobType:'All Government Posts',free:'Yes'},
+   steps:[
+     {t:'Bookmark & Check Daily',d:'Visit daily or subscribe to email alerts → Especially check "Technical Posts" section.'},
+     {t:'Filter for IT/CS Posts',d:'Look for: "Programmer", "IT Officer", "Data Analyst", "Technical Assistant", "Scientific Assistant".'},
+     {t:'Note Application Dates',d:'Govt notifications have strict deadlines. Note the last date and apply well before it.'},
+     {t:'Apply on Official Website',d:'Never apply through Sarkariresult itself — it only lists notifications. Always apply on the OFFICIAL organization portal.'},
+   ],
+   tips:'Set Google Alerts for "IT Officer recruitment 2025" and "Data Analyst government vacancy 2025" to catch new postings early.'},
+  {name:'UPSC Engineering Services',emoji:'⚖️',country:'🇮🇳 Govt',cat:'govt',desc:'UPSC Engineering Services Exam for Group A Technical posts across Indian Railway, Defence, Telecom, and other central departments.',tags:['UPSC','Engineering','Central Govt','Group A'],badge:'gov',url:'https://upsc.gov.in',
+   info:{type:'Government Exam (UPSC)',best:'CS/IT/Electronics engineering graduates',jobType:'Group A Government Service (IES)',free:'Yes (exam fee applies)'},
+   steps:[
+     {t:'Check ESE Notification',d:'UPSC releases Engineering Services Exam (ESE) notification every January. Visit upsc.gov.in for dates.'},
+     {t:'Choose CS/IT Stream',d:'UPSC ESE covers Electronics & Telecom and Mechanical — CS specific posts are under SSC CGL or direct recruitment.'},
+     {t:'Prepare for Written Exam',d:'Stage 1: General Studies + Engineering Aptitude. Stage 2: Technical subjects (CS fundamentals for CS stream).'},
+     {t:'Fill Application Form',d:'Apply on upsc.gov.in → Online → ESE application → Fill carefully, no corrections allowed after submission.'},
+   ],
+   tips:'UPSC also conducts Combined Geo-Scientist, NDA, and CAPF exams — check all UPSC notifications as some include IT/Data related technical posts.'},
+  {name:'IBM Careers',emoji:'🔷',country:'🌍 Global/India',cat:'global',desc:'IBM India (Bangalore/Hyderabad/Pune) hires AI engineers for Watson, IBM Cloud, and consulting AI roles. Strong in enterprise AI.',tags:['Enterprise AI','Watson','Consulting','IBM Cloud'],badge:null,url:'https://ibm.com/careers',
+   info:{type:'Direct Company Careers',best:'AI Consultants, Watson developers, Cloud AI',jobType:'Full-time, Graduate Program',free:'Yes'},
+   steps:[
+     {t:'Target IBM Graduate Program',d:'IBM has a Graduate Hire program in India — look for "Application Developer" and "Data Scientist" tracks.'},
+     {t:'Get IBM Certifications',d:'Free IBM courses on Coursera (IBM Data Science Professional Certificate) add value to your application.'},
+     {t:'Apply via IBM Careers Portal',d:'ibm.com/careers → Filter by India location and AI/Data Science category.'},
+     {t:'Interview Prep',d:'IBM interviews focus on problem solving, data structures, and practical ML knowledge. Technical + HR rounds.'},
+   ],
+   tips:'IBM badges and certifications from Coursera are well-recognized within IBM. Completing the AI Engineering path helps significantly.'},
+  {name:'Infosys (AI & Analytics)',emoji:'🔶',country:'🇮🇳 India / Global',cat:'india',desc:'Infosys BPM and Infosys AI/Analytics teams hire data scientists and ML engineers at scale. InfyTQ and campus recruitment pathways available.',tags:['Infosys','Analytics','Campus','Volume Hiring'],badge:null,url:'https://infosys.com/careers',
+   info:{type:'IT Service Company Direct',best:'Fresh graduates, Campus recruits',jobType:'Full-time, Systems Engineer to Specialist',free:'Yes'},
+   steps:[
+     {t:'Campus Placement / InfyTQ',d:'If in college: prepare for InfyTQ (Infosys platform) → Get certified → Get shortlisted for interviews.'},
+     {t:'Apply for Specialist Programmer',d:'If you have coding skills: apply for "Specialist Programmer" stream — better projects and higher pay.'},
+     {t:'Clear Infosys Online Test',d:'3 rounds: Aptitude, Logical Reasoning, Coding (Python/Java). LeetCode Easy/Medium level questions.'},
+     {t:'Post-joining Training',d:'Infosys provides domain training including AI/ML. You can move to AI projects after initial placement.'},
+   ],
+   tips:'Infosys Nia (AI platform) team is the best AI opportunity within Infosys. Express preference for "Nia" during joining process.'},
+  {name:'TCS iON / NQT',emoji:'🏢',country:'🇮🇳 India',cat:'india',desc:'TCS hires freshers at massive scale via NQT (National Qualifier Test). AI/ML roles within TCS Data Analytics and AI CoE teams.',tags:['TCS','NQT','Freshers','Volume Hiring'],badge:null,url:'https://tcs.com/careers',
+   info:{type:'IT Service Company (Largest in India)',best:'Freshers, Engineering Graduates',jobType:'Full-time (Trainee to Senior)',free:'Yes'},
+   steps:[
+     {t:'Register for TCS NQT',d:'TCS conducts National Qualifier Test for freshers. Register on tcs.com → NQT → Apply for exam.'},
+     {t:'Clear NQT',d:'3 sections: Verbal, Reasoning, Coding. Score 70%+ for Digital (better projects). Python/Java coding is tested.'},
+     {t:'Apply to TCS Careers',d:'Experienced hires apply directly on tcs.com/careers → Search "Machine Learning" or "Data Scientist".'},
+     {t:'Internal Mobility to AI Teams',d:'Once at TCS, apply for TCS AI CoE (Centre of Excellence) projects internally after 1–2 years.'},
+   ],
+   tips:'TCS Ignite is for non-CS graduates who clear NQT. TCS NinjaStar is their premium track for top scorers — aim for this for AI projects.'},
+  {name:'Dice.com',emoji:'🎲',country:'🌍 US/Remote',cat:'global',desc:'US-focused tech job board with strong AI/ML listings. Great for Indians targeting US remote jobs or H1B sponsoring companies.',tags:['US Jobs','Remote','H1B','Tech'],badge:null,url:'https://dice.com',
+   info:{type:'Tech Job Board (US)',best:'Experienced engineers targeting US roles',jobType:'Full-time, Contract, Remote',free:'Yes'},
+   steps:[
+     {t:'Create Profile',d:'Register on Dice → Set "Open to Remote" → Add full US-style resume (1 page, action verbs, metrics).'},
+     {t:'Filter Remote + AI',d:'Search "Machine Learning Engineer" → Filter: Remote, Full-time → Look for "H1B sponsor" or "will sponsor visa".'},
+     {t:'US Format Resume Required',d:'US resume: no photo, no DOB, no address (just city), 1 page, quantified achievements ("Improved accuracy by 23%").'},
+   ],
+   tips:'Dice.com is primarily for people who can work in the US or remote. Strong for experienced (3+ years) ML engineers targeting US companies.'},
+  {name:'Turing.com',emoji:'🧠',country:'🌍 Remote (US Pay)',cat:'global',desc:'Platform connecting developers with US companies at US salaries for remote work from India. Screening required but pay is excellent.',tags:['US Pay','Remote','India','Screening'],badge:'new',url:'https://turing.com',
+   info:{type:'Remote Developer Matching',best:'Experienced developers wanting US pay from India',jobType:'Full-time Remote (6 month+ contracts)',free:'Yes (vetting required)'},
+   steps:[
+     {t:'Apply & Take Skills Test',d:'Go to turing.com → Apply → Take automated coding and ML tests. Tests are timed and rigorous.'},
+     {t:'Video Interview',d:'If tests pass, do a video interview with Turing team for English fluency and communication.'},
+     {t:'Technical Deep Dive',d:'Domain-specific technical interview. For ML: model building, system design, Python coding.'},
+     {t:'Get Matched',d:'Once approved, Turing matches you with US companies. Expect $40–$80/hr pay while working from India.'},
+   ],
+   tips:'Turing is for developers with 2+ years experience. The screening is tough but once in, you earn USD from India — financial game changer.'},
+  {name:'GitHub Jobs (via GitHub)',emoji:'🐙',country:'🌍 Global',cat:'global',desc:'Many AI companies post jobs directly in their GitHub repos or via GitHub\'s network. Great way to find roles at open-source-first companies.',tags:['Open Source','Developer','Global','Tech'],badge:null,url:'https://github.com/explore',
+   info:{type:'Developer Platform (Informal Jobs)',best:'Open source contributors, developers',jobType:'Full-time, Remote',free:'Yes'},
+   steps:[
+     {t:'Build Strong GitHub Profile',d:'Pin your best AI/ML projects. Write good READMEs. Contribute to open source ML libraries.'},
+     {t:'Watch Company Repos',d:'Star and watch repos of companies you want to work at — see job postings in their README or Issues.'},
+     {t:'Contribute & Get Noticed',d:'Meaningful contributions (PRs merged into major ML libraries) often lead to direct job offers from those companies.'},
+     {t:'Check GitHub\'s Jobs section',d:'github.com/explore/jobs (when active) or check "HIRING" pinned issues in popular AI repos.'},
+   ],
+   tips:'Many AI engineers have received job offers directly from maintainers of libraries they contributed to. This is the best organic way to get noticed.'},
+];
 
-// COUNTER
-function animCount(el,target,suffix){
-  let v=0;const dur=2200,steps=70,inc=target/steps;
-  const t=setInterval(()=>{v+=inc;if(v>=target){v=target;clearInterval(t)}el.textContent=Math.floor(v).toLocaleString()+suffix},dur/steps);
+const ROADMAP_DATA = [
+  {phase:'PHASE 1',title:'Python Foundation',items:['Python basics, OOP, functions','NumPy — arrays & matrix math','Pandas — data wrangling','Matplotlib / Seaborn — plots','Git & GitHub basics','Jupyter Notebooks']},
+  {phase:'PHASE 2',title:'Machine Learning',items:['Scikit-learn all algorithms','Regression, Classification, Clustering','Decision Trees & Random Forest','XGBoost & LightGBM','Model evaluation, cross-validation','Kaggle competitions']},
+  {phase:'PHASE 3',title:'Deep Learning',items:['Keras — ANNs, CNNs, RNNs','PyTorch — custom models','Backpropagation & optimization','Convolutional networks (CNNs)','Transformers & Attention','CUDA & GPU training']},
+  {phase:'PHASE 4',title:'Specialize',items:['NLP → Hugging Face Transformers','Vision → YOLO, OpenCV','GenAI → LangChain, RAG','Big Data → PySpark','Robotics → ROS2 + C++','Pick ONE deep specialty']},
+  {phase:'PHASE 5',title:'Build & Deploy',items:['FastAPI — model serving','Docker — containerization','MLflow — experiment tracking','AWS SageMaker / GCP Vertex','CI/CD for ML pipelines','Portfolio: 3 strong projects']},
+  {phase:'PHASE 6',title:'Land the Job',items:['Optimize LinkedIn + Naukri','Apply on 60+ platforms','Target internships first','Build in public on GitHub','Network + referrals','LeetCode 150+ problems']},
+];
+
+// ─── TICKER ────────────────────────────────────────────────────────────────────
+function buildTicker(){
+  const items=['🐍 Python','🔥 PyTorch','🤗 Transformers','🔶 TensorFlow','⛓️ LangChain','📊 Data Science','🤖 ML Engineer','💰 ₹8L–₹40L','🌍 Remote Jobs','🏛️ Govt Tech','🎓 Internships','🚀 ISRO / DRDO','💼 LinkedIn','🇮🇳 Naukri','⚡ JAX','🦙 LLaMA','🧠 NLP','👁️ Computer Vision'];
+  const rep=[...items,...items];
+  const t=document.getElementById('tick1');
+  t.innerHTML=rep.map(i=>`<span style="color:var(--text-dim)">${i} <span style="color:var(--gold)">◆</span></span>`).join('');
 }
-const cObs=new IntersectionObserver((entries)=>{
-  entries.forEach(e=>{
-    if(e.isIntersecting){
-      const el=e.target.querySelector('.sn');
-      if(el&&!el.dataset.done){el.dataset.done=1;animCount(el,parseInt(el.dataset.target),el.dataset.suffix||'+')}
-      cObs.unobserve(e.target);
-    }
+
+// ─── LANGUAGES ────────────────────────────────────────────────────────────────
+function buildLangs(){
+  const tabsEl=document.getElementById('langTabs');
+  const pEl=document.getElementById('langPanels');
+  LANGS.forEach((l,i)=>{
+    const t=document.createElement('button');
+    t.className='lang-tab'+(i===0?' act':'');
+    t.textContent=l.label;
+    t.onclick=()=>{document.querySelectorAll('.lang-tab').forEach(x=>x.classList.remove('act'));t.classList.add('act');document.querySelectorAll('.lang-panel').forEach(x=>x.classList.remove('show'));document.getElementById('lp-'+l.id).classList.add('show');};
+    tabsEl.appendChild(t);
+
+    const p=document.createElement('div');
+    p.className='lang-panel'+(i===0?' show':'');
+    p.id='lp-'+l.id;
+    p.innerHTML=`
+      <div class="lang-hero">
+        <div class="lang-icon">${l.icon}</div>
+        <div>
+          <div class="lang-title" style="color:${l.color}">${l.title}</div>
+          <div class="lang-subtitle">${l.sub}</div>
+          <div class="lang-about">${l.about}</div>
+          <div class="lang-chips">${l.chips.map(c=>`<span class="lchip">${c}</span>`).join('')}</div>
+        </div>
+      </div>
+      <div class="lib-grid">
+        ${l.libs.map(lib=>`
+          <div class="lib-card" style="--c:${l.color}">
+            <div class="lib-top"><div class="lib-icon-name"><span style="font-size:1.3rem">${lib.icon}</span><span class="lib-nm">${lib.name}</span></div><span class="lib-ver">${lib.ver}</span></div>
+            <div class="lib-desc">${lib.desc}</div>
+            <div class="lib-for">USE FOR: <b>${lib.for}</b></div>
+            <div class="inst"><span class="inst-cmd">${lib.cmd}</span><button class="cpybtn" onclick="cpy(this,'${lib.cmd.replace(/'/g,"\\'")}')">COPY</button></div>
+            <div class="lib-foot"><div class="lib-stars">⭐ ${lib.stars}</div><span class="lvl lvl-${lib.lvl}">${{b:'BEGINNER',m:'INTERMEDIATE',a:'ADVANCED'}[lib.lvl]}</span></div>
+          </div>`).join('')}
+      </div>`;
+    pEl.appendChild(p);
+
+    // Color the ::before via JS since CSS vars can't target pseudo
+    p.querySelectorAll('.lib-card').forEach(c=>{
+      c.style.setProperty('--line-color',l.color);
+    });
   });
-},{threshold:.3});
-document.querySelectorAll('.stat-block').forEach(el=>cObs.observe(el));
-
-// WHATSAPP FORM
-function sendToWA(){
-  const n=document.getElementById('f_name').value.trim();
-  const d=document.getElementById('f_desig').value.trim();
-  const i=document.getElementById('f_inst').value.trim();
-  const p=document.getElementById('f_phone').value.trim();
-  const em=document.getElementById('f_email').value.trim();
-  const t=document.getElementById('f_topic').value;
-  const b=document.getElementById('f_batch').value.trim();
-  const dt=document.getElementById('f_date').value;
-  const m=document.getElementById('f_msg').value.trim();
-  if(!n||!i||!p||!t){alert('Please fill in: Name, Institution, Phone and Program to continue.');return}
-  const msg=`Hello! I am reaching out from the NextGen Tech Labs website.\n\n*Name:* ${n}${d?' ('+d+')':''}\n*Institution:* ${i}\n*Phone:* ${p}${em?'\n*Email:* '+em:''}\n*Program:* ${t}\n*Batch Size:* ${b||'Not specified'}\n*Preferred Date:* ${dt||'Flexible'}${m?'\n*Additional Info:* '+m:''}\n\nI would like to book a free demo session. Please confirm availability.`;
-  window.open('https://wa.me/918511565780?text='+encodeURIComponent(msg),'_blank');
-  document.getElementById('cfWrap').style.display='none';
-  document.getElementById('cfOk').style.display='block';
+  // Add gradient line style
+  const st=document.createElement('style');
+  st.textContent=`.lib-card::before{background:linear-gradient(90deg,var(--line-color,#f0c040),transparent)}`;
+  document.head.appendChild(st);
 }
 
-// SMOOTH SCROLL
-document.querySelectorAll('a[href^="#"]').forEach(a=>{
-  a.addEventListener('click',function(e){const t=document.querySelector(this.getAttribute('href'));if(t){e.preventDefault();t.scrollIntoView({behavior:'smooth',block:'start'})}});
+// ─── JOBS ─────────────────────────────────────────────────────────────────────
+function buildJobs(){
+  const filters=['All','Full-time','Internship','Government'];
+  const fEl=document.getElementById('jobFilters');
+  const gEl=document.getElementById('jobsGrid');
+  filters.forEach((f,i)=>{
+    const b=document.createElement('button');
+    b.className='jf'+(i===0?' act':'');
+    b.textContent=f;
+    b.onclick=()=>{
+      document.querySelectorAll('.jf').forEach(x=>x.classList.remove('act'));b.classList.add('act');
+      document.querySelectorAll('.job-card').forEach(c=>{
+        c.classList.toggle('hidden', f!=='All' && c.dataset.type!==f.toLowerCase().replace('-',''));
+      });
+    };
+    fEl.appendChild(b);
+  });
+  JOBS.forEach(j=>{
+    const card=document.createElement('div');
+    card.className='job-card';
+    card.dataset.type=j.type;
+    const lvlColor={entry:'var(--green)',mid:'var(--gold)',senior:'var(--red)'}[j.level]||'var(--text-dim)';
+    const lvlBg={entry:'rgba(52,211,153,.1)',mid:'rgba(240,192,64,.1)',senior:'rgba(248,113,113,.1)'}[j.level]||'transparent';
+    card.innerHTML=`
+      <div class="job-head">
+        <div class="job-icon">${j.icon}</div>
+        <div><div class="job-title">${j.title}</div><div class="job-co">${j.co}</div></div>
+      </div>
+      <div class="job-desc">${j.desc}</div>
+      <div class="job-tags">${j.tags.map(t=>`<span class="jtag">${t}</span>`).join('')}</div>
+      <div class="job-meta">
+        <span class="jsal">${j.sal}</span>
+        <span class="jlvl" style="color:${lvlColor};background:${lvlBg};border-color:${lvlColor}">${j.level.toUpperCase()}</span>
+      </div>`;
+    gEl.appendChild(card);
+  });
+}
+
+// ─── PLATFORMS ────────────────────────────────────────────────────────────────
+const CAT_LABELS={'all':'All (60+)','global':'🌍 Global','india':'🇮🇳 India','intern':'🎓 Internship','govt':'🏛️ Government','freelance':'💰 Freelance'};
+function buildPlatforms(){
+  const cats=Object.keys(CAT_LABELS);
+  const cEl=document.getElementById('platCats');
+  const gEl=document.getElementById('platformsGrid');
+  cats.forEach((c,i)=>{
+    const b=document.createElement('button');
+    b.className='pcat'+(i===0?' act':'');
+    b.textContent=CAT_LABELS[c];
+    b.onclick=()=>{
+      document.querySelectorAll('.pcat').forEach(x=>x.classList.remove('act'));b.classList.add('act');
+      document.querySelectorAll('.p-card').forEach(card=>{
+        card.classList.toggle('hidden',c!=='all'&&card.dataset.cat!==c);
+      });
+    };
+    cEl.appendChild(b);
+  });
+
+  PLATFORMS.forEach(p=>{
+    const card=document.createElement('div');
+    card.className='p-card';
+    card.dataset.cat=p.cat;
+    card.onclick=()=>openModal(p);
+    const badges={pop:'badge-pop',new:'badge-new',gov:'badge-gov',int:'badge-int'};
+    const bLabels={pop:'POPULAR',new:'NEW',gov:'GOVT',int:'INTERN'};
+    card.innerHTML=`
+      ${p.badge?`<span class="p-badge ${badges[p.badge]}">${bLabels[p.badge]}</span>`:''}
+      <div class="p-head">
+        <div class="p-emoji">${p.emoji}</div>
+        <div><div class="p-name">${p.name}</div><div class="p-country">${p.country}</div></div>
+      </div>
+      <div class="p-desc">${p.desc}</div>
+      <div class="p-tags">${p.tags.map(t=>{
+        const cls=t==='HOT'?'ptag hot':t==='INTERNSHIP'?'ptag intern':t==='GOVT'?'ptag gov':'ptag';
+        return `<span class="${cls}">${t}</span>`;
+      }).join('')}</div>
+      <div class="p-footer">
+        <div class="p-roles">${p.cat.toUpperCase()} PLATFORM</div>
+        <button class="how-btn" onclick="event.stopPropagation();openModal(PLATFORMS.find(x=>x.name==='${p.name.replace(/'/g,"\\'")}'))">📋 HOW TO APPLY</button>
+      </div>`;
+    gEl.appendChild(card);
+  });
+}
+
+// ─── MODAL ────────────────────────────────────────────────────────────────────
+function openModal(p){
+  document.getElementById('mEmoji').textContent=p.emoji;
+  document.getElementById('mName').textContent=p.name;
+  document.getElementById('mSub').textContent=p.country+' · '+CAT_LABELS[p.cat]||p.cat;
+  document.getElementById('mLink').href=p.url;
+  document.getElementById('mBody').innerHTML=`
+    <div class="m-section">
+      <div class="m-sec-title">▸ PLATFORM INFO</div>
+      ${Object.entries(p.info).map(([k,v])=>`<div class="info-row"><span class="info-k">${k.replace(/_/g,' ').toUpperCase()}</span><span class="info-v">${v}</span></div>`).join('')}
+    </div>
+    <div class="m-section">
+      <div class="m-sec-title">▸ HOW TO APPLY — STEP BY STEP</div>
+      <ul class="step-list">
+        ${p.steps.map((s,i)=>`<li class="step-item"><div class="step-num">${String(i+1).padStart(2,'0')}</div><div class="step-content"><div class="step-t">${s.t}</div><div class="step-d">${s.d}</div></div></li>`).join('')}
+      </ul>
+    </div>
+    <div class="m-section">
+      <div class="tip-box"><div class="tip-icon">💡</div><p><strong>PRO TIP: </strong>${p.tips}</p></div>
+    </div>`;
+  document.getElementById('modalOverlay').classList.add('open');
+  document.body.style.overflow='hidden';
+}
+function closeModal(){
+  document.getElementById('modalOverlay').classList.remove('open');
+  document.body.style.overflow='';
+}
+function closeModalOutside(e){if(e.target===document.getElementById('modalOverlay'))closeModal();}
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal();});
+
+// ─── ROADMAP ──────────────────────────────────────────────────────────────────
+function buildRoadmap(){
+  const g=document.getElementById('roadmapGrid');
+  ROADMAP_DATA.forEach((r,i)=>{
+    const card=document.createElement('div');
+    card.className='road-card';
+    card.innerHTML=`
+      <div class="road-n">${String(i+1).padStart(2,'0')}</div>
+      <div class="road-phase">${r.phase}</div>
+      <div class="road-title">${r.title}</div>
+      <ul class="road-list">${r.items.map(item=>`<li>${item}</li>`).join('')}</ul>`;
+    g.appendChild(card);
+  });
+}
+
+// ─── COPY ─────────────────────────────────────────────────────────────────────
+function cpy(btn,cmd){
+  navigator.clipboard.writeText(cmd).then(()=>{
+    const o=btn.textContent;btn.textContent='✓ DONE';btn.style.color='var(--green)';btn.style.borderColor='var(--green)';
+    setTimeout(()=>{btn.textContent=o;btn.style.color='';btn.style.borderColor='';},2000);
+  }).catch(()=>{btn.textContent='DONE';setTimeout(()=>btn.textContent='COPY',1500);});
+}
+
+// ─── SCROLL OBSERVER ─────────────────────────────────────────────────────────
+const io=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('vis');}),{threshold:.08});
+
+// ─── NAV ACTIVE ───────────────────────────────────────────────────────────────
+const secIds=['languages','jobs','platforms','roadmap'];
+window.addEventListener('scroll',()=>{
+  let cur='';
+  secIds.forEach(id=>{const el=document.getElementById(id);if(el&&window.scrollY>=el.offsetTop-80)cur=id;});
+  document.querySelectorAll('.nav-links a').forEach(a=>{
+    a.classList.toggle('active',a.getAttribute('href')==='#'+cur);
+  });
 });
+
+// ─── INIT ─────────────────────────────────────────────────────────────────────
+buildTicker(); buildLangs(); buildJobs(); buildPlatforms(); buildRoadmap();
+document.querySelectorAll('.fi').forEach(el=>io.observe(el));
 </script>
 </body>
 </html>
